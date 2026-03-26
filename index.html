@@ -51,10 +51,10 @@
 <header class="topbar">
   <span class="topbar-logo">ETP Game Show</span>
   <nav class="topbar-nav">
-    <a id="nav-home" data-nav-target="home" onclick="requestNavigation('home')" class="active">Home</a>
-    <a id="nav-randomize" data-nav-target="randomize" onclick="requestNavigation('randomize')">Teams</a>
-    <a id="nav-board" data-nav-target="board" onclick="requestNavigation('board')">Board</a>
-    <a id="nav-stats" data-nav-target="stats" onclick="requestNavigation('stats')">Stats</a>
+    <a id="nav-home" onclick="showTopNavHint()" class="active">Home</a>
+    <a id="nav-randomize" onclick="showTopNavHint()">Teams</a>
+    <a id="nav-board" onclick="showTopNavHint()">Board</a>
+    <a id="nav-stats" onclick="showTopNavHint()">Stats</a>
   </nav>
   <div class="topbar-actions">
     <span class="material-symbols-outlined" style="color:var(--c-text-muted);cursor:pointer;" title="Settings">settings</span>
@@ -624,6 +624,10 @@ function isNavigationLocked(target) {
   const blocksActiveGameExit = ['board', 'question', 'stats'].includes(GameState.phase)
     && ['home', 'randomize'].includes(target);
   return blocksActiveGameExit;
+}
+
+function showTopNavHint() {
+  showToast('Use the page buttons to move between screens.');
 }
 
 function requestNavigation(target) {
