@@ -70,10 +70,12 @@ function renderTeamSlots() {
     if (!el) return;
     const members = GameState.teams[i].members;
     el.innerHTML = `
-      <div class="slot-label">SLOT_0${i + 1}</div>
+      <div class="slot-label" style="font-weight:900;">SLOT 0${i + 1}</div>
       <div class="slot-team-name" style="color: ${GameState.teams[i].hex}">${name}</div>
       <div class="slot-status">READY</div>
-      <div class="slot-members">${members.map(m => `<span>${m}</span>`).join('')}</div>
+      <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;">
+        ${members.map(m => `<span style="font-size:0.9rem; font-weight:600; padding:0.4rem; text-align:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">${m}</span>`).join('')}
+      </div>
     `;
   });
 }
