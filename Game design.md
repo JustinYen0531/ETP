@@ -11,8 +11,8 @@
   2. **Statistics (統計)**
   3. **Calculus (微積分)**
   4. **Economics (經濟)**
-  5. **Life (生活常識)**
-  6. **Challenge (特殊挑戰)**
+  5. **Life (生活)**
+  6. **Challenge (挑戰)**
 
 ## 3. 地圖佈局 (Map Layout)
 採用 `4x3 - 2` 的矩形佈局，共 10 格（索引 0-9），中間為空白區域。
@@ -20,36 +20,54 @@
 | 索引 | 格子主題 | 特性描述 |
 |:---:|:---:|:---|
 | **0** | **Start (Life/Challenge)** | 起點，繞行一圈後可獲得固定加分。 |
-| **1** | **Accounting 1** | 分配到會計題庫第一題（不重複）。 |
-| **2** | **Statistics 1** | 分配到統計題庫第一題。 |
-| **3** | **Calculus 1** | 分配到微積分題庫第一題。 |
-| **4** | **Economics 1** | 分配到經濟題庫第一題。 |
-| **5** | **Accounting 2** | 分配到會計題庫第二題。 |
-| **6** | **Statistics 2** | 分配到統計題庫第二題。 |
-| **7** | **Calculus 2** | 分配到微積分題庫第二題。 |
-| **8** | **Economics 2** | 分配到經濟題庫第二題。 |
+| **1** | **Accounting 1** | 分配到會計題庫 1 (IFRS 基礎)。 |
+| **2** | **Statistics 1** | 分配到統計題庫 1 (數據分析直覺)。 |
+| **3** | **Calculus 1** | 分配到微積分題庫 1 (極限與導數)。 |
+| **4** | **Economics 1** | 分配到經濟題庫 1 (市場機制)。 |
+| **5** | **Accounting 2** | 分配到會計題庫 2 (會計方程式與分錄)。 |
+| **6** | **Statistics 2** | 分配到統計題庫 2 (機率與推論)。 |
+| **7** | **Calculus 2** | 分配到微積分題庫 2 (積分與應用)。 |
+| **8** | **Economics 2** | 分配到經濟題庫 2 (供需與外部性)。 |
 | **9** | **Special (Life/Challenge)** | 機會格，隨機觸發生活或挑戰題。 |
 
-> **特性說明**：
-> - `1 & 5` 為會計格：確保兩格呈現的題目不重複。
-> - `2 & 6` 為統計格：確保兩格呈現的題目不重複。
-> - (依此類推...)
-
 ## 4. 題目機制 (Question Banks)
-- **等級劃分**：簡化為三個等級（L100, L200, L300）。
+- **等級劃分**：三個等級（L100, L200, L300）。
 - **題目類型**:
   - `Level 1: 填充題` (核心名詞填充)
   - `Level 2: 計算題` (簡易邏輯運算)
   - `Level 3: 開放性問題` (邏輯答對即給分，無絕對標準答案)
 
-## 5. 核心競賽流程 (Core Gameplay Loop)
-### A. 前端呈現
-- **移動**: 動態步數移動特效。
-- **挑戰**: 若落點格子為無主之地，挑戰 L1；若已有主，則挑戰該格「當前等級 + 1」。
-- **房產轉移**: 
-  - 攻擊方答對：房產易主。
-  - 攻擊方答錯：房產由原主「自動升一級」作為防禦成功獎勵。
+## 5. 數據範例 (Question Samples - Placeholder)
+以下為各學科的題目範本，用於引導 AI 生成完整題庫：
 
-## 6. 遊戲結束條件 (End Conditions)
-- 統計所有格子（1-8）的房產等級與路過獎勵總分。
-- 分數最高者獲勝。
+### 1. Accounting (會計學)
+- **Lv1**: "The recording of an asset’s cost as an expense over its useful life is called ______." (Ans: Depreciation)
+- **Lv2**: "Total Assets = $100, Total Equity = $60. How much are the Liabilities?" (Ans: $40)
+- **Lv3**: "Why do we need 'Adjusting Entries' at the end of a period?" (Ans: To match revenues and expenses)
+
+### 2. Economics (經濟學)
+- **Lv1**: "The point where Supply meets Demand is called the Market ______." (Ans: Equilibrium)
+- **Lv2**: "Price increases from $10 to $12. Quantity demanded drops from 100 to 80. Is the demand elastic or inelastic?" (Ans: Elastic)
+- **Lv3**: "In your opinion, what is one 'Negative Externality' of using AI for homework?" (Ans: Losing critical thinking)
+
+### 3. Calculus (微積分)
+- **Lv1**: "If the slope of a curve is zero, it might be a maximum or a ______ point." (Ans: Minimum)
+- **Lv2**: "Find the derivative (f') of f(x) = x³ + 2x." (Ans: 3x² + 2)
+- **Lv3**: "Explain the 'Chain Rule' in one simple sentence." (Ans: Function inside a function)
+
+### 4. Statistics (統計學)
+- **Lv1**: "A value that is very far away from all other data points is called an ______." (Ans: Outlier)
+- **Lv2**: "If you flip a coin 3 times, what is the probability of getting 3 Heads?" (Ans: 1/8 or 12.5%)
+- **Lv3**: "Why is 'Correlation does not imply Causation' an important rule?" (Ans: Ice cream sales don't cause shark attacks)
+
+## 6. 核心遊戲流程 (Core Gameplay Loop)
+### A. 移動 (Movement)
+- 玩家擲骰子並根據步數移動。
+- 如果落點格子已達到「滿級 (Level 3)」，該格子將被直接略過。
+
+### B. 挑戰與房產 (Property Mechanics)
+1. **無人佔領時**: 挑戰 Level 1。答對獲得房產，答錯維持無主。
+2. **他人佔領時**: 挑戰「當前等級 + 1」。答對奪取房產，答錯則原主房產自動升一級。
+
+## 7. 遊戲結束條件 (End Conditions)
+- 統計所有格子（0-9）的房產等級與路過獎勵總分。最高者獲勝。
