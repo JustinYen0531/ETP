@@ -395,7 +395,7 @@ html, body {
 .hud-tl {
   top: 50%;
   left: 5.5rem;
-  width: 520px;
+  width: 470px;
   transform: translateY(-50%);
   border: none;
   background: transparent;
@@ -456,13 +456,14 @@ html, body {
   overflow: hidden;
   max-height: none;
   padding-right: 0;
+  align-items: stretch;
 }
 .team-stat-card {
   background: rgba(18,18,18,0.9);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 0 18px rgba(0,0,0,0.2);
   padding: 1rem;
-  min-height: 0;
+  min-height: 228px;
 }
 .team-stat-top {
   display: flex;
