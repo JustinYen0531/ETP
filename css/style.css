@@ -510,10 +510,11 @@ html, body {
   border: none;
   cursor: default;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1rem;
+  align-items: center; justify-content: flex-start; gap: 0.65rem;
   aspect-ratio: auto;
   min-height: 0;
-  padding: 1rem;
+  padding: 0.15rem 1rem 0.4rem;
+  overflow: visible;
 }
 .tile-center:hover { background: transparent; transform: none; box-shadow: none; }
 .current-team-display {
@@ -523,7 +524,10 @@ html, body {
   font-weight: 900;
   letter-spacing: 0.16em;
   text-align: center;
-  margin-bottom: 0.15rem;
+  display: block;
+  width: 100%;
+  margin: 0 0 0.15rem;
+  line-height: 1.1;
 }
 .center-controls-row {
   display: grid;
@@ -533,6 +537,7 @@ html, body {
   gap: clamp(0.5rem, 1.6vw, 1.4rem);
   width: 100%;
   max-width: 500px;
+  margin: 0 auto;
 }
 .side-card {
   min-height: 110px;
@@ -541,8 +546,11 @@ html, body {
   max-width: 126px;
   justify-self: center;
   justify-content: center;
+  align-self: center;
+  align-items: center;
   padding: 1rem 0.75rem;
   text-align: center;
+  margin: 0 auto;
 }
 .side-card-icon { font-size: 2.5rem; }
 .side-card-label {
@@ -568,7 +576,7 @@ html, body {
   width: 7rem; height: 7rem;
   cursor: pointer;
   transform-style: preserve-3d;
-  margin-top: 0.25rem;
+  margin: 0 auto;
 }
 .dice-glow {
   position: absolute; inset: -8px;
@@ -581,7 +589,8 @@ html, body {
   font-family: var(--font-head);
   font-size: 1.1rem;
   font-weight: 900;
-  margin-top: 0.35rem;
+  width: 100%;
+  margin-top: -0.15rem;
   text-align: center;
 }
 .end-turn-button {
@@ -597,7 +606,9 @@ html, body {
   padding: 0.6rem 1.75rem;
   text-transform: uppercase;
   transition: all 0.2s ease;
-  margin-top: -0.15rem;
+  margin-top: -0.85rem;
+  position: relative;
+  z-index: 2;
 }
 .end-turn-button:hover {
   color: var(--c-primary);
