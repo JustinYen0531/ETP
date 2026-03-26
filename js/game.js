@@ -339,10 +339,9 @@ function renderStatsPanel(containerId, teamIndexes) {
           <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">looks_two</span>200</span><span>${breakdown.lvl2}</span></div>
           <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">looks_3</span>300</span><span>${breakdown.lvl3}</span></div>
           <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">sync</span>+50</span><span>${team.lapBonusCount}</span></div>
-          <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">edit_square</span>manual</span><span>${team.manualBonus}</span></div>
         </div>
         <div class="manual-score-wrap">
-          <label class="manual-score-label" for="manual-score-${teamIdx}">Manual Score</label>
+          <label class="manual-score-label" for="manual-score-${teamIdx}">Manual</label>
           <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" value="${team.manualBonus}" onchange="updateManualScore(${teamIdx}, this.value)" />
         </div>
       </div>
