@@ -111,6 +111,7 @@ function renderBoard() {
 
     // Remove existing owner class
     el.className = el.className.replace(/owner-\d/g, '').trim();
+    el.classList.remove('owned-level-1', 'owned-level-2', 'owned-level-3');
 
     if (state.owner !== null) {
       const team = GameState.teams[state.owner];
@@ -129,8 +130,10 @@ function renderBoard() {
         }
       };
       const glow = glowByLevel[state.level] || glowByLevel[1];
+      el.style.setProperty('--owner-glow', team.hex);
       el.style.borderColor = glow.border;
       el.style.boxShadow = glow.shadow;
+      el.classList.add(`owned-level-${Math.min(state.level, 3)}`);
 
       // Level indicator
       const levelEl = el.querySelector('.tile-level');
@@ -153,6 +156,7 @@ function renderBoard() {
         ownerEl.style.color = team.hex;
       }
     } else {
+      el.style.removeProperty('--owner-glow');
       el.style.borderColor = '';
       el.style.boxShadow = '';
       const levelEl = el.querySelector('.tile-level');

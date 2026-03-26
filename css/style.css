@@ -669,6 +669,27 @@ html, body {
   padding: 1rem 0.9rem 1.1rem;
   overflow: hidden;
 }
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.tile.owned-level-2::before {
+  opacity: 1;
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--owner-glow) 24%, transparent) 0%, transparent 58%),
+    linear-gradient(180deg, color-mix(in srgb, var(--owner-glow) 14%, transparent) 0%, transparent 62%);
+}
+.tile.owned-level-3::before {
+  opacity: 1;
+  background:
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--owner-glow) 34%, transparent) 0%, transparent 62%),
+    linear-gradient(180deg, color-mix(in srgb, var(--owner-glow) 22%, transparent) 0%, transparent 72%);
+  animation: tileEnergyPulse 1.8s ease-in-out infinite;
+}
 .tile.step-active {
   box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 0 24px rgba(143,245,255,0.22);
 }
@@ -713,6 +734,16 @@ html, body {
   text-transform: uppercase;
   border: 1px solid transparent; padding: 0.1rem 0.4rem;
   border-radius: 1px;
+}
+.tile.owned-level-2 .tile-icon,
+.tile.owned-level-2 .tile-label {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--owner-glow) 42%, transparent);
+}
+.tile.owned-level-3 .tile-icon,
+.tile.owned-level-3 .tile-label {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--owner-glow) 55%, transparent),
+    0 0 24px color-mix(in srgb, var(--owner-glow) 35%, transparent);
 }
 .tile-owner {
   position: absolute; top: 4px; right: 6px;
@@ -761,6 +792,16 @@ html, body {
 @keyframes tokenPulse {
   0%, 100% { transform: scale(1.25); }
   50% { transform: scale(1.45); }
+}
+@keyframes tileEnergyPulse {
+  0%, 100% {
+    opacity: 0.88;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
 }
 /* Tile color variants */
 .tile-primary .tile-icon   { color: var(--c-primary); }
