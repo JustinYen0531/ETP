@@ -9,6 +9,7 @@ const GameState = {
   tiles: [],             // Array of { owner: teamIdx | null, level: 1-3 }
   currentQuestion: null, // { tile, question, challenger, defender }
   roundPassCount: 0,
+  history: [],
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -18,8 +19,13 @@ const GameState = {
       colorClass: TEAM_COLORS[i],
       hex: TEAM_HEX[i],
       score: 0,
-      properties: []
+      properties: [],
+      position: 0,
+      manualBonus: 0,
+      lapBonusCount: 0,
+      scoreBreakdown: { lvl1: 0, lvl2: 0, lvl3: 0 }
     }));
+    this.history = [];
   }
 };
 
@@ -84,12 +90,6 @@ function renderTeamSlots() {
 // Board Rendering
 // ============================================================
 function renderBoard() {
-  // Update team HUD scores
-  GameState.teams.forEach((team, i) => {
-    const scoreEl = document.getElementById(`hud-score-${i}`);
-    if (scoreEl) scoreEl.textContent = team.score.toLocaleString();
-  });
-
   // Update tile states
   BOARD_TILES.forEach((tile, idx) => {
     const el = document.getElementById(`tile-${idx}`);
@@ -135,6 +135,8 @@ function renderBoard() {
     curTeamEl.textContent = `TEAM ${team.name}'S TURN`;
     curTeamEl.style.color = team.hex;
   }
+
+  renderSidePanels();
 }
 
 // ============================================================
@@ -161,13 +163,26 @@ function rollDice() {
 
 function showDiceResult(steps) {
   const resultEl = document.getElementById('dice-result');
+  const team = GameState.teams[GameState.currentTeam];
+  const from = team.position;
+  const spaces = BOARD_TILES.length;
+  const movedTo = (from + steps) % spaces;
+  const laps = Math.floor((from + steps) / spaces);
+
+  team.position = movedTo;
+  if (laps > 0) {
+    team.lapBonusCount += laps;
+    team.score += laps * 50;
+  }
+
   if (resultEl) {
     resultEl.textContent = `ROLLED ${steps}`;
     resultEl.style.opacity = 1;
     setTimeout(() => { resultEl.style.opacity = 0; }, 3000);
   }
-  // Alert: which tile to land on (simplified — no token movement in v1)
-  showToast(`Team ${GameState.teams[GameState.currentTeam].name} rolled ${steps}! Move ${steps} spaces.`);
+  pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${movedTo + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
+  renderBoard();
+  showToast(`Team ${team.name} rolled ${steps} and moved to tile ${movedTo + 1}.`);
 }
 
 // ============================================================
@@ -226,6 +241,7 @@ function judgeResult(correct) {
       GameState.tiles[tileIdx].owner = challenger;
       GameState.tiles[tileIdx].level = 1;
       GameState.teams[challenger].score += questionLevel * 100;
+      incrementScoreBreakdown(challenger, questionLevel);
       GameState.teams[challenger].properties.push(tileIdx);
     } else {
       // Conquer tile
@@ -233,16 +249,20 @@ function judgeResult(correct) {
       GameState.tiles[tileIdx].owner = challenger;
       GameState.tiles[tileIdx].level = Math.min(questionLevel, 3);
       GameState.teams[challenger].score += questionLevel * 100;
+      incrementScoreBreakdown(challenger, questionLevel);
       GameState.teams[challenger].properties.push(tileIdx);
     }
+    pushHistory(challenger, `Answered tile ${tileIdx + 1} correctly${defender === null ? ' and claimed it' : ` and conquered from ${GameState.teams[defender].name}`}.`, `+${questionLevel * 100}`);
     showToast(`✅ Correct! TEAM ${GameState.teams[challenger].name} ${defender === null ? 'claimed' : 'conquered'} the tile!`);
   } else {
     if (defender !== null) {
       // Auto-upgrade defender's tile
       GameState.tiles[tileIdx].level = Math.min(GameState.tiles[tileIdx].level + 1, 3);
       GameState.teams[defender].score += 50;
+      pushHistory(defender, `Defended tile ${tileIdx + 1}; auto-upgrade to Lv ${GameState.tiles[tileIdx].level}.`, '+50 DEF');
       showToast(`❌ Wrong! TEAM ${GameState.teams[defender].name} defends + auto-upgrades to Lv ${GameState.tiles[tileIdx].level}!`);
     } else {
+      pushHistory(challenger, `Missed tile ${tileIdx + 1}; no points awarded.`, 'WRONG');
       showToast(`❌ Wrong! Tile remains unclaimed.`);
     }
   }
@@ -268,6 +288,96 @@ function checkGameEnd() {
   if (allMaxed) {
     setTimeout(() => showScreen('stats'), 500);
   }
+}
+
+function incrementScoreBreakdown(teamIdx, questionLevel) {
+  const team = GameState.teams[teamIdx];
+  if (questionLevel === 1) team.scoreBreakdown.lvl1 += 1;
+  if (questionLevel === 2) team.scoreBreakdown.lvl2 += 1;
+  if (questionLevel >= 3) team.scoreBreakdown.lvl3 += 1;
+}
+
+function pushHistory(teamIdx, text, tag = 'LOG') {
+  const team = GameState.teams[teamIdx];
+  GameState.history.unshift({
+    teamIdx,
+    teamName: team.name,
+    color: team.hex,
+    tag,
+    text,
+    turn: GameState.history.length + 1
+  });
+  GameState.history = GameState.history.slice(0, 12);
+}
+
+function renderSidePanels() {
+  renderStatsPanel('stats-panel-top', [0, 1]);
+  renderStatsPanel('stats-panel-bottom', [2, 3]);
+  renderLogPanel('log-panel-top', GameState.history.slice(0, 4));
+  renderLogPanel('log-panel-bottom', GameState.history.slice(4, 8));
+}
+
+function renderStatsPanel(containerId, teamIndexes) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.className = 'team-stats-stack';
+  el.innerHTML = teamIndexes.map((teamIdx) => {
+    const team = GameState.teams[teamIdx];
+    const breakdown = team.scoreBreakdown;
+    return `
+      <div class="team-stat-card" style="border-left:2px solid ${team.hex};">
+        <div class="team-stat-top">
+          <div>
+            <div class="team-stat-name" style="color:${team.hex};">${team.name}</div>
+            <div class="side-panel-note">Tile ${team.position + 1} · ${team.properties.length} assets</div>
+          </div>
+          <div>
+            <div class="team-stat-total-label">Total</div>
+            <div class="team-stat-total" style="color:${team.hex};">${team.score}</div>
+          </div>
+        </div>
+        <div class="team-breakdown">
+          <div class="team-breakdown-row"><span>Lv1 correct</span><span>${breakdown.lvl1} x 100</span></div>
+          <div class="team-breakdown-row"><span>Lv2 correct</span><span>${breakdown.lvl2} x 200</span></div>
+          <div class="team-breakdown-row"><span>Lv3 correct</span><span>${breakdown.lvl3} x 300</span></div>
+          <div class="team-breakdown-row"><span>Lap bonus</span><span>${team.lapBonusCount} x 50</span></div>
+          <div class="team-breakdown-row"><span>Manual bonus</span><span>${team.manualBonus}</span></div>
+        </div>
+        <div class="manual-score-wrap">
+          <label class="manual-score-label" for="manual-score-${teamIdx}">Manual Score</label>
+          <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" value="${team.manualBonus}" onchange="updateManualScore(${teamIdx}, this.value)" />
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderLogPanel(containerId, entries) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!entries.length) {
+    el.innerHTML = '<div class="log-empty">Waiting for first action...</div>';
+    return;
+  }
+  el.innerHTML = entries.map((entry) => `
+    <div class="log-entry" style="border-left-color:${entry.color};">
+      <div class="log-meta">
+        <span class="log-team" style="color:${entry.color};">${entry.teamName}</span>
+        <span>${entry.tag}</span>
+      </div>
+      <div class="log-text">${entry.text}</div>
+    </div>
+  `).join('');
+}
+
+function updateManualScore(teamIdx, rawValue) {
+  const team = GameState.teams[teamIdx];
+  const nextManual = Number(rawValue) || 0;
+  const delta = nextManual - team.manualBonus;
+  team.manualBonus = nextManual;
+  team.score += delta;
+  pushHistory(teamIdx, `Manual score adjusted by ${delta >= 0 ? '+' : ''}${delta}.`, 'MANUAL');
+  renderBoard();
 }
 
 // ============================================================
@@ -321,5 +431,6 @@ function showToast(msg) {
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   GameState.init();
+  renderSidePanels();
   showScreen('home');
 });

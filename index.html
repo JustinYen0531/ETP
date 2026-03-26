@@ -222,56 +222,32 @@
 
   <!-- HUD Panels -->
   <div class="hud hud-tl" style="left:4.5rem;">
-    <div class="hud-unit" style="color:var(--c-primary);">UNIT_A</div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
-      <div>
-        <div class="hud-name">ALPHA</div>
-        <div style="font-size:0.55rem;color:var(--c-text-muted);text-transform:uppercase;letter-spacing:0.15em;">Status: <span style="color:var(--c-tertiary);">Active</span></div>
-      </div>
-      <div style="text-align:right;">
-        <div class="hud-score-label">Score</div>
-        <div class="hud-score glow-primary" style="color:var(--c-primary);" id="hud-score-0">0</div>
-      </div>
+    <div class="side-panel-header">
+      <div class="hud-unit" style="color:var(--c-primary);">SCORE LEDGER</div>
+      <div class="side-panel-note">Alpha / Beta</div>
     </div>
+    <div id="stats-panel-top"></div>
   </div>
   <div class="hud hud-tr">
-    <div class="hud-unit" style="color:var(--c-secondary);">UNIT_B</div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
-      <div>
-        <div class="hud-name">BETA</div>
-        <div style="font-size:0.55rem;color:var(--c-text-muted);text-transform:uppercase;letter-spacing:0.15em;">Status: <span style="color:var(--c-tertiary);">Active</span></div>
-      </div>
-      <div style="text-align:right;">
-        <div class="hud-score-label">Score</div>
-        <div class="hud-score glow-secondary" style="color:var(--c-secondary);" id="hud-score-1">0</div>
-      </div>
+    <div class="side-panel-header">
+      <div class="hud-unit" style="color:var(--c-secondary);">TURN REPLAY</div>
+      <div class="side-panel-note">Latest actions</div>
     </div>
+    <div id="log-panel-top" class="log-panel"></div>
   </div>
   <div class="hud hud-bl" style="left:4.5rem;">
-    <div class="hud-unit" style="color:var(--c-tertiary);">UNIT_C</div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
-      <div>
-        <div class="hud-name">GAMMA</div>
-        <div style="font-size:0.55rem;color:var(--c-text-muted);text-transform:uppercase;letter-spacing:0.15em;">Status: <span style="color:var(--c-tertiary);">Active</span></div>
-      </div>
-      <div style="text-align:right;">
-        <div class="hud-score-label">Score</div>
-        <div class="hud-score glow-tertiary" style="color:var(--c-tertiary);" id="hud-score-2">0</div>
-      </div>
+    <div class="side-panel-header">
+      <div class="hud-unit" style="color:var(--c-tertiary);">SCORE LEDGER</div>
+      <div class="side-panel-note">Gamma / Delta</div>
     </div>
+    <div id="stats-panel-bottom"></div>
   </div>
   <div class="hud hud-br">
-    <div class="hud-unit" style="color:var(--c-error);">UNIT_D</div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
-      <div>
-        <div class="hud-name">DELTA</div>
-        <div style="font-size:0.55rem;color:var(--c-text-muted);text-transform:uppercase;letter-spacing:0.15em;">Status: <span style="color:var(--c-tertiary);">Active</span></div>
-      </div>
-      <div style="text-align:right;">
-        <div class="hud-score-label">Score</div>
-        <div class="hud-score glow-error" style="color:var(--c-error);" id="hud-score-3">0</div>
-      </div>
+    <div class="side-panel-header">
+      <div class="hud-unit" style="color:var(--c-error);">BOARD FEED</div>
+      <div class="side-panel-note">History trail</div>
     </div>
+    <div id="log-panel-bottom" class="log-panel"></div>
   </div>
 
   <!-- Main Board Area -->
@@ -624,6 +600,7 @@ function goToStats() {
 function resetGame() {
   if (!confirm('Reset all game data?')) return;
   GameState.init();
+  renderSidePanels();
   showScreen('home');
   updateNav('home');
 }
