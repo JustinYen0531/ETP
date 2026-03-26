@@ -11,6 +11,8 @@ const GameState = {
   roundPassCount: 0,
   history: [],
   turnCount: 1,
+  isRolling: false,
+  pendingAnswerTile: null,
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -28,6 +30,8 @@ const GameState = {
     }));
     this.history = [];
     this.turnCount = 1;
+    this.isRolling = false;
+    this.pendingAnswerTile = null;
   }
 };
 
@@ -128,6 +132,8 @@ function renderBoard() {
       const ownerEl = el.querySelector('.tile-owner');
       if (ownerEl) ownerEl.textContent = '';
     }
+
+    renderTileTokens(el, idx);
   });
 
   // Current team indicator
@@ -138,6 +144,17 @@ function renderBoard() {
     curTeamEl.style.color = team.hex;
   }
 
+  const answerButton = document.getElementById('btn-answer-tile');
+  if (answerButton) {
+    const tileIdx = GameState.pendingAnswerTile;
+    const tile = tileIdx === null ? null : BOARD_TILES[tileIdx];
+    const canAnswer = tile && tile.bankKey;
+    answerButton.classList.toggle('hidden', !canAnswer);
+    if (canAnswer) {
+      answerButton.textContent = `ANSWER TILE ${tileIdx + 1}`;
+    }
+  }
+
   renderSidePanels();
 }
 
@@ -145,8 +162,10 @@ function renderBoard() {
 // Dice Roll
 // ============================================================
 function rollDice() {
+  if (GameState.isRolling || GameState.pendingAnswerTile !== null) return;
   const diceEl = document.getElementById('dice-icon');
   if (!diceEl) return;
+  GameState.isRolling = true;
 
   // Dice animation
   let rolls = 0;
@@ -158,33 +177,43 @@ function rollDice() {
       clearInterval(interval);
       const result = Math.floor(Math.random() * 6) + 1;
       diceEl.textContent = 'casino';
-      showDiceResult(result);
+      animateTeamMove(result);
     }
   }, 80);
 }
 
-function showDiceResult(steps) {
+async function animateTeamMove(steps) {
   const resultEl = document.getElementById('dice-result');
   const team = GameState.teams[GameState.currentTeam];
   const from = team.position;
   const spaces = BOARD_TILES.length;
-  const movedTo = (from + steps) % spaces;
-  const laps = Math.floor((from + steps) / spaces);
+  let laps = 0;
 
-  team.position = movedTo;
+  if (resultEl) {
+    resultEl.textContent = `ROLLED ${steps}`;
+    resultEl.style.opacity = 1;
+  }
+
+  for (let i = 0; i < steps; i++) {
+    team.position = (team.position + 1) % spaces;
+    if (team.position === 0) laps += 1;
+    renderBoard();
+    await wait(220);
+  }
+
   if (laps > 0) {
     team.lapBonusCount += laps;
     team.score += laps * 50;
   }
 
-  if (resultEl) {
-    resultEl.textContent = `ROLLED ${steps}`;
-    resultEl.style.opacity = 1;
-    setTimeout(() => { resultEl.style.opacity = 0; }, 3000);
-  }
-  pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${movedTo + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
+  GameState.pendingAnswerTile = team.position;
+  pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
   renderBoard();
-  showToast(`Team ${team.name} rolled ${steps} and moved to tile ${movedTo + 1}.`);
+  showToast(`Team ${team.name} rolled ${steps} and moved to tile ${team.position + 1}.`);
+  GameState.isRolling = false;
+  setTimeout(() => {
+    if (resultEl) resultEl.style.opacity = 0;
+  }, 2500);
 }
 
 // ============================================================
@@ -270,6 +299,7 @@ function judgeResult(correct) {
   }
 
   closeModal('question-modal');
+  GameState.pendingAnswerTile = null;
   renderBoard();
   endTurn();
 }
@@ -278,10 +308,17 @@ function judgeResult(correct) {
 // Turn Management
 // ============================================================
 function endTurn() {
+  if (GameState.isRolling) return;
+  GameState.pendingAnswerTile = null;
   GameState.currentTeam = (GameState.currentTeam + 1) % 4;
   GameState.turnCount += 1;
   renderBoard();
   checkGameEnd();
+}
+
+function answerCurrentTile() {
+  if (GameState.pendingAnswerTile === null) return;
+  triggerQuestion(GameState.pendingAnswerTile);
 }
 
 function checkGameEnd() {
@@ -377,6 +414,27 @@ function updateManualScore(teamIdx, rawValue) {
   team.score += delta;
   pushHistory(teamIdx, `Manual score adjusted by ${delta >= 0 ? '+' : ''}${delta}.`, 'MANUAL');
   renderBoard();
+}
+
+function renderTileTokens(tileEl, tileIdx) {
+  let layer = tileEl.querySelector('.tile-token-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.className = 'tile-token-layer';
+    tileEl.appendChild(layer);
+  }
+
+  const teamsOnTile = GameState.teams
+    .map((team, idx) => ({ team, idx }))
+    .filter(({ team }) => team.position === tileIdx);
+
+  layer.innerHTML = teamsOnTile.map(({ team, idx }) =>
+    `<span class="team-token" title="${team.name}" style="background:${team.hex}; outline: 1px solid ${team.hex}90;" data-team="${idx}"></span>`
+  ).join('');
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // ============================================================

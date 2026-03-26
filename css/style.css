@@ -718,6 +718,27 @@ html, body {
   background: transparent; padding: 0.1rem 0.35rem;
   letter-spacing: 0.1em;
 }
+.tile-token-layer {
+  position: absolute;
+  left: 0.55rem;
+  top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  max-width: 3rem;
+  z-index: 2;
+}
+.team-token {
+  width: 0.92rem;
+  height: 0.92rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+.team-token::after {
+  content: '';
+  position: absolute;
+}
 /* Tile color variants */
 .tile-primary .tile-icon   { color: var(--c-primary); }
 .tile-primary .tile-label  { color: var(--c-primary); }
@@ -825,6 +846,26 @@ html, body {
   width: 100%;
   margin-top: -0.15rem;
   text-align: center;
+}
+.answer-tile-button {
+  min-width: 270px;
+  padding: 0.95rem 1.35rem;
+  border: 1px solid rgba(143,245,255,0.55);
+  background: linear-gradient(180deg, rgba(143,245,255,0.18), rgba(143,245,255,0.08));
+  color: var(--c-primary);
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 26px rgba(143,245,255,0.18);
+}
+.answer-tile-button:hover {
+  background: linear-gradient(180deg, rgba(143,245,255,0.25), rgba(143,245,255,0.12));
+}
+.answer-tile-button.hidden {
+  display: none !important;
 }
 .end-turn-button {
   background: rgba(255,255,255,0.05);
