@@ -320,7 +320,18 @@
         <span class="tile-owner" id="to-3"></span>
       </div>
 
-      <!-- Row 2: [Center 2x1] | Economics 1 | Accounting 2 -->
+      <!-- Row 2: Economics 1 | [Center 2x1] | Accounting 2 -->
+      <!-- Tile 4: Economics 1 -->
+      <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1">
+        <span class="material-symbols-outlined tile-icon">trending_up</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Economics 1
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">04</span>
+        </span>
+        <span class="tile-level" id="tl-4"></span>
+        <span class="tile-owner" id="to-4"></span>
+      </div>
+
       <!-- Center Cell (Dice + Controls) -->
       <div class="tile tile-center" id="tile-center-cell">
         <div id="current-team-display" class="current-team-display">TEAM ALPHA'S TURN</div>
@@ -349,17 +360,6 @@
         <button class="end-turn-button" onclick="endTurn()">
           END TURN
         </button>
-      </div>
-
-      <!-- Tile 4: Economics 1 -->
-      <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1">
-        <span class="material-symbols-outlined tile-icon">trending_up</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Economics 1
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">04</span>
-        </span>
-        <span class="tile-level" id="tl-4"></span>
-        <span class="tile-owner" id="to-4"></span>
       </div>
 
       <!-- Tile 5: Accounting 2 -->
