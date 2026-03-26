@@ -90,10 +90,40 @@ html, body {
 .topbar-logo {
   font-family: var(--font-head);
   font-weight: 800;
-  font-size: 1.25rem;
-  letter-spacing: -0.03em;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
   color: var(--c-primary);
   text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(143,245,255,0.22);
+}
+.celebration-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 160;
+}
+.confetti-piece {
+  position: absolute;
+  top: -12%;
+  width: 10px;
+  height: 18px;
+  opacity: 0;
+  transform: translateY(0) rotate(0deg);
+  animation: confettiFall 1800ms linear forwards;
+}
+@keyframes confettiFall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(120vh) rotate(540deg);
+  }
 }
 
 .topbar-nav {

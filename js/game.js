@@ -399,7 +399,7 @@ function checkGameEnd() {
     .filter(t => BOARD_TILES[GameState.tiles.indexOf(t)]?.type === 'subject')
     .every(t => t.level >= 3);
   if (allMaxed) {
-    setTimeout(() => showScreen('stats'), 500);
+    setTimeout(() => goToStats(true), 500);
   }
 }
 
@@ -487,6 +487,34 @@ function updateManualScore(teamIdx, rawValue) {
   team.score += delta;
   pushHistory(teamIdx, `Manual score adjusted by ${delta >= 0 ? '+' : ''}${delta}.`, 'MANUAL');
   renderBoard();
+}
+
+function getWinningTeam() {
+  return GameState.teams.reduce((best, team) => (team.score > best.score ? team : best), GameState.teams[0]);
+}
+
+function triggerStatsCelebration() {
+  const layer = document.getElementById('celebration-layer');
+  if (!layer) return;
+  layer.innerHTML = '';
+
+  const winner = getWinningTeam();
+  const palette = [winner.hex, '#ffffff', '#ffe066', '#8ff5ff'];
+
+  for (let i = 0; i < 48; i++) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = palette[i % palette.length];
+    piece.style.animationDelay = `${Math.random() * 220}ms`;
+    piece.style.animationDuration = `${1600 + Math.random() * 1200}ms`;
+    piece.style.transform = `translateY(0) rotate(${Math.random() * 180}deg)`;
+    layer.appendChild(piece);
+  }
+
+  setTimeout(() => {
+    layer.innerHTML = '';
+  }, 3200);
 }
 
 function renderTileTokens(tileEl, tileIdx) {
