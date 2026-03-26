@@ -329,7 +329,7 @@ function renderStatsPanel(containerId, teamIndexes) {
             <div class="team-stat-name" style="color:${team.hex};">${team.name}</div>
             <div class="side-panel-note">Tile ${team.position + 1} · ${team.properties.length} assets</div>
           </div>
-          <div>
+          <div class="team-stat-scorebox">
             <div class="team-stat-total-label">Total</div>
             <div class="team-stat-total" style="color:${team.hex};">${team.score}</div>
           </div>
@@ -342,7 +342,7 @@ function renderStatsPanel(containerId, teamIndexes) {
         </div>
         <div class="manual-score-wrap">
           <label class="manual-score-label" for="manual-score-${teamIdx}">Manual</label>
-          <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" value="${team.manualBonus}" onchange="updateManualScore(${teamIdx}, this.value)" />
+          <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" inputmode="numeric" placeholder="Type score" value="${team.manualBonus}" oninput="updateManualScore(${teamIdx}, this.value)" />
         </div>
       </div>
     `;
