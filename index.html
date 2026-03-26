@@ -51,10 +51,10 @@
 <header class="topbar">
   <span class="topbar-logo">ETP Game Show</span>
   <nav class="topbar-nav">
-    <a id="nav-home"       onclick="showScreen('home')"      class="active">Home</a>
-    <a id="nav-randomize"  onclick="showScreen('randomize')">Teams</a>
-    <a id="nav-board"      onclick="goToBoard()">Board</a>
-    <a id="nav-stats"      onclick="goToStats()">Stats</a>
+    <a id="nav-home" data-nav-target="home" onclick="requestNavigation('home')" class="active">Home</a>
+    <a id="nav-randomize" data-nav-target="randomize" onclick="requestNavigation('randomize')">Teams</a>
+    <a id="nav-board" data-nav-target="board" onclick="requestNavigation('board')">Board</a>
+    <a id="nav-stats" data-nav-target="stats" onclick="requestNavigation('stats')">Stats</a>
   </nav>
   <div class="topbar-actions">
     <span class="material-symbols-outlined" style="color:var(--c-text-muted);cursor:pointer;" title="Settings">settings</span>
@@ -215,8 +215,8 @@
   <!-- Side Rail -->
   <div class="side-rail">
     <div class="rail-icon active" title="Dashboard"><span class="material-symbols-outlined">dashboard</span></div>
-    <div class="rail-icon" title="Teams" onclick="showScreen('randomize')"><span class="material-symbols-outlined">groups</span></div>
-    <div class="rail-icon" title="Stats" onclick="goToStats()"><span class="material-symbols-outlined">analytics</span></div>
+    <div class="rail-icon" data-nav-target="randomize" title="Teams" onclick="requestNavigation('randomize')"><span class="material-symbols-outlined">groups</span></div>
+    <div class="rail-icon" data-nav-target="stats" title="Stats" onclick="requestNavigation('stats')"><span class="material-symbols-outlined">analytics</span></div>
     <div class="rail-icon" title="Logs"><span class="material-symbols-outlined">description</span></div>
     <div style="flex:1;"></div>
     <div class="rail-icon" title="Reset" onclick="resetGame()" style="color:var(--c-error);opacity:0.5;"><span class="material-symbols-outlined">restart_alt</span></div>
@@ -396,7 +396,7 @@
       <span class="material-symbols-outlined">casino</span>
       <span class="nav-label">Roll</span>
     </div>
-    <div class="nav-item" onclick="goToStats()">
+    <div class="nav-item" data-nav-target="stats" onclick="requestNavigation('stats')">
       <span class="material-symbols-outlined">leaderboard</span>
       <span class="nav-label">Score</span>
     </div>
@@ -600,9 +600,55 @@ function resetGame() {
   updateNav('home');
 }
 
+function isNavigationLocked(target) {
+  const lockedTargets = ['home', 'randomize', 'stats'];
+  return lockedTargets.includes(target) && ['board', 'question'].includes(GameState.phase);
+}
+
+function requestNavigation(target) {
+  if (isNavigationLocked(target)) {
+    showToast('Navigation is locked during an active game. Use Reset Game if you want to start over.');
+    return;
+  }
+
+  if (target === 'home') {
+    showScreen('home');
+    updateNav('home');
+    return;
+  }
+  if (target === 'randomize') {
+    showScreen('randomize');
+    updateNav('randomize');
+    return;
+  }
+  if (target === 'stats') {
+    goToStats();
+    return;
+  }
+  if (target === 'board') {
+    goToBoard();
+  }
+}
+
 function updateNav(active) {
   document.querySelectorAll('.topbar-nav a').forEach(a => a.classList.remove('active'));
   document.getElementById(`nav-${active}`)?.classList.add('active');
+}
+
+function refreshNavigationLockState() {
+  document.querySelectorAll('[data-nav-target]').forEach((el) => {
+    const target = el.getAttribute('data-nav-target');
+    const locked = isNavigationLocked(target);
+    el.classList.toggle('nav-locked', locked);
+    el.setAttribute('aria-disabled', locked ? 'true' : 'false');
+    if (locked) {
+      el.setAttribute('title', 'Locked during active gameplay');
+    } else if (target === 'randomize') {
+      el.setAttribute('title', 'Teams');
+    } else if (target === 'stats') {
+      el.setAttribute('title', 'Stats');
+    }
+  });
 }
 
 function closeModalOutside(e, id) {

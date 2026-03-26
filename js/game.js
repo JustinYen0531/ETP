@@ -49,6 +49,7 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
   document.getElementById(`screen-${id}`).classList.remove('hidden');
   GameState.phase = id;
+  if (typeof refreshNavigationLockState === 'function') refreshNavigationLockState();
 }
 
 // ============================================================
