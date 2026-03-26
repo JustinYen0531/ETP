@@ -669,6 +669,9 @@ html, body {
   padding: 1rem 0.9rem 1.1rem;
   overflow: hidden;
 }
+.tile.step-active {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 0 24px rgba(143,245,255,0.22);
+}
 .tile:hover { background: rgba(30,30,30,0.7); transform: translateY(-3px); } /* Added transform */
 .tile-icon {
   font-family: 'Material Symbols Outlined';
@@ -888,6 +891,19 @@ html, body {
 .answer-tile-button.hidden {
   display: none !important;
 }
+.answer-tile-level {
+  margin-top: 0.55rem;
+  color: var(--c-text-muted);
+  font-family: var(--font-head);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.answer-tile-level.hidden {
+  display: none !important;
+}
 .tile-center.answer-mode {
   justify-content: center;
 }
@@ -900,6 +916,9 @@ html, body {
 .tile-center.answer-mode .answer-tile-button {
   display: grid !important;
   place-items: center;
+}
+.tile-center.answer-mode .answer-tile-level {
+  display: block !important;
 }
 .end-turn-button {
   background: rgba(255,255,255,0.05);

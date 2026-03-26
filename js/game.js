@@ -13,6 +13,7 @@ const GameState = {
   turnCount: 1,
   isRolling: false,
   pendingAnswerTile: null,
+  activeStepTile: null,
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -32,6 +33,7 @@ const GameState = {
     this.turnCount = 1;
     this.isRolling = false;
     this.pendingAnswerTile = null;
+    this.activeStepTile = null;
   }
 };
 
@@ -133,6 +135,7 @@ function renderBoard() {
       if (ownerEl) ownerEl.textContent = '';
     }
 
+    el.classList.toggle('step-active', GameState.activeStepTile === idx);
     renderTileTokens(el, idx);
   });
 
@@ -154,10 +157,19 @@ function renderBoard() {
   }
 
   const answerButton = document.getElementById('btn-answer-tile');
+  const answerLevel = document.getElementById('answer-tile-level');
   if (answerButton) {
     answerButton.classList.toggle('hidden', !canAnswer);
     if (canAnswer) {
       answerButton.textContent = `ANSWER TILE ${tileIdx + 1}`;
+    }
+  }
+  if (answerLevel) {
+    answerLevel.classList.toggle('hidden', !canAnswer);
+    if (canAnswer) {
+      const tileState = GameState.tiles[tileIdx];
+      const nextLevel = tileState.owner === null ? 1 : Math.min(tileState.level + 1, 3);
+      answerLevel.textContent = `LEVEL ${nextLevel}`;
     }
   }
 
@@ -203,6 +215,7 @@ async function animateTeamMove(steps) {
   for (let i = 0; i < steps; i++) {
     team.position = (team.position + 1) % spaces;
     if (team.position === 0) laps += 1;
+    GameState.activeStepTile = team.position;
     if (resultEl) resultEl.textContent = `MOVING ${i + 1}/${steps}`;
     renderBoard();
     await wait(260);
@@ -213,6 +226,7 @@ async function animateTeamMove(steps) {
     team.score += laps * 50;
   }
 
+  GameState.activeStepTile = team.position;
   GameState.pendingAnswerTile = team.position;
   if (resultEl) resultEl.textContent = `LANDED ON ${team.position + 1}`;
   pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
@@ -318,6 +332,7 @@ function judgeResult(correct) {
 function endTurn() {
   if (GameState.isRolling) return;
   GameState.pendingAnswerTile = null;
+  GameState.activeStepTile = null;
   GameState.currentTeam = (GameState.currentTeam + 1) % 4;
   GameState.turnCount += 1;
   renderBoard();
