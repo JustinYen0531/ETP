@@ -431,11 +431,11 @@ html, body {
   align-items: center; justify-content: center;
   gap: 0.4rem;
   cursor: pointer;
-  transition: border-color 0.3s, box-shadow 0.3s, background 0.2s;
+  transition: all 0.3s ease; /* Changed from border-color, box-shadow, background */
   position: relative;
   aspect-ratio: 1;
 }
-.tile:hover { background: rgba(30,30,30,0.7); }
+.tile:hover { background: rgba(30,30,30,0.7); transform: translateY(-3px); } /* Added transform */
 .tile-icon {
   font-family: 'Material Symbols Outlined';
   font-size: 5rem; font-weight: 700;
