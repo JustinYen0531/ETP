@@ -5,6 +5,7 @@
 // Visual board route follows the clockwise numbering shown on screen:
 // 1,2,3,4,5,6,7,8,9,10 => tile ids [0,1,2,3,4,9,5,6,7,8]
 const BOARD_ROUTE = [0, 1, 2, 3, 4, 9, 5, 6, 7, 8];
+const DICE_FACES = ['filter_1', 'filter_2', 'filter_3', 'filter_4', 'filter_5', 'filter_6'];
 
 const GameState = {
   phase: 'home',         // 'home' | 'randomize' | 'board' | 'question' | 'stats'
@@ -186,35 +187,35 @@ function renderBoard() {
 function rollDice() {
   if (GameState.isRolling || GameState.pendingAnswerTile !== null) return;
   const diceEl = document.getElementById('dice-icon');
+  const resultEl = document.getElementById('dice-result');
   if (!diceEl) return;
   GameState.isRolling = true;
 
   // Dice animation
   let rolls = 0;
-  const faces = ['casino', 'filter_1', 'filter_2', 'filter_3', 'filter_4', 'filter_5', 'filter_6'];
   const interval = setInterval(() => {
-    diceEl.textContent = faces[Math.floor(Math.random() * faces.length)];
+    diceEl.textContent = DICE_FACES[Math.floor(Math.random() * DICE_FACES.length)];
     rolls++;
     if (rolls > 10) {
       clearInterval(interval);
       const result = Math.floor(Math.random() * 6) + 1;
-      diceEl.textContent = 'casino';
-      animateTeamMove(result);
+      diceEl.textContent = DICE_FACES[result - 1];
+      if (resultEl) {
+        resultEl.textContent = `ROLLED ${result}`;
+        resultEl.style.opacity = 1;
+      }
+      setTimeout(() => animateTeamMove(result), 260);
     }
   }, 80);
 }
 
 async function animateTeamMove(steps) {
   const resultEl = document.getElementById('dice-result');
+  const diceEl = document.getElementById('dice-icon');
   const team = GameState.teams[GameState.currentTeam];
   const from = team.position;
   const spaces = BOARD_ROUTE.length;
   let laps = 0;
-
-  if (resultEl) {
-    resultEl.textContent = `ROLLED ${steps}`;
-    resultEl.style.opacity = 1;
-  }
 
   for (let i = 0; i < steps; i++) {
     team.position = (team.position + 1) % spaces;
@@ -239,6 +240,7 @@ async function animateTeamMove(steps) {
   GameState.isRolling = false;
   setTimeout(() => {
     if (resultEl) resultEl.style.opacity = 0;
+    if (diceEl) diceEl.textContent = 'casino';
   }, 2500);
 }
 
