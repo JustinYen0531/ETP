@@ -437,7 +437,7 @@ function renderTileTokens(tileEl, tileIdx) {
     .filter(({ team }) => team.position === tileIdx);
 
   layer.innerHTML = teamsOnTile.map(({ team, idx }) =>
-    `<span class="team-token" title="${team.name}" style="background:${team.hex}; outline: 1px solid ${team.hex}90;" data-team="${idx}"></span>`
+    `<span class="team-token ${GameState.isRolling && idx === GameState.currentTeam ? 'moving' : ''}" title="${team.name}" style="background:${team.hex}; color:${team.hex}; outline: 1px solid ${team.hex}90;" data-team="${idx}"></span>`
   ).join('');
 }
 
