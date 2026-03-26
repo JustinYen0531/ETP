@@ -255,6 +255,17 @@ async function animateTeamMove(steps) {
     await wait(260);
   }
 
+  let skippedMaxTiles = 0;
+  while (isMaxLevelTile(BOARD_ROUTE[team.position])) {
+    skippedMaxTiles += 1;
+    team.position = (team.position + 1) % spaces;
+    if (team.position === 0) laps += 1;
+    GameState.activeStepTile = BOARD_ROUTE[team.position];
+    if (resultEl) resultEl.textContent = `SKIP MAX TILE -> ${team.position + 1}`;
+    renderBoard();
+    await wait(220);
+  }
+
   if (laps > 0) {
     team.lapBonusCount += laps;
     team.score += laps * 50;
@@ -263,7 +274,11 @@ async function animateTeamMove(steps) {
   GameState.activeStepTile = BOARD_ROUTE[team.position];
   GameState.pendingAnswerTile = BOARD_ROUTE[team.position];
   if (resultEl) resultEl.textContent = `LANDED ON ${team.position + 1}`;
-  pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
+  pushHistory(
+    GameState.currentTeam,
+    `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${skippedMaxTiles > 0 ? ` · Skipped ${skippedMaxTiles} max tile${skippedMaxTiles > 1 ? 's' : ''}` : ''}${laps > 0 ? ' · Lap bonus +50' : ''}.`,
+    `MOVE ${steps}`
+  );
   renderBoard();
   showToast(`Team ${team.name} rolled ${steps} and moved to tile ${team.position + 1}.`);
   GameState.isRolling = false;
@@ -493,6 +508,12 @@ function renderTileTokens(tileEl, tileIdx) {
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isMaxLevelTile(tileIdx) {
+  const tile = BOARD_TILES[tileIdx];
+  const state = GameState.tiles[tileIdx];
+  return Boolean(tile?.bankKey) && (state?.level ?? 0) >= 3;
 }
 
 // ============================================================
