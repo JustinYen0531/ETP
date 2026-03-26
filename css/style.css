@@ -423,12 +423,11 @@ html, body {
 .hud-tr {
   top: 50%;
   right: 1rem;
-  width: 430px;
+  width: 320px;
   transform: translateY(-50%);
   border-right: 2px solid var(--c-secondary);
   box-shadow: 0 0 20px rgba(196,127,255,0.12);
-  max-height: 76vh;
-  padding: 1rem 1rem 0.9rem;
+  max-height: 72vh;
 }
 .hud-bl {
   display: none;
@@ -485,12 +484,12 @@ html, body {
   display: grid;
   grid-template-columns: minmax(0, 1.02fr) minmax(180px, 1.1fr);
   gap: 0.38rem 0.7rem;
-  align-items: start;
+  align-items: stretch;
 }
 .team-stat-top {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 0.3rem;
   margin-bottom: 0;
@@ -519,24 +518,27 @@ html, body {
   font-size: 1.35rem;
   font-weight: 800;
   text-align: right;
-  margin-top: 0.9rem;
+  margin-top: auto;
+  line-height: 1;
 }
 .team-breakdown {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.12rem 0.62rem;
+  gap: 0.2rem 0.72rem;
   align-items: center;
   grid-column: 2;
   width: 92%;
   justify-self: center;
+  align-self: center;
 }
 .team-breakdown-row {
   display: flex;
   justify-content: space-between;
   gap: 0.35rem;
-  font-size: 0.54rem;
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  align-items: center;
 }
 .team-breakdown-row:nth-child(3),
 .team-breakdown-row:nth-child(4) {
@@ -546,10 +548,10 @@ html, body {
 .team-breakdown-key {
   display: inline-flex;
   align-items: center;
-  gap: 0.28rem;
+  gap: 0.34rem;
 }
 .team-breakdown-icon {
-  font-size: 0.82rem;
+  font-size: 0.96rem;
   opacity: 0.9;
 }
 .manual-score-wrap {
@@ -586,17 +588,16 @@ html, body {
 .log-panel {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.7rem;
   overflow: auto;
-  max-height: calc(76vh - 58px);
-  padding-right: 0.15rem;
+  max-height: calc(72vh - 70px);
+  padding-right: 0.2rem;
 }
 .log-entry {
-  width: 100%;
-  background: rgba(255,255,255,0.035);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
   border-left-width: 3px;
-  padding: 0.62rem 0.78rem;
+  padding: 0.85rem 0.9rem;
 }
 .log-meta {
   display: flex;
@@ -606,14 +607,14 @@ html, body {
   font-size: 0.55rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.22rem;
+  margin-bottom: 0.35rem;
 }
 .log-team {
   font-weight: 800;
 }
 .log-text {
-  font-size: 0.72rem;
-  line-height: 1.45;
+  font-size: 0.74rem;
+  line-height: 1.55;
   color: var(--c-text);
 }
 .log-empty {
