@@ -126,48 +126,56 @@
         <span class="material-symbols-outlined" style="vertical-align:middle;margin-right:6px;">shuffle</span>
         RANDOMIZE TEAMS · INITIATE PROTOCOL
       </button>
-      <button class="btn-proceed" onclick="goToBoard()">
-        PROCEED TO BOARD
-        <span class="material-symbols-outlined" style="vertical-align:middle;margin-left:6px;font-size:0.9rem;">arrow_forward</span>
-      </button>
     </div>
 
     <!-- Right Panel: Team Slots -->
-    <div style="display:flex;flex-direction:column;gap:1rem;">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span class="section-label">Team Assignment Slots</span>
-        <span style="font-size:0.6rem;font-family:var(--font-head);color:var(--c-tertiary);letter-spacing:0.2em;">● SYSTEM READY</span>
+    <div style="display:flex;flex-direction:column;gap:1rem; height: 100%; justify-content: space-between;">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span class="section-label">Team Assignment Slots</span>
+          <span style="font-size:0.6rem;font-family:var(--font-head);color:var(--c-tertiary);letter-spacing:0.2em;">● SYSTEM READY</span>
+        </div>
+        <div class="team-slots-grid" style="margin-top: 1rem;">
+          <div class="team-slot" id="team-slot-0" style="border-color:rgba(143,245,255,0.2);">
+            <div class="slot-label" style="font-weight:900;">SLOT 01</div>
+            <div class="slot-team-name" style="color:var(--c-primary);">ALPHA</div>
+            <div class="slot-status">READY</div>
+            <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
+          </div>
+          <div class="team-slot" id="team-slot-1" style="border-color:rgba(196,127,255,0.2);">
+            <div class="slot-label" style="font-weight:900;">SLOT 02</div>
+            <div class="slot-team-name" style="color:var(--c-secondary);">BETA</div>
+            <div class="slot-status">READY</div>
+            <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
+          </div>
+          <div class="team-slot" id="team-slot-2" style="border-color:rgba(160,237,0,0.2);">
+            <div class="slot-label" style="font-weight:900;">SLOT 03</div>
+            <div class="slot-team-name" style="color:var(--c-tertiary);">GAMMA</div>
+            <div class="slot-status">READY</div>
+            <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
+          </div>
+          <div class="team-slot" id="team-slot-3" style="border-color:rgba(255,113,108,0.2);">
+            <div class="slot-label" style="font-weight:900;">SLOT 04</div>
+            <div class="slot-team-name" style="color:var(--c-error);">DELTA</div>
+            <div class="slot-status">READY</div>
+            <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
+          </div>
+        </div>
       </div>
-      <div class="team-slots-grid">
-        <div class="team-slot" id="team-slot-0" style="border-color:rgba(143,245,255,0.2);">
-          <div class="slot-label" style="font-weight:900;">SLOT 01</div>
-          <div class="slot-team-name" style="color:var(--c-primary);">ALPHA</div>
-          <div class="slot-status">READY</div>
-          <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
+
+      <div style="display:flex; flex-direction:column; gap:1.5rem;">
+        <!-- System log -->
+        <div style="background:var(--c-surface-lo);padding:0.75rem;font-family:monospace;font-size:0.65rem;color:var(--c-text-muted);border-left:1px solid var(--c-outline);" id="system-log">
+          [SYSTEM] Waiting for shuffle protocol...<br>
+          [SYSTEM] 15 entrants in pool.
         </div>
-        <div class="team-slot" id="team-slot-1" style="border-color:rgba(196,127,255,0.2);">
-          <div class="slot-label" style="font-weight:900;">SLOT 02</div>
-          <div class="slot-team-name" style="color:var(--c-secondary);">BETA</div>
-          <div class="slot-status">READY</div>
-          <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
-        </div>
-        <div class="team-slot" id="team-slot-2" style="border-color:rgba(160,237,0,0.2);">
-          <div class="slot-label" style="font-weight:900;">SLOT 03</div>
-          <div class="slot-team-name" style="color:var(--c-tertiary);">GAMMA</div>
-          <div class="slot-status">READY</div>
-          <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
-        </div>
-        <div class="team-slot" id="team-slot-3" style="border-color:rgba(255,113,108,0.2);">
-          <div class="slot-label" style="font-weight:900;">SLOT 04</div>
-          <div class="slot-team-name" style="color:var(--c-error);">DELTA</div>
-          <div class="slot-status">READY</div>
-          <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;"></div>
-        </div>
-      </div>
-      <!-- System log -->
-      <div style="background:var(--c-surface-lo);padding:0.75rem;font-family:monospace;font-size:0.65rem;color:var(--c-text-muted);border-left:1px solid var(--c-outline);" id="system-log">
-        [SYSTEM] Waiting for shuffle protocol...<br>
-        [SYSTEM] 15 entrants in pool.
+
+        <button class="btn-proceed-v2" onclick="goToBoard()">
+          <span style="display:flex; align-items:center; justify-content:center; gap:1rem;">
+            PROCEED TO BOARD
+            <span class="material-symbols-outlined" style="font-size:1.5rem;">keyboard_double_arrow_right</span>
+          </span>
+        </button>
       </div>
     </div>
   </div>

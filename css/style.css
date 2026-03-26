@@ -331,21 +331,38 @@ html, body {
   padding: 0.2rem 0.5rem;
   color: var(--c-text-muted);
 }
-.btn-proceed {
+.btn-proceed-v2 {
   background: transparent;
   border: 1px solid var(--c-primary);
   color: var(--c-primary);
   font-family: var(--font-head);
-  font-size: 0.75rem; font-weight: 700;
+  font-size: 1.25rem; font-weight: 900;
   letter-spacing: 0.2em; text-transform: uppercase;
-  padding: 0.9rem 2rem;
+  padding: 1.25rem 2rem;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-  margin-top: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 20px rgba(143,245,255,0.15);
+  position: relative;
+  overflow: hidden;
 }
-.btn-proceed:hover {
-  background: rgba(143,245,255,0.08);
-  box-shadow: 0 0 20px rgba(143,245,255,0.2);
+.btn-proceed-v2:hover {
+  background: rgba(143,245,255,0.1);
+  box-shadow: 0 0 40px rgba(143,245,255,0.4);
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--c-cyan);
+  color: var(--c-cyan);
+}
+.btn-proceed-v2:active {
+  transform: scale(0.98);
+}
+.btn-proceed-v2::before {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(143,245,255,0.2), transparent);
+  transition: 0.5s;
+}
+.btn-proceed-v2:hover::before {
+  left: 100%;
 }
 
 /* ==============================================================
