@@ -32,7 +32,10 @@
 
 ## 4. 題目機制 (Question Banks)
 - **等級劃分**：三個等級（L100, L200, L300）。
-- **總題數**: 8 格學科格 * 3 等級 = **24 題專業學科題**。
+- **題目類型**:
+  - `Level 1: 填充題` (核心名詞填充)
+  - `Level 2: 計算題` (簡易邏輯運算)
+  - `Level 3: 開放性問題` (邏輯答對即給分，無絕對標準答案)
 
 ## 5. 數據範例 - 題庫 1 & 2 (Question Samples)
 
@@ -75,7 +78,35 @@
 - **Lv2**: "Data: {1, 1, 2, 3, 8}. What is the Median?" (Ans: 2)
 - **Lv3**: "Why is 'Correlation does not imply Causation' an important rule?" (Ans: Ice cream sales don't cause shark attacks)
 
-#### STQ-2 (用於格子 6)
-- **Lv1**: "If two variables move in opposite directions, they have a ______ correlation." (Ans: Negative)
-- **Lv2**: "If you flip a coin 3 times, what is the probability of getting 3 Heads?" (Ans: 1/8 or 12.5%)
-- **Lv3**: "What does a 'P-value < 0.05' typically represent in a hypothesis test?" (Ans: Statistically significant results / Reject H0)
+## 6. 核心遊戲流程 (Core Gameplay Loop)
+### A. 移動 (Movement)
+- 玩家擲骰子並根據步數移動。
+- 如果落點格子已達到「滿級 (Level 3)」，該格子將被直接略過。
+
+### B. 挑戰與房產 (Property Mechanics)
+1. **無人佔領時**:
+   - 玩家必須回答 **Level 1** 問題。
+   - **答對**: 獲得該格房產（Level 1）。
+   - **答錯**: 所有權維持無主。
+2. **他人佔領時**:
+   - 玩家必須回答該格的 **當前等級 + 1** 的問題。
+   - **答對 (奪取成功)**: 該格所有權轉移給當前玩家，且等級增加。
+   - **答錯 (防禦成功)**: 所有權維持原狀，且該房產「自動升一級」。
+
+## 7. 遊戲結束條件 (End Conditions)
+- 統計所有格子（0-9）的房產等級與路過獎勵總分。
+- 分數最高者獲勝。
+
+## 8. 學生名單與隨機分組 (Student Management)
+### 挑戰者池 (15 人):
+- **Week 5**: Anthony, Jimena, Peggie
+- **Week 7**: Annie, Dylan, Wendy
+- **Week 8**: Jason, Kevin, Maggie
+- **Week 12**: Ryan, Ruby
+- **Week 13**: Dino, Vincent
+- **Week 15**: Regina, Tony
+
+### 隨機分組規則:
+- 介面提供 "Randomize Teams" 按鈕。
+- 系統將 15 位同學隨機分配至 4 個組別。
+- 預計分佈為: 4, 4, 4, 3 人。

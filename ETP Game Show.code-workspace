@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "ETP Game Show",
+			"path": "."
+		},
+		{
+			"name": "stitch",
+			"path": "../stitch/stitch"
+		}
+	],
+	"settings": {}
+}
