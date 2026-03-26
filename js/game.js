@@ -10,6 +10,7 @@ const GameState = {
   currentQuestion: null, // { tile, question, challenger, defender }
   roundPassCount: 0,
   history: [],
+  turnCount: 1,
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -26,6 +27,7 @@ const GameState = {
       scoreBreakdown: { lvl1: 0, lvl2: 0, lvl3: 0 }
     }));
     this.history = [];
+    this.turnCount = 1;
   }
 };
 
@@ -277,6 +279,7 @@ function judgeResult(correct) {
 // ============================================================
 function endTurn() {
   GameState.currentTeam = (GameState.currentTeam + 1) % 4;
+  GameState.turnCount += 1;
   renderBoard();
   checkGameEnd();
 }
@@ -312,7 +315,7 @@ function pushHistory(teamIdx, text, tag = 'LOG') {
 
 function renderSidePanels() {
   renderStatsPanel('stats-panel-top', [0, 1, 2, 3]);
-  renderLogPanel('log-panel-top', GameState.history.slice(0, 8));
+  renderRoundPanel();
 }
 
 function renderStatsPanel(containerId, teamIndexes) {
@@ -349,22 +352,21 @@ function renderStatsPanel(containerId, teamIndexes) {
   }).join('');
 }
 
-function renderLogPanel(containerId, entries) {
-  const el = document.getElementById(containerId);
+function renderRoundPanel() {
+  const el = document.getElementById('round-panel');
   if (!el) return;
-  if (!entries.length) {
-    el.innerHTML = '<div class="log-empty">Waiting for first action...</div>';
-    return;
-  }
-  el.innerHTML = entries.map((entry) => `
-    <div class="log-entry" style="border-left-color:${entry.color};">
-      <div class="log-meta">
-        <span class="log-team" style="color:${entry.color};">${entry.teamName}</span>
-        <span>${entry.tag}</span>
-      </div>
-      <div class="log-text">${entry.text}</div>
+  const round = Math.floor((GameState.turnCount - 1) / 4) + 1;
+  const turnInRound = ((GameState.turnCount - 1) % 4) + 1;
+  const nextTeam = GameState.teams[GameState.currentTeam];
+
+  el.innerHTML = `
+    <div class="round-card" style="border-color:${nextTeam.hex}; box-shadow: 0 0 24px ${nextTeam.hex}20;">
+      <div class="round-chip">Round ${round}</div>
+      <div class="round-turn-label">Turn ${turnInRound}</div>
+      <div class="round-turn-copy">下一個輪到</div>
+      <div class="round-team-name" style="color:${nextTeam.hex}; border-color:${nextTeam.hex}55;">TEAM ${nextTeam.name}</div>
     </div>
-  `).join('');
+  `;
 }
 
 function updateManualScore(teamIdx, rawValue) {
