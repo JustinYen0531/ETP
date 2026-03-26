@@ -1275,7 +1275,7 @@ html, body {
   color: var(--c-primary);
   background: rgba(143,245,255,0.08);
 }
-.dice-frame-菱形 {
+.dice-frame-diamond {
   width: 5.6rem;
   height: 5.6rem;
   display: grid;

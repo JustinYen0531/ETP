@@ -473,8 +473,8 @@ function renderRoundPanel() {
     <div class="round-card" style="border-color:${nextTeam.hex}; box-shadow: 0 0 24px ${nextTeam.hex}20;">
       <div class="round-chip">Round ${round}</div>
       <div class="round-turn-label">Turn ${turnInRound}</div>
-      <div class="round-turn-copy">下一個輪到</div>
-      <div class="round-team-name" style="color:${nextTeam.hex}; border-color:${nextTeam.hex}55;">TEAM ${nextTeam.name}</div>
+      <div class="round-turn-copy">Up Next</div>
+      <div class="round-team-name" style="color:${nextTeam.hex}; border-color:${nextTeam.hex}55;">${nextTeam.name}</div>
     </div>
   `;
 }
@@ -564,7 +564,7 @@ function renderStats() {
   const winner = GameState.teams.reduce((a, b) => a.score > b.score ? a : b);
   const winEl = document.getElementById('stats-winner');
   if (winEl) {
-    winEl.textContent = `TEAM ${winner.name}`;
+    winEl.textContent = winner.name;
     winEl.style.color = winner.hex;
   }
 }
