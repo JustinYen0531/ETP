@@ -428,13 +428,13 @@ html, body {
   background: var(--c-glass);
   backdrop-filter: blur(20px);
   border: 1px solid var(--c-outline);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 0.4rem;
+  display: block;
   cursor: pointer;
   transition: all 0.3s ease; /* Changed from border-color, box-shadow, background */
   position: relative;
   aspect-ratio: 1;
+  padding: 1rem 0.9rem 1.1rem;
+  overflow: hidden;
 }
 .tile:hover { background: rgba(30,30,30,0.7); transform: translateY(-3px); } /* Added transform */
 .tile-icon {
@@ -442,12 +442,34 @@ html, body {
   font-size: 5rem; font-weight: 700;
   font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 48;
   transition: transform 0.2s;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+  display: grid;
+  place-items: center;
 }
-.tile:hover .tile-icon { transform: scale(1.1); }
+.tile:hover .tile-icon { transform: translate(-50%, -50%) scale(1.08); }
 .tile-label {
   font-family: var(--font-head);
   font-size: 0.65rem; font-weight: 800; letter-spacing: 0.25em;
   text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  bottom: 0.95rem;
+  transform: translateX(-50%);
+  width: calc(100% - 1.4rem);
+  text-align: center;
+  line-height: 1.2;
+}
+.tile-label > span {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 1.05rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.06em;
+  opacity: 1 !important;
 }
 .tile-level {
   font-family: var(--font-head);
@@ -497,28 +519,30 @@ html, body {
 .current-team-display {
   color: var(--c-primary);
   font-family: var(--font-head);
-  font-size: 0.85rem;
+  font-size: 1.08rem;
   font-weight: 900;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-align: center;
+  margin-bottom: 0.15rem;
 }
 .center-controls-row {
   display: grid;
-  grid-template-columns: minmax(110px, 1fr) auto minmax(110px, 1fr);
+  grid-template-columns: minmax(88px, 126px) auto minmax(88px, 126px);
   align-items: center;
   justify-content: center;
-  gap: clamp(1rem, 2.5vw, 2.5rem);
+  gap: clamp(0.5rem, 1.6vw, 1.4rem);
   width: 100%;
-  max-width: 560px;
+  max-width: 500px;
 }
 .side-card {
   min-height: 110px;
   height: 72%;
   width: 100%;
-  max-width: 148px;
+  max-width: 126px;
   justify-self: center;
   justify-content: center;
   padding: 1rem 0.75rem;
+  text-align: center;
 }
 .side-card-icon { font-size: 2.5rem; }
 .side-card-label {
@@ -544,6 +568,7 @@ html, body {
   width: 7rem; height: 7rem;
   cursor: pointer;
   transform-style: preserve-3d;
+  margin-top: 0.25rem;
 }
 .dice-glow {
   position: absolute; inset: -8px;
@@ -556,6 +581,8 @@ html, body {
   font-family: var(--font-head);
   font-size: 1.1rem;
   font-weight: 900;
+  margin-top: 0.35rem;
+  text-align: center;
 }
 .end-turn-button {
   background: rgba(255,255,255,0.05);
@@ -570,6 +597,7 @@ html, body {
   padding: 0.6rem 1.75rem;
   text-transform: uppercase;
   transition: all 0.2s ease;
+  margin-top: -0.15rem;
 }
 .end-turn-button:hover {
   color: var(--c-primary);
