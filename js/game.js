@@ -2,6 +2,10 @@
 // ETP GAME SHOW - Game State & Logic
 // ============================================================
 
+// Visual board route follows the clockwise numbering shown on screen:
+// 1,2,3,4,5,6,7,8,9,10 => tile ids [0,1,2,3,4,9,5,6,7,8]
+const BOARD_ROUTE = [0, 1, 2, 3, 4, 9, 5, 6, 7, 8];
+
 const GameState = {
   phase: 'home',         // 'home' | 'randomize' | 'board' | 'question' | 'stats'
   currentTeam: 0,        // 0-3 index
@@ -204,7 +208,7 @@ async function animateTeamMove(steps) {
   const resultEl = document.getElementById('dice-result');
   const team = GameState.teams[GameState.currentTeam];
   const from = team.position;
-  const spaces = BOARD_TILES.length;
+  const spaces = BOARD_ROUTE.length;
   let laps = 0;
 
   if (resultEl) {
@@ -215,7 +219,7 @@ async function animateTeamMove(steps) {
   for (let i = 0; i < steps; i++) {
     team.position = (team.position + 1) % spaces;
     if (team.position === 0) laps += 1;
-    GameState.activeStepTile = team.position;
+    GameState.activeStepTile = BOARD_ROUTE[team.position];
     if (resultEl) resultEl.textContent = `MOVING ${i + 1}/${steps}`;
     renderBoard();
     await wait(260);
@@ -226,8 +230,8 @@ async function animateTeamMove(steps) {
     team.score += laps * 50;
   }
 
-  GameState.activeStepTile = team.position;
-  GameState.pendingAnswerTile = team.position;
+  GameState.activeStepTile = BOARD_ROUTE[team.position];
+  GameState.pendingAnswerTile = BOARD_ROUTE[team.position];
   if (resultEl) resultEl.textContent = `LANDED ON ${team.position + 1}`;
   pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
   renderBoard();
@@ -449,7 +453,7 @@ function renderTileTokens(tileEl, tileIdx) {
 
   const teamsOnTile = GameState.teams
     .map((team, idx) => ({ team, idx }))
-    .filter(({ team }) => team.position === tileIdx);
+    .filter(({ team }) => BOARD_ROUTE[team.position] === tileIdx);
 
   layer.innerHTML = teamsOnTile.map(({ team, idx }) =>
     `<span class="team-token ${GameState.isRolling && idx === GameState.currentTeam ? 'moving' : ''}" title="${team.name}" style="background:${team.hex}; color:${team.hex}; outline: 1px solid ${team.hex}90;" data-team="${idx}"></span>`
