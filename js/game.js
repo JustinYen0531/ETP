@@ -311,10 +311,8 @@ function pushHistory(teamIdx, text, tag = 'LOG') {
 }
 
 function renderSidePanels() {
-  renderStatsPanel('stats-panel-top', [0, 1]);
-  renderStatsPanel('stats-panel-bottom', [2, 3]);
-  renderLogPanel('log-panel-top', GameState.history.slice(0, 4));
-  renderLogPanel('log-panel-bottom', GameState.history.slice(4, 8));
+  renderStatsPanel('stats-panel-top', [0, 1, 2, 3]);
+  renderLogPanel('log-panel-top', GameState.history.slice(0, 8));
 }
 
 function renderStatsPanel(containerId, teamIndexes) {
