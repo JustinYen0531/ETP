@@ -144,11 +144,17 @@ function renderBoard() {
     curTeamEl.style.color = team.hex;
   }
 
+  const centerTile = document.getElementById('tile-center-cell');
+  const tileIdx = GameState.pendingAnswerTile;
+  const pendingTile = tileIdx === null ? null : BOARD_TILES[tileIdx];
+  const canAnswer = pendingTile && pendingTile.bankKey;
+
+  if (centerTile) {
+    centerTile.classList.toggle('answer-mode', Boolean(canAnswer));
+  }
+
   const answerButton = document.getElementById('btn-answer-tile');
   if (answerButton) {
-    const tileIdx = GameState.pendingAnswerTile;
-    const tile = tileIdx === null ? null : BOARD_TILES[tileIdx];
-    const canAnswer = tile && tile.bankKey;
     answerButton.classList.toggle('hidden', !canAnswer);
     if (canAnswer) {
       answerButton.textContent = `ANSWER TILE ${tileIdx + 1}`;
@@ -197,8 +203,9 @@ async function animateTeamMove(steps) {
   for (let i = 0; i < steps; i++) {
     team.position = (team.position + 1) % spaces;
     if (team.position === 0) laps += 1;
+    if (resultEl) resultEl.textContent = `MOVING ${i + 1}/${steps}`;
     renderBoard();
-    await wait(220);
+    await wait(260);
   }
 
   if (laps > 0) {
@@ -207,6 +214,7 @@ async function animateTeamMove(steps) {
   }
 
   GameState.pendingAnswerTile = team.position;
+  if (resultEl) resultEl.textContent = `LANDED ON ${team.position + 1}`;
   pushHistory(GameState.currentTeam, `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`, `MOVE ${steps}`);
   renderBoard();
   showToast(`Team ${team.name} rolled ${steps} and moved to tile ${team.position + 1}.`);
