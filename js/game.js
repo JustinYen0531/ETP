@@ -114,8 +114,23 @@ function renderBoard() {
 
     if (state.owner !== null) {
       const team = GameState.teams[state.owner];
-      el.style.borderColor = team.hex + '80';
-      el.style.boxShadow = `0 0 20px ${team.hex}33`;
+      const glowByLevel = {
+        1: {
+          border: `${team.hex}80`,
+          shadow: `0 0 20px ${team.hex}33`
+        },
+        2: {
+          border: `${team.hex}b3`,
+          shadow: `0 0 0 1px ${team.hex}55, 0 0 26px ${team.hex}66, inset 0 0 18px ${team.hex}18`
+        },
+        3: {
+          border: `${team.hex}ff`,
+          shadow: `0 0 0 1px ${team.hex}88, 0 0 18px ${team.hex}88, 0 0 36px ${team.hex}99, inset 0 0 24px ${team.hex}22`
+        }
+      };
+      const glow = glowByLevel[state.level] || glowByLevel[1];
+      el.style.borderColor = glow.border;
+      el.style.boxShadow = glow.shadow;
 
       // Level indicator
       const levelEl = el.querySelector('.tile-level');
@@ -123,6 +138,12 @@ function renderBoard() {
         levelEl.textContent = `LV ${state.level}`;
         levelEl.style.color = team.hex;
         levelEl.style.borderColor = team.hex + '40';
+        levelEl.style.backgroundColor = state.level >= 2 ? `${team.hex}18` : 'transparent';
+        levelEl.style.boxShadow = state.level === 3
+          ? `0 0 18px ${team.hex}66`
+          : state.level === 2
+            ? `0 0 10px ${team.hex}40`
+            : '';
       }
       // Owner badge
       const ownerEl = el.querySelector('.tile-owner');
@@ -135,7 +156,11 @@ function renderBoard() {
       el.style.borderColor = '';
       el.style.boxShadow = '';
       const levelEl = el.querySelector('.tile-level');
-      if (levelEl) levelEl.textContent = '';
+      if (levelEl) {
+        levelEl.textContent = '';
+        levelEl.style.backgroundColor = '';
+        levelEl.style.boxShadow = '';
+      }
       const ownerEl = el.querySelector('.tile-owner');
       if (ownerEl) ownerEl.textContent = '';
     }
