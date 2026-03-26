@@ -320,7 +320,7 @@
         <span class="tile-owner" id="to-3"></span>
       </div>
 
-      <!-- Row 2: Economics 1 | [Center 2x1] | Statistics 2 -->
+      <!-- Row 2: Economics 1 | [Center 2x1] | Accounting 2 -->
       <!-- Tile 4: Economics 1 -->
       <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1">
         <span class="material-symbols-outlined tile-icon">trending_up</span>
@@ -330,44 +330,37 @@
         </span>
         <span class="tile-level" id="tl-4"></span>
         <span class="tile-owner" id="to-4"></span>
-              <!-- Center Cell (Dice + Controls) — spans 2 columns -->
-        <div class="tile tile-center" id="tile-center-cell" style="grid-column:span 2; aspect-ratio: unset; flex-direction:column; position:relative; background:transparent; border:none;">
-          <div id="current-team-display" style="color:var(--c-primary);font-weight:900; letter-spacing:0.1em; margin-bottom:1.5rem;">TEAM ALPHA'S TURN</div>
-          
-          <div style="display:flex; align-items:center; gap:2.5rem; justify-content: center;">
-            <!-- Left: Life Card -->
-            <div id="btn-life" class="side-card" onclick="triggerQuestion(0)" style="opacity:0.6; border-color:rgba(143,245,255,0.3);">
-              <span class="material-symbols-outlined glow-primary" style="font-size:1.75rem; color:var(--c-primary);">ecg_heart</span>
-              <span style="font-family:var(--font-head); font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:var(--c-primary);">LIFE</span>
-            </div>
+      </div>
 
-            <!-- Central Dice (Restore diamond shape) -->
-            <div class="dice-container" onclick="rollDice()" style="cursor:pointer; transform-style: preserve-3d; position:relative;" title="Roll Dice">
-              <div class="dice-glow" style="inset:-8px;"></div>
-              <div class="dice-frame-菱形">
-                <span class="material-symbols-outlined" id="dice-icon" style="font-variation-settings:'FILL' 1,'wght' 700,'GRAD' 0,'opsz' 48; font-size:3rem; transform: rotate(-45deg); color:var(--c-primary);">casino</span>
-              </div>
-            </div>
+      <!-- Center Cell (Dice + Controls) -->
+      <div class="tile tile-center" id="tile-center-cell">
+        <div id="current-team-display" class="current-team-display">TEAM ALPHA'S TURN</div>
 
-            <!-- Right: Challenge Card -->
-            <div id="btn-challenge" class="side-card" onclick="triggerQuestion(9)" style="opacity:0.6; border-color:rgba(255,113,108,0.3);">
-              <span class="material-symbols-outlined glow-error" style="font-size:1.75rem; color:var(--c-error);">bolt</span>
-              <span style="font-family:var(--font-head); font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:var(--c-error);">CHANCE</span>
+        <div class="center-controls-row">
+          <div id="btn-life" class="side-card side-card-life" onclick="triggerQuestion(0)">
+            <span class="material-symbols-outlined glow-primary side-card-icon">ecg_heart</span>
+            <span class="side-card-label side-card-label-life">LIFE</span>
+          </div>
+
+          <div class="dice-container" onclick="rollDice()" title="Roll Dice">
+            <div class="dice-glow"></div>
+            <div class="dice-frame-菱形">
+              <span class="material-symbols-outlined" id="dice-icon" style="font-variation-settings:'FILL' 1,'wght' 700,'GRAD' 0,'opsz' 48; font-size:3rem; transform: rotate(-45deg); color:var(--c-primary);">casino</span>
             </div>
           </div>
 
-          <div id="dice-result" style="font-weight:900; font-size:1.2rem; color:var(--c-primary); margin-top:1.5rem; min-height:1.5rem;"></div>
-          
-          <button onclick="endTurn()" style="
-            background:rgba(255,255,255,0.05); border: 1px solid var(--c-outline); color:var(--c-text-muted);
-            font-family:var(--font-head); font-size:0.65rem; font-weight:900;
-            letter-spacing:0.2em; text-transform:uppercase; padding:0.6rem 1.75rem; cursor:pointer;
-            transition:all 0.2s; margin-top:10px; border-radius: 2px;
-          " onmouseover="this.style.color='var(--c-primary)'; this.style.borderColor='var(--c-primary)'; this.style.background='rgba(143,245,255,0.1)';"
-             onmouseout="this.style.color='var(--c-text-muted)'; this.style.borderColor='var(--c-outline)'; this.style.background='rgba(255,255,255,0.05)';">
-            END TURN
-          </button>
-        </div>    </div>
+          <div id="btn-challenge" class="side-card side-card-challenge" onclick="triggerQuestion(9)">
+            <span class="material-symbols-outlined glow-error side-card-icon">bolt</span>
+            <span class="side-card-label side-card-label-challenge">CHALLENGE</span>
+          </div>
+        </div>
+
+        <div id="dice-result" class="dice-result"></div>
+
+        <button class="end-turn-button" onclick="endTurn()">
+          END TURN
+        </button>
+      </div>
 
       <!-- Tile 5: Accounting 2 -->
       <div class="tile tile-tertiary" id="tile-5" onclick="triggerQuestion(5)" title="Accounting 2">

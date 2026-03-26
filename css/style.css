@@ -422,6 +422,7 @@ html, body {
   gap: 0.75rem;
   width: min(760px, 85vw);
   aspect-ratio: 4/3;
+  align-items: stretch;
 }
 .tile {
   background: var(--c-glass);
@@ -482,21 +483,86 @@ html, body {
 /* Central dice cell (spans 2 cols) */
 .tile-center {
   grid-column: span 2;
+  grid-row: 2;
   background: transparent;
   border: none;
   cursor: default;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 1rem;
+  aspect-ratio: auto;
+  min-height: 0;
+  padding: 1rem;
 }
+.tile-center:hover { background: transparent; transform: none; box-shadow: none; }
+.current-team-display {
+  color: var(--c-primary);
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-align: center;
+}
+.center-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  width: 100%;
+}
+.side-card-icon { font-size: 1.75rem; }
+.side-card-label {
+  font-family: var(--font-head);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+.side-card-life {
+  opacity: 0.72;
+  border-color: rgba(143,245,255,0.3);
+}
+.side-card-challenge {
+  opacity: 0.72;
+  border-color: rgba(255,113,108,0.3);
+}
+.side-card-label-life { color: var(--c-primary); }
+.side-card-label-challenge { color: var(--c-error); }
 .dice-container {
   position: relative;
   display: flex; align-items: center; justify-content: center;
   width: 5rem; height: 5rem;
+  cursor: pointer;
+  transform-style: preserve-3d;
 }
 .dice-glow {
-  position: absolute; inset: -12px;
+  position: absolute; inset: -8px;
   background: rgba(143,245,255,0.06);
   filter: blur(20px); border-radius: 50%;
+}
+.dice-result {
+  min-height: 1.5rem;
+  color: var(--c-primary);
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+.end-turn-button {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--c-outline);
+  border-radius: 2px;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  font-family: var(--font-head);
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  padding: 0.6rem 1.75rem;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+.end-turn-button:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+  background: rgba(143,245,255,0.1);
 }
 .dice-frame {
   width: 4.5rem; height: 4.5rem;
