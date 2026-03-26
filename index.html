@@ -600,14 +600,39 @@ function resetGame() {
   updateNav('home');
 }
 
+function getNavigationOrder() {
+  return ['home', 'randomize', 'board', 'stats'];
+}
+
+function getCurrentNavigationStep() {
+  if (GameState.phase === 'question') return 'board';
+  return GameState.phase;
+}
+
 function isNavigationLocked(target) {
-  const lockedTargets = ['home', 'randomize', 'stats'];
-  return lockedTargets.includes(target) && ['board', 'question'].includes(GameState.phase);
+  const current = getCurrentNavigationStep();
+  const navOrder = getNavigationOrder();
+  const currentIndex = navOrder.indexOf(current);
+  const targetIndex = navOrder.indexOf(target);
+
+  if (targetIndex === -1 || currentIndex === -1) return false;
+  if (target === current) return false;
+
+  const isSkippingSteps = Math.abs(targetIndex - currentIndex) > 1;
+  if (isSkippingSteps) return true;
+
+  const blocksActiveGameExit = ['board', 'question', 'stats'].includes(GameState.phase)
+    && ['home', 'randomize'].includes(target);
+  return blocksActiveGameExit;
 }
 
 function requestNavigation(target) {
   if (isNavigationLocked(target)) {
-    showToast('Navigation is locked during an active game. Use Reset Game if you want to start over.');
+    if (['board', 'question', 'stats'].includes(GameState.phase) && ['home', 'randomize'].includes(target)) {
+      showToast('Navigation is locked during an active game. Use Reset Game if you want to start over.');
+    } else {
+      showToast('Move through the top tabs one step at a time from left to right.');
+    }
     return;
   }
 
@@ -642,11 +667,14 @@ function refreshNavigationLockState() {
     el.classList.toggle('nav-locked', locked);
     el.setAttribute('aria-disabled', locked ? 'true' : 'false');
     if (locked) {
-      el.setAttribute('title', 'Locked during active gameplay');
+      const isGameplayLock = ['board', 'question', 'stats'].includes(GameState.phase) && ['home', 'randomize'].includes(target);
+      el.setAttribute('title', isGameplayLock ? 'Locked during active gameplay' : 'Follow the tabs in order');
     } else if (target === 'randomize') {
       el.setAttribute('title', 'Teams');
     } else if (target === 'stats') {
       el.setAttribute('title', 'Stats');
+    } else if (target === 'home') {
+      el.removeAttribute('title');
     }
   });
 }
