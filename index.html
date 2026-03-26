@@ -248,74 +248,103 @@
 
       <!-- Row 1: Tiles 0-3 -->
       <!-- Tile 0: Fate -->
-      <div class="tile tile-white" id="tile-0" onclick="triggerQuestion(0)" title="Fate / Life & Challenge">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">0</span>
+      <div class="tile tile-white" id="tile-0" onclick="triggerQuestion(0)" title="FATE / Life & Challenge">
         <span class="material-symbols-outlined tile-icon">tsunami</span>
-        <span class="tile-label">0 命運 (Fate)</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          FATE
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">00</span>
+        </span>
         <span class="tile-level" id="tl-0"></span>
         <span class="tile-owner" id="to-0"></span>
       </div>
       <!-- Tile 1: Accounting 1 -->
       <div class="tile tile-tertiary" id="tile-1" onclick="triggerQuestion(1)" title="Accounting 1">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">1</span>
         <span class="material-symbols-outlined tile-icon">account_balance</span>
-        <span class="tile-label">1 Accounting 1</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Accounting 1
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">01</span>
+        </span>
         <span class="tile-level" id="tl-1"></span>
         <span class="tile-owner" id="to-1"></span>
       </div>
       <!-- Tile 2: Statistics 1 -->
       <div class="tile tile-primary" id="tile-2" onclick="triggerQuestion(2)" title="Statistics 1">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">2</span>
         <span class="material-symbols-outlined tile-icon">insights</span>
-        <span class="tile-label">2 Statistics 1</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Statistics 1
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">02</span>
+        </span>
         <span class="tile-level" id="tl-2"></span>
         <span class="tile-owner" id="to-2"></span>
       </div>
       <!-- Tile 3: Calculus 1 -->
       <div class="tile tile-secondary" id="tile-3" onclick="triggerQuestion(3)" title="Calculus 1">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">3</span>
         <span class="material-symbols-outlined tile-icon">calculate</span>
-        <span class="tile-label">3 Calculus 1</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Calculus 1
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">03</span>
+        </span>
         <span class="tile-level" id="tl-3"></span>
         <span class="tile-owner" id="to-3"></span>
       </div>
 
-      <!-- Row 2: Economics 1 | [Center 2x1] | Accounting 2 -->
+      <!-- Row 2: Economics 1 | [Center 2x1] | Statistics 2 -->
       <!-- Tile 4: Economics 1 -->
       <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">4</span>
         <span class="material-symbols-outlined tile-icon">trending_up</span>
-        <span class="tile-label">4 Economics 1</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Economics 1
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">04</span>
+        </span>
         <span class="tile-level" id="tl-4"></span>
         <span class="tile-owner" id="to-4"></span>
       </div>
 
-      <!-- Center Cell (Dice + Controls) — spans 2 columns -->
-      <div class="tile tile-center" style="grid-column:span 2; aspect-ratio: unset;">
-        <div id="current-team-display" style="color:var(--c-primary);font-weight:900;">TEAM ALPHA'S TURN</div>
-        <div class="dice-container" onclick="rollDice()" style="cursor:pointer;" title="Roll Dice">
-          <div class="dice-glow"></div>
-          <div class="dice-frame" style="width:5rem; height:5rem; border-width:4px;">
-            <span class="material-symbols-outlined" id="dice-icon" style="font-variation-settings:'FILL' 1,'wght' 700,'GRAD' 0,'opsz' 48; font-size:3rem;">casino</span>
+        <!-- Center Cell (Dice + Controls) — spans 2 columns -->
+        <div class="tile tile-center" style="grid-column:span 2; aspect-ratio: unset; flex-direction:column; position:relative;">
+          <div id="current-team-display" style="color:var(--c-primary);font-weight:900; letter-spacing:0.1em; margin-bottom:1rem;">TEAM ALPHA'S TURN</div>
+          
+          <div style="display:flex; align-items:center; gap:3rem;">
+            <!-- Left: Life -->
+            <div id="btn-life" onclick="triggerQuestion(0)" style="cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:0.5rem; opacity:0.4; transition:all 0.3s;" onmouseover="this.style.opacity='1'; this.style.transform='translateY(-4px)';" onmouseout="this.style.opacity='0.4'; this.style.transform='translateY(0)';">
+              <span class="material-symbols-outlined glow-primary" style="font-size:2rem; color:var(--c-primary);">ecg_heart</span>
+              <span style="font-family:var(--font-head); font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:var(--c-primary);">LIFE</span>
+            </div>
+
+            <div class="dice-container" onclick="rollDice()" style="cursor:pointer; transform-style: preserve-3d;" title="Roll Dice">
+              <div class="dice-glow"></div>
+              <div class="dice-frame" style="width:6rem; height:6rem; border-width:4px; border-color:var(--c-cyan); background:rgba(0,0,0,0.8); box-shadow:0 12px 40px rgba(0,240,255,0.4), inset 0 0 20px rgba(0,240,255,0.2);">
+                <span class="material-symbols-outlined" id="dice-icon" style="font-variation-settings:'FILL' 1,'wght' 700,'GRAD' 0,'opsz' 48; font-size:3.5rem; transform: rotate(-45deg);">casino</span>
+              </div>
+            </div>
+
+            <!-- Right: Challenge -->
+            <div id="btn-challenge" onclick="triggerQuestion(9)" style="cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:0.5rem; opacity:0.4; transition:all 0.3s;" onmouseover="this.style.opacity='1'; this.style.transform='translateY(-4px)';" onmouseout="this.style.opacity='0.4'; this.style.transform='translateY(0)';">
+              <span class="material-symbols-outlined glow-error" style="font-size:2rem; color:var(--c-error);">bolt</span>
+              <span style="font-family:var(--font-head); font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:var(--c-error);">CHANCE</span>
+            </div>
           </div>
+
+          <div id="dice-result" style="font-weight:900; font-size:1.2rem; color:var(--c-primary); margin-top:1rem; min-height:1.5rem;"></div>
+          
+          <button onclick="endTurn()" style="
+            background:rgba(255,255,255,0.05); border:1px solid var(--c-outline); color:var(--c-text-muted);
+            font-family:var(--font-head); font-size:0.65rem; font-weight:900;
+            letter-spacing:0.2em; text-transform:uppercase; padding:0.6rem 1.5rem; cursor:pointer;
+            transition:all 0.2s; margin-top:8px;
+          " onmouseover="this.style.color='var(--c-primary)'; this.style.borderColor='var(--c-primary)'; this.style.background='rgba(143,245,255,0.1)';"
+             onmouseout="this.style.color='var(--c-text-muted)'; this.style.borderColor='var(--c-outline)'; this.style.background='rgba(255,255,255,0.05)';">
+            END TURN
+          </button>
         </div>
-        <div id="dice-result" style="font-weight:900;font-size:1rem;"></div>
-        <button onclick="endTurn()" style="
-          background:rgba(255,255,255,0.05);border:1px solid var(--c-outline);color:var(--c-text-muted);
-          font-family:var(--font-head);font-size:0.65rem;font-weight:900;
-          letter-spacing:0.2em;text-transform:uppercase;padding:0.6rem 1.5rem;cursor:pointer;
-          transition:all 0.2s;margin-top:8px;
-        " onmouseover="this.style.color='var(--c-primary)';this.style.borderColor='var(--c-primary)';this.style.background='rgba(143,245,255,0.1)';"
-           onmouseout="this.style.color='var(--c-text-muted)';this.style.borderColor='var(--c-outline)';this.style.background='rgba(255,255,255,0.05)';">
-          END TURN
-        </button>
-      </div>
 
       <!-- Tile 5: Accounting 2 -->
       <div class="tile tile-tertiary" id="tile-5" onclick="triggerQuestion(5)" title="Accounting 2">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">5</span>
         <span class="material-symbols-outlined tile-icon">account_balance_wallet</span>
-        <span class="tile-label">5 Accounting 2</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Accounting 2
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">05</span>
+        </span>
         <span class="tile-level" id="tl-5"></span>
         <span class="tile-owner" id="to-5"></span>
       </div>
@@ -323,33 +352,41 @@
       <!-- Row 3: Tiles 6-9 -->
       <!-- Tile 6: Statistics 2 -->
       <div class="tile tile-primary" id="tile-6" onclick="triggerQuestion(6)" title="Statistics 2">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">6</span>
         <span class="material-symbols-outlined tile-icon">analytics</span>
-        <span class="tile-label">6 Statistics 2</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Statistics 2
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">06</span>
+        </span>
         <span class="tile-level" id="tl-6"></span>
         <span class="tile-owner" id="to-6"></span>
       </div>
       <!-- Tile 7: Calculus 2 -->
       <div class="tile tile-secondary" id="tile-7" onclick="triggerQuestion(7)" title="Calculus 2">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">7</span>
         <span class="material-symbols-outlined tile-icon">functions</span>
-        <span class="tile-label">7 Calculus 2</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Calculus 2
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">07</span>
+        </span>
         <span class="tile-level" id="tl-7"></span>
         <span class="tile-owner" id="to-7"></span>
       </div>
       <!-- Tile 8: Economics 2 -->
       <div class="tile tile-cyan" id="tile-8" onclick="triggerQuestion(8)" title="Economics 2">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">8</span>
         <span class="material-symbols-outlined tile-icon">science</span>
-        <span class="tile-label">8 Economics 2</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          Economics 2
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">08</span>
+        </span>
         <span class="tile-level" id="tl-8"></span>
         <span class="tile-owner" id="to-8"></span>
       </div>
       <!-- Tile 9: Fate/Special -->
-      <div class="tile tile-white" id="tile-9" onclick="triggerQuestion(9)" title="Fate / Special">
-        <span class="tile-owner" style="left:6px;right:auto;opacity:0.4;">9</span>
+      <div class="tile tile-white" id="tile-9" onclick="triggerQuestion(9)" title="FATE / Special">
         <span class="material-symbols-outlined tile-icon">wind_power</span>
-        <span class="tile-label">9 命運 (Fate)</span>
+        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
+          FATE
+          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">09</span>
+        </span>
         <span class="tile-level" id="tl-9"></span>
         <span class="tile-owner" id="to-9"></span>
       </div>
@@ -587,6 +624,38 @@ setInterval(() => {
     if (log.scrollLeft >= log.scrollWidth - log.clientWidth) log.scrollLeft = 0;
   }
 }, 30);
+function rollDice() {
+  const diceEl = document.getElementById('dice-icon');
+  const resultEl = document.getElementById('dice-result');
+  const container = document.querySelector('.dice-container');
+  if (!diceEl || !resultEl || !container) return;
+
+  // Dice animation
+  let rolls = 0;
+  const faces = ['casino', 'filter_1', 'filter_2', 'filter_3', 'filter_4', 'filter_5', 'filter_6'];
+  resultEl.textContent = '... CYCLING DATA ...';
+  resultEl.style.opacity = 0.5;
+  
+  // Elevation effect
+  container.style.transform = 'translateY(-15px) scale(1.1)';
+  container.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+
+  const interval = setInterval(() => {
+    diceEl.textContent = faces[Math.floor(Math.random() * faces.length)];
+    rolls++;
+    if (rolls > 15) {
+      clearInterval(interval);
+      const result = Math.floor(Math.random() * 6) + 1;
+      
+      // Dramatic pause before final result
+      setTimeout(() => {
+        diceEl.textContent = 'casino'; // Or faces[result]
+        showDiceResult(result);
+        container.style.transform = 'translateY(0) scale(1)';
+      }, 400);
+    }
+  }, 60);
+}
 </script>
 </body>
 </html>
