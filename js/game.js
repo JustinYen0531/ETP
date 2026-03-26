@@ -243,27 +243,16 @@ async function animateTeamMove(steps) {
   const diceEl = document.getElementById('dice-icon');
   const team = GameState.teams[GameState.currentTeam];
   const from = team.position;
-  const spaces = BOARD_ROUTE.length;
   let laps = 0;
 
   for (let i = 0; i < steps; i++) {
-    team.position = (team.position + 1) % spaces;
-    if (team.position === 0) laps += 1;
+    const nextMove = getNextPlayableRouteIndex(team.position);
+    team.position = nextMove.routeIndex;
+    if (nextMove.wrapped) laps += 1;
     GameState.activeStepTile = BOARD_ROUTE[team.position];
     if (resultEl) resultEl.textContent = `MOVING ${i + 1}/${steps}`;
     renderBoard();
     await wait(260);
-  }
-
-  let skippedMaxTiles = 0;
-  while (isMaxLevelTile(BOARD_ROUTE[team.position])) {
-    skippedMaxTiles += 1;
-    team.position = (team.position + 1) % spaces;
-    if (team.position === 0) laps += 1;
-    GameState.activeStepTile = BOARD_ROUTE[team.position];
-    if (resultEl) resultEl.textContent = `SKIP MAX TILE -> ${team.position + 1}`;
-    renderBoard();
-    await wait(220);
   }
 
   if (laps > 0) {
@@ -276,7 +265,7 @@ async function animateTeamMove(steps) {
   if (resultEl) resultEl.textContent = `LANDED ON ${team.position + 1}`;
   pushHistory(
     GameState.currentTeam,
-    `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${skippedMaxTiles > 0 ? ` · Skipped ${skippedMaxTiles} max tile${skippedMaxTiles > 1 ? 's' : ''}` : ''}${laps > 0 ? ' · Lap bonus +50' : ''}.`,
+    `Rolled ${steps} and moved from ${from + 1} to ${team.position + 1}${laps > 0 ? ' · Lap bonus +50' : ''}.`,
     `MOVE ${steps}`
   );
   renderBoard();
@@ -542,6 +531,22 @@ function isMaxLevelTile(tileIdx) {
   const tile = BOARD_TILES[tileIdx];
   const state = GameState.tiles[tileIdx];
   return Boolean(tile?.bankKey) && (state?.level ?? 0) >= 3;
+}
+
+function getNextPlayableRouteIndex(currentRouteIndex) {
+  const spaces = BOARD_ROUTE.length;
+  let nextRouteIndex = currentRouteIndex;
+  let wrapped = false;
+
+  for (let i = 0; i < spaces; i++) {
+    nextRouteIndex = (nextRouteIndex + 1) % spaces;
+    if (nextRouteIndex === 0) wrapped = true;
+    if (!isMaxLevelTile(BOARD_ROUTE[nextRouteIndex])) {
+      return { routeIndex: nextRouteIndex, wrapped };
+    }
+  }
+
+  return { routeIndex: currentRouteIndex, wrapped: false };
 }
 
 // ============================================================
