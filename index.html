@@ -153,7 +153,7 @@
       </div>
 
       <!-- Buttons -->
-      <button class="btn-randomize" onclick="randomizeTeams()">
+      <button id="btn-randomize-teams" class="btn-randomize" onclick="randomizeTeams()">
         <span class="material-symbols-outlined" style="vertical-align:middle;margin-right:6px;">shuffle</span>
         RANDOMIZE TEAMS · INITIATE PROTOCOL
       </button>
@@ -201,7 +201,7 @@
           15 students are ready in the pool.
         </div>
 
-        <button class="btn-proceed-v2" onclick="goToBoard()">
+        <button id="btn-proceed-board" class="btn-proceed-v2 disabled" onclick="goToBoard()">
           <span style="display:flex; align-items:center; justify-content:center; gap:1rem;">
             PROCEED TO BOARD
             <span class="material-symbols-outlined" style="font-size:1.5rem;">keyboard_double_arrow_right</span>
@@ -740,8 +740,10 @@
 // ── Extra page helpers ──────────────────────────────────────
 
 function startGame() {
+  GameState.teamsRandomized = false;
   showScreen('randomize');
   updateNav('randomize');
+  updateProceedButtonState();
 
   // Populate the drum with student names
   const drum = document.getElementById('students-drum');
@@ -753,6 +755,7 @@ function startGame() {
 }
 
 function goToBoard() {
+  if (GameState.phase === 'randomize' && !GameState.teamsRandomized) return;
   showScreen('board');
   updateNav('board');
   renderBoard();
@@ -775,6 +778,14 @@ function resetGame() {
   renderSidePanels();
   showScreen('home');
   updateNav('home');
+}
+
+function updateProceedButtonState() {
+  const proceedBtn = document.getElementById('btn-proceed-board');
+  if (!proceedBtn) return;
+  const isReady = Boolean(GameState.teamsRandomized);
+  proceedBtn.disabled = !isReady;
+  proceedBtn.classList.toggle('disabled', !isReady);
 }
 
 function getNavigationOrder() {

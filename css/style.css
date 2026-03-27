@@ -225,6 +225,10 @@ html, body {
   gap: 1rem;
   flex-wrap: wrap;
 }
+.home-cta-row > .btn-start,
+.home-cta-row > .btn-home-secondary {
+  width: min(320px, 82vw);
+}
 .btn-start-glow {
   position: absolute;
   inset: -4px;
@@ -248,10 +252,12 @@ html, body {
   padding: 1rem 4rem;
   cursor: pointer;
   transition: transform 0.15s;
+  width: 100%;
+  min-height: 70px;
 }
 .btn-start button:active { transform: scale(0.97); }
 .btn-home-secondary {
-  min-width: 220px;
+  min-width: 0;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.12);
   color: var(--c-text);
@@ -262,6 +268,7 @@ html, body {
   padding: 1rem 2rem;
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  min-height: 70px;
 }
 .btn-home-secondary:hover {
   transform: translateY(-2px);
@@ -422,6 +429,13 @@ html, body {
   position: relative;
   overflow: hidden;
 }
+.btn-proceed-v2.disabled {
+  border-color: rgba(143,245,255,0.12);
+  color: rgba(143,245,255,0.35);
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
 .btn-proceed-v2:hover {
   background: rgba(143,245,255,0.1);
   box-shadow: 0 0 40px rgba(143,245,255,0.4);
@@ -440,6 +454,16 @@ html, body {
 }
 .btn-proceed-v2:hover::before {
   left: 100%;
+}
+.btn-proceed-v2.disabled:hover {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  border-color: rgba(143,245,255,0.12);
+  color: rgba(143,245,255,0.35);
+}
+.btn-proceed-v2.disabled::before {
+  display: none;
 }
 
 /* ==============================================================

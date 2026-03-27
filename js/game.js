@@ -19,6 +19,7 @@ const GameState = {
   isRolling: false,
   pendingAnswerTile: null,
   activeStepTile: null,
+  teamsRandomized: false,
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -39,6 +40,7 @@ const GameState = {
     this.isRolling = false;
     this.pendingAnswerTile = null;
     this.activeStepTile = null;
+    this.teamsRandomized = false;
   }
 };
 
@@ -67,7 +69,9 @@ function randomizeTeams() {
   pool.forEach((student, idx) => {
     GameState.teams[idx % 4].members.push(student);
   });
+  GameState.teamsRandomized = true;
   renderTeamSlots();
+  if (typeof updateProceedButtonState === 'function') updateProceedButtonState();
   
   // Animate the number spinner
   animatePoolCount();
