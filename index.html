@@ -86,7 +86,7 @@
           </div>
         </button>
       </div>
-      <button id="btn-how-to-play" class="btn-home-secondary" onclick="openModal('how-to-play-modal')">
+      <button id="btn-how-to-play" class="btn-home-secondary" onclick="openHowToPlay()">
         HOW TO PLAY
       </button>
     </div>
@@ -430,109 +430,164 @@
       <span class="material-symbols-outlined">close</span>
     </button>
     <div class="guide-copy">
-      <span class="section-label">Quick reference for hosts and players</span>
-      <h2 class="guide-title">How to Play</h2>
-      <p class="guide-lead">
-        ETP Game Show is a four-team academic board game. Teams roll, move, answer subject questions,
-        capture tiles, upgrade their holdings, and finish with the highest total score.
-      </p>
-
-      <section class="guide-section">
-        <h3>Game Setup</h3>
-        <ul>
-          <li>There are 4 teams: Alpha, Beta, Gamma, and Delta.</li>
-          <li>The board has 10 outer tiles arranged around the center control area.</li>
-          <li>Subject tiles cover Accounting, Statistics, Calculus, and Economics.</li>
-          <li>Special tiles handle Start, Life, and Challenge moments.</li>
-        </ul>
-      </section>
-
-      <section class="guide-section">
-        <h3>Board Layout</h3>
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th>Tile</th>
-              <th>Theme</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Fate / Start</td><td>Lap bonus trigger</td></tr>
-            <tr><td>2</td><td>Accounting 1</td><td>Subject tile</td></tr>
-            <tr><td>3</td><td>Statistics 1</td><td>Subject tile</td></tr>
-            <tr><td>4</td><td>Calculus 1</td><td>Subject tile</td></tr>
-            <tr><td>5</td><td>Economics 1</td><td>Subject tile</td></tr>
-            <tr><td>6</td><td>Fate / Chance</td><td>Special tile</td></tr>
-            <tr><td>7</td><td>Accounting 2</td><td>Subject tile</td></tr>
-            <tr><td>8</td><td>Statistics 2</td><td>Subject tile</td></tr>
-            <tr><td>9</td><td>Calculus 2</td><td>Subject tile</td></tr>
-            <tr><td>10</td><td>Economics 2</td><td>Subject tile</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section class="guide-section">
-        <h3>Turn Flow</h3>
-        <ol class="guide-steps">
-          <li>Roll the dice.</li>
-          <li>Move the active team token by the exact number rolled.</li>
-          <li>Max-level subject tiles are skipped automatically and do not count toward movement.</li>
-          <li>When the team lands on a question tile, press <strong>Answer Tile</strong> in the center.</li>
-          <li>Reveal the answer, judge the result, and end the turn.</li>
-        </ol>
-      </section>
-
-      <section class="guide-section">
-        <h3>Question Levels</h3>
-        <div class="guide-chip-row">
-          <span class="guide-chip">Level 1: Fill in the blank</span>
-          <span class="guide-chip">Level 2: Calculation</span>
-          <span class="guide-chip">Level 3: Open response</span>
+      <div class="guide-header">
+        <div>
+          <span class="section-label">Quick reference for hosts and players</span>
+          <h2 class="guide-title">How to Play</h2>
         </div>
-        <ul>
-          <li>Unclaimed tiles start at Level 1.</li>
-          <li>If a tile is already owned, challengers answer the next level up.</li>
-          <li>If a tile reaches Level 3, it is treated as complete and skipped in future movement.</li>
-        </ul>
-      </section>
+        <div class="guide-page-indicator" id="guide-page-indicator">Page 1 / 4</div>
+      </div>
 
-      <section class="guide-section">
-        <h3>Tile Control Rules</h3>
-        <ul>
-          <li>If a team answers correctly on an unclaimed tile, that tile becomes theirs.</li>
-          <li>If a team answers correctly on an opponent tile, they conquer it and take ownership.</li>
-          <li>If a challenger answers incorrectly on an owned tile, the defender keeps it and the tile levels up.</li>
-        </ul>
-      </section>
+      <div class="guide-slide-tabs">
+        <button class="guide-tab active" data-guide-page="0" onclick="setHowToPlayPage(0)">Overview</button>
+        <button class="guide-tab" data-guide-page="1" onclick="setHowToPlayPage(1)">Board</button>
+        <button class="guide-tab" data-guide-page="2" onclick="setHowToPlayPage(2)">Questions</button>
+        <button class="guide-tab" data-guide-page="3" onclick="setHowToPlayPage(3)">Winning</button>
+      </div>
 
-      <section class="guide-section">
-        <h3>Scoring</h3>
-        <ul>
-          <li>Level 1 correct answer: <strong>+100</strong></li>
-          <li>Level 2 correct answer: <strong>+200</strong></li>
-          <li>Level 3 correct answer: <strong>+300</strong></li>
-          <li>Each full lap around the board: <strong>+50</strong></li>
-          <li>Manual score adjustments can be entered on the left scoreboard.</li>
-        </ul>
-      </section>
+      <div class="guide-slides">
+        <section class="guide-slide active" data-guide-page="0">
+          <p class="guide-lead">
+            ETP Game Show is a four-team academic board game. Teams roll, move, answer subject questions,
+            capture tiles, upgrade their holdings, and finish with the highest total score.
+          </p>
+          <div class="guide-highlight-grid">
+            <div class="guide-highlight-card">
+              <div class="guide-highlight-label">Teams</div>
+              <div class="guide-highlight-value">4</div>
+              <p>Alpha, Beta, Gamma, and Delta compete on the same board.</p>
+            </div>
+            <div class="guide-highlight-card">
+              <div class="guide-highlight-label">Question Themes</div>
+              <div class="guide-highlight-value">4</div>
+              <p>Accounting, Statistics, Calculus, and Economics drive the core gameplay.</p>
+            </div>
+            <div class="guide-highlight-card">
+              <div class="guide-highlight-label">Special Spaces</div>
+              <div class="guide-highlight-value">2</div>
+              <p>Fate / Start and Fate / Chance add movement rhythm and lap progression.</p>
+            </div>
+          </div>
+          <section class="guide-section">
+            <h3>Basic Flow</h3>
+            <ol class="guide-steps">
+              <li>Start on the Home screen and use the designed buttons to move through the setup flow.</li>
+              <li>Randomize the teams, then continue to the board.</li>
+              <li>Roll, move, answer, score, and pass the turn.</li>
+              <li>Repeat until every subject tile reaches Level 3.</li>
+            </ol>
+          </section>
+        </section>
 
-      <section class="guide-section">
-        <h3>Win Condition</h3>
-        <p>
-          The game ends when all subject tiles reach Level 3. Final standings are based on accumulated score,
-          including answered tiles, defended upgrades, lap bonuses, and any manual bonus entries.
-        </p>
-      </section>
+        <section class="guide-slide" data-guide-page="1">
+          <section class="guide-section">
+            <h3>Board Layout</h3>
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>Tile</th>
+                  <th>Theme</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Fate / Start</td><td>Lap bonus trigger</td></tr>
+                <tr><td>2</td><td>Accounting 1</td><td>Subject tile</td></tr>
+                <tr><td>3</td><td>Statistics 1</td><td>Subject tile</td></tr>
+                <tr><td>4</td><td>Calculus 1</td><td>Subject tile</td></tr>
+                <tr><td>5</td><td>Economics 1</td><td>Subject tile</td></tr>
+                <tr><td>6</td><td>Fate / Chance</td><td>Special tile</td></tr>
+                <tr><td>7</td><td>Accounting 2</td><td>Subject tile</td></tr>
+                <tr><td>8</td><td>Statistics 2</td><td>Subject tile</td></tr>
+                <tr><td>9</td><td>Calculus 2</td><td>Subject tile</td></tr>
+                <tr><td>10</td><td>Economics 2</td><td>Subject tile</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="guide-section">
+            <h3>Movement Rules</h3>
+            <ul>
+              <li>Roll the dice and move the exact number shown.</li>
+              <li>The active team token moves one valid space at a time.</li>
+              <li>Max-level subject tiles are skipped automatically and do not count toward movement.</li>
+              <li>Completing a full lap adds <strong>+50</strong> to the active team.</li>
+            </ul>
+          </section>
+        </section>
 
-      <section class="guide-section">
-        <h3>Helpful Notes</h3>
-        <ul>
-          <li>Only the large center button can open the current tile question.</li>
-          <li>Top navigation is display-only. Use the designed page buttons to move through the flow.</li>
-          <li>Use Reset Game only if you intentionally want to restart from the beginning.</li>
-        </ul>
-      </section>
+        <section class="guide-slide" data-guide-page="2">
+          <section class="guide-section">
+            <h3>Question Levels</h3>
+            <div class="guide-chip-row">
+              <span class="guide-chip">Level 1: Fill in the blank</span>
+              <span class="guide-chip">Level 2: Calculation</span>
+              <span class="guide-chip">Level 3: Open response</span>
+            </div>
+            <ul>
+              <li>Unclaimed tiles always start with a Level 1 question.</li>
+              <li>Owned tiles force challengers to answer the next level up.</li>
+              <li>Once a tile reaches Level 3, it is complete and skipped from future movement.</li>
+            </ul>
+          </section>
+          <section class="guide-section">
+            <h3>Tile Control Rules</h3>
+            <ul>
+              <li>If a team answers correctly on an unclaimed tile, that tile becomes theirs.</li>
+              <li>If a team answers correctly on an opponent tile, they conquer it and take ownership.</li>
+              <li>If a challenger answers incorrectly on an owned tile, the defender keeps it and the tile levels up.</li>
+              <li>Only the large center button can open the current tile question.</li>
+            </ul>
+          </section>
+        </section>
+
+        <section class="guide-slide" data-guide-page="3">
+          <section class="guide-section">
+            <h3>Scoring</h3>
+            <div class="guide-highlight-grid">
+              <div class="guide-highlight-card compact">
+                <div class="guide-highlight-label">Level 1</div>
+                <div class="guide-highlight-value">+100</div>
+              </div>
+              <div class="guide-highlight-card compact">
+                <div class="guide-highlight-label">Level 2</div>
+                <div class="guide-highlight-value">+200</div>
+              </div>
+              <div class="guide-highlight-card compact">
+                <div class="guide-highlight-label">Level 3</div>
+                <div class="guide-highlight-value">+300</div>
+              </div>
+              <div class="guide-highlight-card compact">
+                <div class="guide-highlight-label">Full Lap</div>
+                <div class="guide-highlight-value">+50</div>
+              </div>
+            </div>
+            <ul>
+              <li>Manual score adjustments can be entered on the left scoreboard.</li>
+              <li>Defended upgrades and captured tiles continue to affect final ranking.</li>
+            </ul>
+          </section>
+          <section class="guide-section">
+            <h3>Win Condition</h3>
+            <p>
+              The game ends when all subject tiles reach Level 3. Final standings are based on accumulated score,
+              including answered tiles, defended upgrades, lap bonuses, and any manual bonus entries.
+            </p>
+          </section>
+          <section class="guide-section">
+            <h3>Helpful Notes</h3>
+            <ul>
+              <li>Top navigation is display-only. Use the designed page buttons to move through the flow.</li>
+              <li>Use Reset Game only if you intentionally want to restart from the beginning.</li>
+              <li>The stats screen appears automatically when the full board is completed.</li>
+            </ul>
+          </section>
+        </section>
+      </div>
+
+      <div class="guide-footer">
+        <button class="guide-nav-btn" id="guide-prev-btn" onclick="changeHowToPlayPage(-1)">Previous</button>
+        <button class="guide-nav-btn primary" id="guide-next-btn" onclick="changeHowToPlayPage(1)">Next</button>
+      </div>
     </div>
   </div>
 </div>
@@ -750,6 +805,46 @@ function isNavigationLocked(target) {
 
 function showTopNavHint() {
   showToast('Use the page buttons to move between screens.');
+}
+
+let howToPlayPage = 0;
+
+function openHowToPlay() {
+  setHowToPlayPage(0);
+  openModal('how-to-play-modal');
+}
+
+function setHowToPlayPage(page) {
+  const slides = [...document.querySelectorAll('.guide-slide')];
+  const tabs = [...document.querySelectorAll('.guide-tab')];
+  if (!slides.length) return;
+
+  howToPlayPage = Math.max(0, Math.min(page, slides.length - 1));
+  slides.forEach((slide, index) => slide.classList.toggle('active', index === howToPlayPage));
+  tabs.forEach((tab, index) => tab.classList.toggle('active', index === howToPlayPage));
+
+  const indicator = document.getElementById('guide-page-indicator');
+  if (indicator) indicator.textContent = `Page ${howToPlayPage + 1} / ${slides.length}`;
+
+  const prevBtn = document.getElementById('guide-prev-btn');
+  const nextBtn = document.getElementById('guide-next-btn');
+  if (prevBtn) prevBtn.disabled = howToPlayPage === 0;
+  if (nextBtn) {
+    nextBtn.disabled = howToPlayPage === slides.length - 1;
+    nextBtn.textContent = howToPlayPage === slides.length - 1 ? 'Done' : 'Next';
+  }
+}
+
+function changeHowToPlayPage(direction) {
+  const slides = document.querySelectorAll('.guide-slide');
+  if (!slides.length) return;
+
+  const targetPage = howToPlayPage + direction;
+  if (targetPage >= slides.length) {
+    closeModal('how-to-play-modal');
+    return;
+  }
+  setHowToPlayPage(targetPage);
 }
 
 function requestNavigation(target) {

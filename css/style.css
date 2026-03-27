@@ -1154,17 +1154,95 @@ html, body {
   gap: 1.4rem;
   padding-right: 0.25rem;
 }
+.guide-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.guide-page-indicator {
+  font-family: var(--font-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
 .guide-title {
   margin: 0;
   font-family: var(--font-head);
   font-size: clamp(2rem, 4vw, 3rem);
   letter-spacing: -0.04em;
 }
+.guide-slide-tabs {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.guide-tab {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: var(--c-text-muted);
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-head);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.guide-tab.active {
+  color: var(--c-primary);
+  border-color: rgba(143,245,255,0.28);
+  background: rgba(143,245,255,0.08);
+}
+.guide-slides {
+  position: relative;
+  min-height: 520px;
+}
+.guide-slide {
+  display: none;
+  gap: 1.2rem;
+}
+.guide-slide.active {
+  display: grid;
+}
 .guide-lead {
   margin: 0;
   max-width: 72ch;
   color: var(--c-text);
   line-height: 1.8;
+}
+.guide-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+.guide-highlight-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.guide-highlight-card.compact {
+  text-align: center;
+}
+.guide-highlight-card p {
+  margin: 0;
+  color: var(--c-text);
+  line-height: 1.65;
+}
+.guide-highlight-label {
+  font-family: var(--font-head);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+.guide-highlight-value {
+  font-family: var(--font-head);
+  font-size: clamp(1.4rem, 3vw, 2.3rem);
+  color: var(--c-primary);
+  font-weight: 800;
 }
 .guide-section {
   display: grid;
@@ -1226,6 +1304,34 @@ html, body {
 }
 .guide-table td {
   color: var(--c-text);
+}
+.guide-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.guide-nav-btn {
+  min-width: 140px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
+  color: var(--c-text);
+  padding: 0.85rem 1.2rem;
+  font-family: var(--font-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.guide-nav-btn.primary {
+  border-color: rgba(143,245,255,0.28);
+  color: var(--c-primary);
+}
+.guide-nav-btn[disabled] {
+  opacity: 0.35;
+  cursor: default;
 }
 .q-level-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -1311,6 +1417,23 @@ html, body {
   }
   .guide-table {
     font-size: 0.84rem;
+  }
+  .guide-header {
+    align-items: start;
+    flex-direction: column;
+  }
+  .guide-highlight-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-slides {
+    min-height: auto;
+  }
+  .guide-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .guide-nav-btn {
+    width: 100%;
   }
 }
 
