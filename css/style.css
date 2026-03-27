@@ -216,6 +216,15 @@ html, body {
   position: relative;
   margin-top: 1rem;
 }
+.home-cta-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 .btn-start-glow {
   position: absolute;
   inset: -4px;
@@ -241,6 +250,24 @@ html, body {
   transition: transform 0.15s;
 }
 .btn-start button:active { transform: scale(0.97); }
+.btn-home-secondary {
+  min-width: 220px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--c-text);
+  font-family: var(--font-head);
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.btn-home-secondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(143,245,255,0.35);
+  box-shadow: 0 0 20px rgba(143,245,255,0.14);
+}
 
 .home-stats {
   position: relative; z-index: 1;
@@ -1098,9 +1125,107 @@ html, body {
   display: flex; flex-direction: column; gap: 1.5rem;
   position: relative;
 }
+.modal-card-guide {
+  max-width: 920px;
+  max-height: min(88vh, 900px);
+  overflow: auto;
+}
 .modal-accent-line {
   position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, var(--c-primary), var(--c-cyan), transparent);
+}
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
+  color: var(--c-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.guide-copy {
+  display: grid;
+  gap: 1.4rem;
+  padding-right: 0.25rem;
+}
+.guide-title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.04em;
+}
+.guide-lead {
+  margin: 0;
+  max-width: 72ch;
+  color: var(--c-text);
+  line-height: 1.8;
+}
+.guide-section {
+  display: grid;
+  gap: 0.7rem;
+}
+.guide-section h3 {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: 0.92rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--c-primary);
+}
+.guide-section p,
+.guide-section li {
+  color: var(--c-text);
+  line-height: 1.75;
+}
+.guide-section ul,
+.guide-steps {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.45rem;
+}
+.guide-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.guide-chip {
+  border: 1px solid rgba(143,245,255,0.18);
+  background: rgba(143,245,255,0.06);
+  color: var(--c-primary);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.guide-table th,
+.guide-table td {
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.7rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+}
+.guide-table th {
+  color: var(--c-text-muted);
+  font-family: var(--font-head);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.03);
+}
+.guide-table td {
+  color: var(--c-text);
 }
 .q-level-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -1171,6 +1296,23 @@ html, body {
   flex: 1; transition: background 0.2s;
 }
 .btn-wrong:hover { background: rgba(255,113,108,0.2); }
+
+@media (max-width: 1024px) {
+  .home-cta-row {
+    flex-direction: column;
+  }
+  .btn-home-secondary,
+  .btn-start button {
+    width: min(82vw, 320px);
+  }
+  .modal-card-guide {
+    width: min(92vw, 920px);
+    max-height: 86vh;
+  }
+  .guide-table {
+    font-size: 0.84rem;
+  }
+}
 
 /* ==============================================================
    SCREEN: STATS

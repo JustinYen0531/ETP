@@ -74,15 +74,20 @@
   <div class="home-hero">
     <h1 class="home-title">ETP<br>Game Show</h1>
     <p class="home-subtitle">High-Frequency Competitive Environment</p>
-    <div class="btn-start">
-      <div class="btn-start-glow"></div>
-      <button id="btn-start-game" onclick="startGame()">
-        START GAME
-        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px;">
-          <div style="width:4px;height:4px;background:var(--c-primary);"></div>
-          <div style="width:48px;height:1px;background:rgba(143,245,255,0.3);align-self:center;"></div>
-          <div style="width:4px;height:4px;background:var(--c-primary);"></div>
-        </div>
+    <div class="home-cta-row">
+      <div class="btn-start">
+        <div class="btn-start-glow"></div>
+        <button id="btn-start-game" onclick="startGame()">
+          START GAME
+          <div style="display:flex;gap:4px;justify-content:center;margin-top:6px;">
+            <div style="width:4px;height:4px;background:var(--c-primary);"></div>
+            <div style="width:48px;height:1px;background:rgba(143,245,255,0.3);align-self:center;"></div>
+            <div style="width:4px;height:4px;background:var(--c-primary);"></div>
+          </div>
+        </button>
+      </div>
+      <button id="btn-how-to-play" class="btn-home-secondary" onclick="openModal('how-to-play-modal')">
+        HOW TO PLAY
       </button>
     </div>
     <div class="home-stats">
@@ -414,6 +419,123 @@
     </div>
   </nav>
 </div><!-- /screen-board -->
+
+<!-- ============================================================
+     HOW TO PLAY MODAL
+     ============================================================ -->
+<div id="how-to-play-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'how-to-play-modal')">
+  <div class="modal-card modal-card-guide" onclick="event.stopPropagation()">
+    <div class="modal-accent-line"></div>
+    <button class="modal-close-btn" onclick="closeModal('how-to-play-modal')" aria-label="Close how to play">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div class="guide-copy">
+      <span class="section-label">Quick reference for hosts and players</span>
+      <h2 class="guide-title">How to Play</h2>
+      <p class="guide-lead">
+        ETP Game Show is a four-team academic board game. Teams roll, move, answer subject questions,
+        capture tiles, upgrade their holdings, and finish with the highest total score.
+      </p>
+
+      <section class="guide-section">
+        <h3>Game Setup</h3>
+        <ul>
+          <li>There are 4 teams: Alpha, Beta, Gamma, and Delta.</li>
+          <li>The board has 10 outer tiles arranged around the center control area.</li>
+          <li>Subject tiles cover Accounting, Statistics, Calculus, and Economics.</li>
+          <li>Special tiles handle Start, Life, and Challenge moments.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section">
+        <h3>Board Layout</h3>
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th>Tile</th>
+              <th>Theme</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Fate / Start</td><td>Lap bonus trigger</td></tr>
+            <tr><td>2</td><td>Accounting 1</td><td>Subject tile</td></tr>
+            <tr><td>3</td><td>Statistics 1</td><td>Subject tile</td></tr>
+            <tr><td>4</td><td>Calculus 1</td><td>Subject tile</td></tr>
+            <tr><td>5</td><td>Economics 1</td><td>Subject tile</td></tr>
+            <tr><td>6</td><td>Fate / Chance</td><td>Special tile</td></tr>
+            <tr><td>7</td><td>Accounting 2</td><td>Subject tile</td></tr>
+            <tr><td>8</td><td>Statistics 2</td><td>Subject tile</td></tr>
+            <tr><td>9</td><td>Calculus 2</td><td>Subject tile</td></tr>
+            <tr><td>10</td><td>Economics 2</td><td>Subject tile</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="guide-section">
+        <h3>Turn Flow</h3>
+        <ol class="guide-steps">
+          <li>Roll the dice.</li>
+          <li>Move the active team token by the exact number rolled.</li>
+          <li>Max-level subject tiles are skipped automatically and do not count toward movement.</li>
+          <li>When the team lands on a question tile, press <strong>Answer Tile</strong> in the center.</li>
+          <li>Reveal the answer, judge the result, and end the turn.</li>
+        </ol>
+      </section>
+
+      <section class="guide-section">
+        <h3>Question Levels</h3>
+        <div class="guide-chip-row">
+          <span class="guide-chip">Level 1: Fill in the blank</span>
+          <span class="guide-chip">Level 2: Calculation</span>
+          <span class="guide-chip">Level 3: Open response</span>
+        </div>
+        <ul>
+          <li>Unclaimed tiles start at Level 1.</li>
+          <li>If a tile is already owned, challengers answer the next level up.</li>
+          <li>If a tile reaches Level 3, it is treated as complete and skipped in future movement.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section">
+        <h3>Tile Control Rules</h3>
+        <ul>
+          <li>If a team answers correctly on an unclaimed tile, that tile becomes theirs.</li>
+          <li>If a team answers correctly on an opponent tile, they conquer it and take ownership.</li>
+          <li>If a challenger answers incorrectly on an owned tile, the defender keeps it and the tile levels up.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section">
+        <h3>Scoring</h3>
+        <ul>
+          <li>Level 1 correct answer: <strong>+100</strong></li>
+          <li>Level 2 correct answer: <strong>+200</strong></li>
+          <li>Level 3 correct answer: <strong>+300</strong></li>
+          <li>Each full lap around the board: <strong>+50</strong></li>
+          <li>Manual score adjustments can be entered on the left scoreboard.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section">
+        <h3>Win Condition</h3>
+        <p>
+          The game ends when all subject tiles reach Level 3. Final standings are based on accumulated score,
+          including answered tiles, defended upgrades, lap bonuses, and any manual bonus entries.
+        </p>
+      </section>
+
+      <section class="guide-section">
+        <h3>Helpful Notes</h3>
+        <ul>
+          <li>Only the large center button can open the current tile question.</li>
+          <li>Top navigation is display-only. Use the designed page buttons to move through the flow.</li>
+          <li>Use Reset Game only if you intentionally want to restart from the beginning.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
 
 
 <!-- ============================================================
