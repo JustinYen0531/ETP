@@ -830,7 +830,7 @@ function setHowToPlayPage(page) {
   const nextBtn = document.getElementById('guide-next-btn');
   if (prevBtn) prevBtn.disabled = howToPlayPage === 0;
   if (nextBtn) {
-    nextBtn.disabled = howToPlayPage === slides.length - 1;
+    nextBtn.disabled = false;
     nextBtn.textContent = howToPlayPage === slides.length - 1 ? 'Done' : 'Next';
   }
 }
