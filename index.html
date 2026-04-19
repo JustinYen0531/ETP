@@ -255,10 +255,9 @@
       <!-- Tile 0: Fate -->
       <div class="tile tile-white" id="tile-0" onclick="triggerQuestion(0)" title="FATE / Life & Challenge">
         <span class="material-symbols-outlined tile-icon">tsunami</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          FATE
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">1</span>
-        </span>
+        <span class="tile-author">System</span>
+        <span class="tile-label">FATE</span>
+        <span class="tile-number">1</span>
         <span class="tile-level" id="tl-0"></span>
         <span class="tile-owner" id="to-0"></span>
       </div>
@@ -266,10 +265,8 @@
       <div class="tile tile-tertiary" id="tile-1" onclick="triggerQuestion(1)" title="Accounting 1 (by Kelly)">
         <span class="material-symbols-outlined tile-icon">account_balance</span>
         <span class="tile-author">Kelly</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Accounting 1
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">2</span>
-        </span>
+        <span class="tile-label">Accounting 1</span>
+        <span class="tile-number">2</span>
         <span class="tile-level" id="tl-1"></span>
         <span class="tile-owner" id="to-1"></span>
       </div>
@@ -277,10 +274,8 @@
       <div class="tile tile-primary" id="tile-2" onclick="triggerQuestion(2)" title="Statistics 1 (by Ally)">
         <span class="material-symbols-outlined tile-icon">insights</span>
         <span class="tile-author">Ally</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Statistics 1
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">3</span>
-        </span>
+        <span class="tile-label">Statistics 1</span>
+        <span class="tile-number">3</span>
         <span class="tile-level" id="tl-2"></span>
         <span class="tile-owner" id="to-2"></span>
       </div>
@@ -288,10 +283,8 @@
       <div class="tile tile-secondary" id="tile-3" onclick="triggerQuestion(3)" title="Calculus 1 (by Ally)">
         <span class="material-symbols-outlined tile-icon">calculate</span>
         <span class="tile-author">Ally</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Calculus 1
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">4</span>
-        </span>
+        <span class="tile-label">Calculus 1</span>
+        <span class="tile-number">4</span>
         <span class="tile-level" id="tl-3"></span>
         <span class="tile-owner" id="to-3"></span>
       </div>
@@ -314,7 +307,7 @@
         <div id="current-team-display" class="current-team-display">TEAM ALPHA'S TURN</div>
 
         <div id="center-controls-row" class="center-controls-row">
-          <div id="btn-life" class="side-card side-card-life" onclick="triggerQuestion(0)">
+          <div id="btn-life" class="side-card side-card-life" onclick="selectFate('life')">
             <span class="material-symbols-outlined glow-primary side-card-icon">ecg_heart</span>
             <span class="side-card-label side-card-label-life">LIFE</span>
           </div>
@@ -326,7 +319,7 @@
             </div>
           </div>
 
-          <div id="btn-challenge" class="side-card side-card-challenge" onclick="triggerQuestion(9)">
+          <div id="btn-challenge" class="side-card side-card-challenge" onclick="selectFate('challenge')">
             <span class="material-symbols-outlined glow-error side-card-icon">bolt</span>
             <span class="side-card-label side-card-label-challenge">CHALLENGE</span>
           </div>
@@ -348,10 +341,8 @@
       <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1 (by Kelly)">
         <span class="material-symbols-outlined tile-icon">trending_up</span>
         <span class="tile-author">Kelly</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Economics 1
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">5</span>
-        </span>
+        <span class="tile-label">Economics 1</span>
+        <span class="tile-number">5</span>
         <span class="tile-level" id="tl-4"></span>
         <span class="tile-owner" id="to-4"></span>
       </div>
@@ -361,10 +352,8 @@
       <div class="tile tile-secondary" id="tile-7" onclick="triggerQuestion(7)" title="Calculus 2 (by Justin)">
         <span class="material-symbols-outlined tile-icon">functions</span>
         <span class="tile-author">Justin</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Calculus 2
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">9</span>
-        </span>
+        <span class="tile-label">Calculus 2</span>
+        <span class="tile-number">9</span>
         <span class="tile-level" id="tl-7"></span>
         <span class="tile-owner" id="to-7"></span>
       </div>
@@ -373,10 +362,8 @@
       <div class="tile tile-primary" id="tile-6" onclick="triggerQuestion(6)" title="Statistics 2 (by Justin)">
         <span class="material-symbols-outlined tile-icon">analytics</span>
         <span class="tile-author">Justin</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Statistics 2
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">8</span>
-        </span>
+        <span class="tile-label">Statistics 2</span>
+        <span class="tile-number">8</span>
         <span class="tile-level" id="tl-6"></span>
         <span class="tile-owner" id="to-6"></span>
       </div>
@@ -385,10 +372,8 @@
       <div class="tile tile-tertiary" id="tile-5" onclick="triggerQuestion(5)" title="Accounting 2 (by Carrie)">
         <span class="material-symbols-outlined tile-icon">account_balance_wallet</span>
         <span class="tile-author">Carrie</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          Accounting 2
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">7</span>
-        </span>
+        <span class="tile-label">Accounting 2</span>
+        <span class="tile-number">7</span>
         <span class="tile-level" id="tl-5"></span>
         <span class="tile-owner" id="to-5"></span>
       </div>
@@ -396,10 +381,9 @@
       <!-- Tile 9: Fate/Special -->
       <div class="tile tile-white" id="tile-9" onclick="triggerQuestion(9)" title="FATE / Special">
         <span class="material-symbols-outlined tile-icon">wind_power</span>
-        <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
-          FATE
-          <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">6</span>
-        </span>
+        <span class="tile-author">System</span>
+        <span class="tile-label">FATE</span>
+        <span class="tile-number">6</span>
         <span class="tile-level" id="tl-9"></span>
         <span class="tile-owner" id="to-9"></span>
       </div>
@@ -768,17 +752,60 @@
   </div>
 </div>
 
+</div>
+
 <!-- ============================================================
-     QUESTION PREVIEW MODAL (Inside Overview)
+     FATE SELECTION MODAL
      ============================================================ -->
-<div id="preview-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'preview-modal')" style="z-index: 2000;">
+<div id="fate-selection-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'fate-selection-modal')">
   <div class="modal-card" onclick="event.stopPropagation()">
-    <div class="modal-accent-line" id="preview-accent"></div>
-    <button class="modal-close-btn" onclick="closeModal('preview-modal')">
-      <span class="material-symbols-outlined">close</span>
-    </button>
-    <div id="preview-content">
-      <!-- Populated by JS -->
+    <div class="modal-accent-line" style="background:var(--c-white);"></div>
+    <div class="section-label">FATE / START & CHANCE</div>
+    <h2 class="guide-title">Event Selection</h2>
+    <p style="color:var(--c-text-muted); margin-bottom:1.5rem;">Choose your path for this fate tile.</p>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+      <button class="btn-proceed-v2" onclick="selectFate('life')" style="height:auto; padding:2rem 1rem;">
+        <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">auto_awesome</span>
+        LIFE / FUN
+      </button>
+      <button class="btn-proceed-v2" onclick="selectFate('challenge')" style="height:auto; padding:2rem 1rem; border-color:var(--c-error); background:rgba(255,113,108,0.05); color:var(--c-error);">
+        <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">bolt</span>
+        CHALLENGE
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LIFE QUESTION MODAL
+     ============================================================ -->
+<div id="life-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'life-modal')">
+  <div class="modal-card modal-card-wide" onclick="event.stopPropagation()">
+    <div class="modal-accent-line" style="background:#ffea00;"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="q-level-badge" style="background:rgba(255,234,0,0.1); border-color:rgba(255,234,0,0.3); color:#ffea00;">
+        <span class="material-symbols-outlined" style="font-size:0.9rem;">auto_awesome</span>
+        LIFE QUESTION
+      </div>
+      <span class="q-author-modal-tag" id="life-author" style="color:#ffea00; text-shadow:0 0 15px rgba(255,234,0,0.4);">AUTHOR</span>
+    </div>
+    
+    <div style="text-align:center; margin-bottom:1.5rem;">
+      <img id="life-image" src="" style="max-width:100%; max-height:400px; border-radius:8px; border:2px solid var(--c-outline); box-shadow:0 0 40px rgba(255,234,0,0.15);">
+    </div>
+
+    <h2 style="font-family:var(--font-head); font-size:1.5rem; text-align:center; margin-bottom:1rem;">
+      Can you recognize where this image is from?
+    </h2>
+    
+    <p style="color:var(--c-tertiary); text-align:center; font-weight:700; margin-bottom:2rem;">
+      💡 Extra +150 if you can mimic the lines or the scene!
+    </p>
+
+    <div class="modal-actions" style="justify-content:center;">
+      <button class="btn-wrong" onclick="solveLife(0)" style="flex:none; min-width:140px;">WRONG (+0)</button>
+      <button class="btn-correct" onclick="solveLife(150)" style="flex:none; min-width:140px; border-color:#ffea00; color:#ffea00; background:rgba(255,234,0,0.05);">CORRECT (+150)</button>
+      <button class="btn-correct" onclick="solveLife(300)" style="flex:none; min-width:140px; border-color:var(--c-tertiary); color:var(--c-tertiary); background:rgba(160,237,0,0.05);">SUPER (+300)</button>
     </div>
   </div>
 </div>

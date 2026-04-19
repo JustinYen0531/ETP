@@ -20,6 +20,7 @@ const GameState = {
   pendingAnswerTile: null,
   activeStepTile: null,
   teamsRandomized: false,
+  usedLifeQuestions: [],
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -41,6 +42,7 @@ const GameState = {
     this.pendingAnswerTile = null;
     this.activeStepTile = null;
     this.teamsRandomized = false;
+    this.usedLifeQuestions = [];
   }
 };
 
@@ -189,23 +191,27 @@ function renderBoard() {
   const centerTile = document.getElementById('tile-center-cell');
   const tileIdx = GameState.pendingAnswerTile;
   const pendingTile = tileIdx === null ? null : BOARD_TILES[tileIdx];
-  const canAnswer = pendingTile && pendingTile.bankKey;
+  const canAnswerSubject = pendingTile && pendingTile.type === 'subject';
+  const isFate = pendingTile && pendingTile.type === 'special';
 
   if (centerTile) {
-    centerTile.classList.toggle('answer-mode', Boolean(canAnswer));
+    centerTile.classList.toggle('answer-mode', Boolean(canAnswerSubject || isFate));
   }
 
   const answerButton = document.getElementById('btn-answer-tile');
   const answerLevel = document.getElementById('answer-tile-level');
   if (answerButton) {
-    answerButton.classList.toggle('hidden', !canAnswer);
-    if (canAnswer) {
+    answerButton.classList.toggle('hidden', !canAnswerSubject && !isFate);
+    if (isFate) {
+      answerButton.textContent = `TRIGGER FATE EVENT`;
+    } else if (canAnswerSubject) {
       answerButton.textContent = `ANSWER TILE ${tileIdx + 1}`;
     }
   }
   if (answerLevel) {
-    answerLevel.classList.toggle('hidden', !canAnswer);
-    if (canAnswer) {
+    // Hide level for fate tiles
+    answerLevel.classList.toggle('hidden', !canAnswerSubject);
+    if (canAnswerSubject) {
       const tileState = GameState.tiles[tileIdx];
       const nextLevel = tileState.owner === null ? 1 : Math.min(tileState.level + 1, 3);
       answerLevel.textContent = `LEVEL ${nextLevel}`;
@@ -287,7 +293,13 @@ async function animateTeamMove(steps) {
 // ============================================================
 function triggerQuestion(tileIdx) {
   const tile = BOARD_TILES[tileIdx];
-  if (!tile.bankKey) return; // Skip special tiles
+
+  // Handle Special Tiles (Fate / Start / Chance)
+  if (tile.type === 'special') {
+    GameState.pendingAnswerTile = tileIdx;
+    openModal('fate-selection-modal');
+    return;
+  }
 
   const tileState = GameState.tiles[tileIdx];
   const challenger = GameState.currentTeam;
@@ -678,4 +690,57 @@ document.addEventListener('DOMContentLoaded', () => {
   GameState.init();
   renderSidePanels();
   showScreen('home');
+// ── Fate / Life logic ───────────────────────────────────────
+
+function selectFate(type) {
+  closeModal('fate-selection-modal');
+  if (type === 'life') {
+    triggerLifeQuestion();
+  } else {
+    // Challenge Path: Trigger a high-level random question or special event
+    // For now, let's just show a toast or a random Hard question
+    showToast("Challenge Protocol Initialized... (Feature pending)");
+  }
+}
+
+function triggerLifeQuestion() {
+  const pool = LIFE_QUESTIONS.filter(q => !GameState.usedLifeQuestions.includes(q.id));
+  if (pool.length === 0) {
+    showToast("All life questions consumed! Shuffling pool...");
+    GameState.usedLifeQuestions = [];
+    return triggerLifeQuestion();
+  }
+
+  const q = pool[Math.floor(Math.random() * pool.length)];
+  GameState.currentLifeQuestion = q;
+
+  // Populate Life Modal
+  document.getElementById('life-author').textContent = q.author.toUpperCase();
+  document.getElementById('life-image').src = q.image;
+  
+  openModal('life-modal');
+}
+
+function solveLife(points) {
+  closeModal('life-modal');
+  const team = GameState.teams[GameState.currentTeam];
+  const q = GameState.currentLifeQuestion;
+
+  team.score += points;
+  GameState.usedLifeQuestions.push(q.id);
+
+  showToast(`Life Event: ${team.name} gained ${points} points!`);
+  
+  // Log it
+  GameState.history.push({
+    turn: GameState.turnCount,
+    team: team.name,
+    action: `Life Question (${q.author})`,
+    points: points
+  });
+
+  renderStats();
+  renderSidePanels();
+  nextTurn(); // Usually fate tiles end the turn if they involve a question
+}
 });

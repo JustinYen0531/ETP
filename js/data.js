@@ -158,6 +158,18 @@ const QUESTION_BANK = {
 };
 
 // Board tile configuration (索引 0-9)
+/**
+ * LIFE QUESTIONS DATA
+ * --------------------------------------------------------------------------
+ */
+const LIFE_QUESTIONS = [
+  { id: 'l1', image: 'Ally_Conan.jpg', author: 'Ally', hint: 'Detective Conan' },
+  { id: 'l2', image: 'Ally_Snoopy.jpg', author: 'Ally', hint: 'Snoopy / Peanuts' },
+  { id: 'l3', image: 'Carrie_English.jpg', author: 'Carrie', hint: 'Johnny English' },
+  { id: 'l4', image: 'Carrie_Trump.jpg', author: 'Carrie', hint: 'Donald Trump' },
+  { id: 'l5', image: 'Kelly_Harry.jpg', author: 'Kelly', hint: 'Harry Potter' },
+  { id: 'l6', image: 'Kelly_Titanic.jpg', author: 'Kelly', hint: 'Titanic' }
+];
 const BOARD_TILES = [
   { id: 0, type: 'special', label: 'START', icon: 'flag', color: 'white', bankKey: null, author: 'System' },
   { id: 1, type: 'subject', label: 'ACQ', icon: 'account_balance', color: 'tertiary', bankKey: 'ACQ1', author: 'Kelly' },
