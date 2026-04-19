@@ -306,14 +306,17 @@ function triggerQuestion(tileIdx) {
   // Populate question modal
   const levelLabels = ['', 'Level 1 · Fill in the Blank', 'Level 2 · Calculation', 'Level 3 · Open Question'];
   document.getElementById('q-level-label').textContent = levelLabels[questionLevel];
-  document.getElementById('q-subject').textContent = tile.label;
   document.getElementById('q-text').textContent = q.question;
   document.getElementById('q-answer').textContent = q.answer;
   document.getElementById('q-answer').classList.add('hidden');
 
-  // Author label (using existing section-label or new element if needed)
-  const authEl = document.querySelector('#question-modal .section-label');
-  if (authEl) authEl.textContent = `Question by ${tile.author}`;
+  // Author label (Top Right)
+  const qAuthEl = document.getElementById('q-author');
+  if (qAuthEl) {
+    qAuthEl.textContent = tile.author.toUpperCase();
+    qAuthEl.style.color = `var(--c-${tile.color})`;
+    qAuthEl.style.textShadow = `0 0 15px var(--c-${tile.color})80`;
+  }
 
   // Context line
   const ctxEl = document.getElementById('q-context');

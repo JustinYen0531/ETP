@@ -1705,3 +1705,14 @@ html, body {
   opacity: 0.6;
   pointer-events: none;
 }
+
+.q-author-modal-tag {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--c-primary);
+  margin-left: auto;
+  text-shadow: 0 0 15px rgba(143, 245, 255, 0.4);
+}
