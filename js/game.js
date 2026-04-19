@@ -311,6 +311,10 @@ function triggerQuestion(tileIdx) {
   document.getElementById('q-answer').textContent = q.answer;
   document.getElementById('q-answer').classList.add('hidden');
 
+  // Author label (using existing section-label or new element if needed)
+  const authEl = document.querySelector('#question-modal .section-label');
+  if (authEl) authEl.textContent = `Question by ${tile.author}`;
+
   // Context line
   const ctxEl = document.getElementById('q-context');
   if (defender === null) {
@@ -598,6 +602,70 @@ function showToast(msg) {
   toast.textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// Question Index / Overview
+// ============================================================
+function openQuestionOverview() {
+  renderQuestionOverview();
+  openModal('overview-modal');
+}
+
+function renderQuestionOverview() {
+  const grid = document.getElementById('overview-grid');
+  if (!grid) return;
+
+  grid.innerHTML = BOARD_TILES.filter(t => t.type === 'subject').map(tile => {
+    return `
+      <div class="overview-item" onclick="openQuestionPreview('${tile.bankKey}')">
+        <div class="overview-item-top">
+          <span class="overview-tile-num">TILE 0${tile.id}</span>
+          <span class="material-symbols-outlined" style="color:var(--c-${tile.color});">${tile.icon}</span>
+        </div>
+        <div class="overview-subject">${tile.label}</div>
+        <div class="overview-author-label">Created By</div>
+        <div class="overview-author-name">${tile.author}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openQuestionPreview(bankKey) {
+  const content = document.getElementById('preview-content');
+  const accent = document.getElementById('preview-accent');
+  if (!content || !bankKey) return;
+
+  const subjectData = QUESTION_BANK[bankKey];
+  const tile = BOARD_TILES.find(t => t.bankKey === bankKey);
+  
+  accent.style.background = `var(--c-${tile.color})`;
+
+  content.innerHTML = `
+    <span class="section-label">${tile.label} Bank · ${tile.author}</span>
+    <h2 class="guide-title" style="margin-bottom:1.5rem;">Tile ${tile.id} Questions</h2>
+    
+    ${subjectData.map((q, i) => `
+      <div class="preview-q-block" style="border-left-color: var(--c-${tile.color})">
+        <div class="preview-q-level">Level ${i + 1}</div>
+        <div class="preview-q-text">${q.question}</div>
+        <div class="preview-q-ans">Ans: ${q.answer}</div>
+      </div>
+    `).join('')}
+  `;
+
+  openModal('preview-modal');
+}
+
+function closeModalOutside(event, modalId) {
+  if (event.target.id === modalId) {
+    closeModal(modalId);
+  }
+}
+
+// Custom Navigation Functions
+function openHowToPlay() {
+  openModal('how-to-play-modal');
 }
 
 // ============================================================

@@ -61,22 +61,22 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 6: Statistics - Justin
+  // Tile 6: Statistics - Library 2
   STQ2: [
     {
       level: 1, type: 'fill',
-      question: "A probability distribution where the mean, median, and mode are all equal and the curve is perfectly bell-shaped is the ______ distribution.",
-      answer: "Normal"
+      question: "If two variables move in opposite directions, they have a ______ correlation.",
+      answer: "Negative"
     },
     {
       level: 2, type: 'calc',
-      question: "In a standard deck of 52 cards, what is the probability of drawing a 'Heart' card? (Enter as a fraction, e.g., 1/2)",
-      answer: "1/4"
+      question: "If you flip a coin 3 times, what is the probability of getting 3 Heads?",
+      answer: "1/8 (12.5%)"
     },
     {
       level: 3, type: 'open',
-      question: "Explain the main difference between 'Descriptive Statistics' and 'Inferential Statistics'.",
-      answer: "Descriptive statistics summarize and describe data, while inferential statistics use sample data to make predictions or generalizations about a larger population."
+      question: "What does a 'P-value < 0.05' typically represent in a hypothesis test?",
+      answer: "Statistically significant result — we reject the null hypothesis (H₀)."
     }
   ],
 
@@ -99,22 +99,22 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 7: Calculus - Justin
+  // Tile 7: Calculus - Library 2
   CAQ2: [
     {
       level: 1, type: 'fill',
-      question: "The mathematical concept used to measure the rate at which a function changes at a specific point is the ______.",
-      answer: "Derivative"
+      question: "The reverse process of differentiation is called ______.",
+      answer: "Integration (Antiderivative)"
     },
     {
       level: 2, type: 'calc',
-      question: "Find the derivative (f') of f(x) = 5x^2 + 7x - 3.",
-      answer: "10x + 7"
+      question: "What is the value of 'e' to two decimal places?",
+      answer: "2.72"
     },
     {
       level: 3, type: 'open',
-      question: "In calculus, what does it mean for a function to be 'Continuous' at a specific point?",
-      answer: "It means the limit as you approach the point equals the actual function value at that point (there are no jumps, holes, or gaps in the graph)."
+      question: "Explain the 'Chain Rule' in one simple sentence.",
+      answer: "It's a rule for finding the derivative of a function inside another function (composite function)."
     }
   ],
 
@@ -159,16 +159,16 @@ const QUESTION_BANK = {
 
 // Board tile configuration (索引 0-9)
 const BOARD_TILES = [
-  { id: 0, type: 'special', label: 'START', icon: 'flag', color: 'white', bankKey: null, author: 'System' },
-  { id: 1, type: 'subject', label: 'ACQ', icon: 'account_balance', color: 'tertiary', bankKey: 'ACQ1', author: 'Kelly' },
-  { id: 2, type: 'subject', label: 'STQ', icon: 'insights', color: 'primary', bankKey: 'STQ1', author: 'Ally' },
-  { id: 3, type: 'subject', label: 'CAQ', icon: 'calculate', color: 'secondary', bankKey: 'CAQ1', author: 'Ally' },
-  { id: 4, type: 'subject', label: 'ECQ', icon: 'trending_up', color: 'cyan', bankKey: 'ECQ1', author: 'Kelly' },
-  { id: 5, type: 'subject', label: 'ACQ', icon: 'account_balance_wallet', color: 'tertiary', bankKey: 'ACQ2', author: 'Carrie' },
-  { id: 6, type: 'subject', label: 'STQ', icon: 'analytics', color: 'primary', bankKey: 'STQ2', author: 'Justin' },
-  { id: 7, type: 'subject', label: 'CAQ', icon: 'functions', color: 'secondary', bankKey: 'CAQ2', author: 'Justin' },
-  { id: 8, type: 'subject', label: 'ECQ', icon: 'science', color: 'cyan', bankKey: 'ECQ2', author: 'Carrie' },
-  { id: 9, type: 'special', label: 'CHANCE', icon: 'casino', color: 'white', bankKey: null, author: 'System' },
+  { id: 0, type: 'special', label: 'START', icon: 'flag', color: 'white', bankKey: null },
+  { id: 1, type: 'subject', label: 'ACQ', icon: 'account_balance', color: 'tertiary', bankKey: 'ACQ1' },
+  { id: 2, type: 'subject', label: 'STQ', icon: 'insights', color: 'primary', bankKey: 'STQ1' },
+  { id: 3, type: 'subject', label: 'CAQ', icon: 'calculate', color: 'secondary', bankKey: 'CAQ1' },
+  { id: 4, type: 'subject', label: 'ECQ', icon: 'trending_up', color: 'cyan', bankKey: 'ECQ1' },
+  { id: 5, type: 'subject', label: 'ACQ', icon: 'account_balance_wallet', color: 'tertiary', bankKey: 'ACQ2' },
+  { id: 6, type: 'subject', label: 'STQ', icon: 'analytics', color: 'primary', bankKey: 'STQ2' },
+  { id: 7, type: 'subject', label: 'CAQ', icon: 'functions', color: 'secondary', bankKey: 'CAQ2' },
+  { id: 8, type: 'subject', label: 'ECQ', icon: 'science', color: 'cyan', bankKey: 'ECQ2' },
+  { id: 9, type: 'special', label: 'CHANCE', icon: 'casino', color: 'white', bankKey: null },
 ];
 
 // Student pool (15 students, excluding 4 presenters: Justin, Kelly, Carrie, Ally)

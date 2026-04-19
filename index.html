@@ -90,6 +90,9 @@
       <button id="btn-how-to-play" class="btn-home-secondary" onclick="openHowToPlay()">
         HOW TO PLAY
       </button>
+      <button id="btn-question-overview" class="btn-home-secondary" onclick="openQuestionOverview()" style="border-color:var(--c-tertiary); color:var(--c-tertiary);">
+        QUESTION INDEX
+      </button>
     </div>
     <div class="home-stats">
       <div class="home-stat-card">
@@ -260,8 +263,9 @@
         <span class="tile-owner" id="to-0"></span>
       </div>
       <!-- Tile 1: Accounting 1 -->
-      <div class="tile tile-tertiary" id="tile-1" onclick="triggerQuestion(1)" title="Accounting 1">
+      <div class="tile tile-tertiary" id="tile-1" onclick="triggerQuestion(1)" title="Accounting 1 (by Kelly)">
         <span class="material-symbols-outlined tile-icon">account_balance</span>
+        <span class="tile-author">Kelly</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Accounting 1
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">2</span>
@@ -270,8 +274,9 @@
         <span class="tile-owner" id="to-1"></span>
       </div>
       <!-- Tile 2: Statistics 1 -->
-      <div class="tile tile-primary" id="tile-2" onclick="triggerQuestion(2)" title="Statistics 1">
+      <div class="tile tile-primary" id="tile-2" onclick="triggerQuestion(2)" title="Statistics 1 (by Ally)">
         <span class="material-symbols-outlined tile-icon">insights</span>
+        <span class="tile-author">Ally</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Statistics 1
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">3</span>
@@ -280,8 +285,9 @@
         <span class="tile-owner" id="to-2"></span>
       </div>
       <!-- Tile 3: Calculus 1 -->
-      <div class="tile tile-secondary" id="tile-3" onclick="triggerQuestion(3)" title="Calculus 1">
+      <div class="tile tile-secondary" id="tile-3" onclick="triggerQuestion(3)" title="Calculus 1 (by Ally)">
         <span class="material-symbols-outlined tile-icon">calculate</span>
+        <span class="tile-author">Ally</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Calculus 1
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">4</span>
@@ -292,8 +298,9 @@
 
       <!-- Row 2: Tile 8 | [Center 2x1] | Tile 4 -->
       <!-- Tile 8: Economics 2 -->
-      <div class="tile tile-cyan" id="tile-8" onclick="triggerQuestion(8)" title="Economics 2">
+      <div class="tile tile-cyan" id="tile-8" onclick="triggerQuestion(8)" title="Economics 2 (by Carrie)">
         <span class="material-symbols-outlined tile-icon">science</span>
+        <span class="tile-author">Carrie</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Economics 2
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">10</span>
@@ -338,8 +345,9 @@
       </div>
 
       <!-- Tile 4: Economics 1 -->
-      <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1">
+      <div class="tile tile-cyan" id="tile-4" onclick="triggerQuestion(4)" title="Economics 1 (by Kelly)">
         <span class="material-symbols-outlined tile-icon">trending_up</span>
+        <span class="tile-author">Kelly</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Economics 1
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">5</span>
@@ -350,8 +358,9 @@
 
       <!-- Row 3: Tiles 7-9 -->
       <!-- Tile 7: Calculus 2 -->
-      <div class="tile tile-secondary" id="tile-7" onclick="triggerQuestion(7)" title="Calculus 2">
+      <div class="tile tile-secondary" id="tile-7" onclick="triggerQuestion(7)" title="Calculus 2 (by Justin)">
         <span class="material-symbols-outlined tile-icon">functions</span>
+        <span class="tile-author">Justin</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Calculus 2
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">9</span>
@@ -361,8 +370,9 @@
       </div>
 
       <!-- Tile 6: Statistics 2 -->
-      <div class="tile tile-primary" id="tile-6" onclick="triggerQuestion(6)" title="Statistics 2">
+      <div class="tile tile-primary" id="tile-6" onclick="triggerQuestion(6)" title="Statistics 2 (by Justin)">
         <span class="material-symbols-outlined tile-icon">analytics</span>
+        <span class="tile-author">Justin</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Statistics 2
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">8</span>
@@ -372,8 +382,9 @@
       </div>
 
       <!-- Tile 5: Accounting 2 -->
-      <div class="tile tile-tertiary" id="tile-5" onclick="triggerQuestion(5)" title="Accounting 2">
+      <div class="tile tile-tertiary" id="tile-5" onclick="triggerQuestion(5)" title="Accounting 2 (by Carrie)">
         <span class="material-symbols-outlined tile-icon">account_balance_wallet</span>
+        <span class="tile-author">Carrie</span>
         <span class="tile-label" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem;">
           Accounting 2
           <span style="font-size:0.75rem; opacity:0.8; font-weight:800; color:var(--c-text-muted);">7</span>
@@ -733,6 +744,44 @@
   50% { opacity: 0.4; transform: scale(0.8); }
 }
 </style>
+
+<!-- ============================================================
+     QUESTION OVERVIEW MODAL
+     ============================================================ -->
+<div id="overview-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'overview-modal')">
+  <div class="modal-card modal-card-wide" onclick="event.stopPropagation()">
+    <div class="modal-accent-line" style="background:var(--c-tertiary);"></div>
+    <button class="modal-close-btn" onclick="closeModal('overview-modal')">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div class="overview-container">
+      <div class="overview-header">
+        <span class="section-label">Full Question Bank · Presenter Reference</span>
+        <h2 class="guide-title">Question Index</h2>
+        <p style="font-size:0.8rem;color:var(--c-text-muted);">Review all subject tiles and their respective authors.</p>
+      </div>
+
+      <div class="overview-grid" id="overview-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     QUESTION PREVIEW MODAL (Inside Overview)
+     ============================================================ -->
+<div id="preview-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'preview-modal')" style="z-index: 2000;">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-accent-line" id="preview-accent"></div>
+    <button class="modal-close-btn" onclick="closeModal('preview-modal')">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div id="preview-content">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
 
 <!-- Scripts -->
 <script src="js/data.js"></script>
