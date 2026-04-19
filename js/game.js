@@ -6,6 +6,7 @@
 // 1,2,3,4,5,6,7,8,9,10 => tile ids [0,1,2,3,4,9,5,6,7,8]
 const BOARD_ROUTE = [0, 1, 2, 3, 4, 9, 5, 6, 7, 8];
 const DICE_FACES = ['filter_1', 'filter_2', 'filter_3', 'filter_4', 'filter_5', 'filter_6'];
+const FATE_MAX_PER_TYPE = 3;
 
 const GameState = {
   phase: 'home',         // 'home' | 'randomize' | 'board' | 'question' | 'stats'
@@ -305,15 +306,15 @@ function triggerQuestion(tileIdx) {
 
   // Handle Special Tiles (Fate / Start / Chance)
   if (tile.type === 'special' || tile.type === 'fate-subject') {
-    GameState.pendingAnswerTile = tileIdx;
-    
-    // Toggle question button visibility based on tile type
-    const qBtn = document.getElementById('fate-btn-question');
-    if (qBtn) {
-      if (tile.type === 'fate-subject') qBtn.classList.remove('hidden');
-      else qBtn.classList.add('hidden');
+    if (isFateFullyConsumed()) {
+      showToast('All Fate events are exhausted. This tile is skipped.');
+      GameState.pendingAnswerTile = null;
+      endTurn();
+      return;
     }
-    
+
+    GameState.pendingAnswerTile = tileIdx;
+    syncFateSelectionButtons();
     openModal('fate-selection-modal');
     return;
   }
@@ -582,6 +583,9 @@ function wait(ms) {
 function isMaxLevelTile(tileIdx) {
   const tile = BOARD_TILES[tileIdx];
   const state = GameState.tiles[tileIdx];
+  if (tile?.type === 'special' || tile?.type === 'fate-subject') {
+    return isFateFullyConsumed();
+  }
   return Boolean(tile?.bankKey) && (state?.level ?? 0) >= 3;
 }
 
@@ -723,40 +727,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── Fate / Life logic ───────────────────────────────────────
 
 function selectFate(type) {
+  const exhaustedType = (type === 'life' && isLifeExhausted()) || (type === 'challenge' && isChallengeExhausted());
+  if (exhaustedType) {
+    showToast(`${type === 'life' ? 'Life' : 'Challenge'} quota reached. Choose the other one.`);
+    syncFateSelectionButtons();
+    return;
+  }
+
   closeModal('fate-selection-modal');
-  if (type === 'question') {
-    // Manually trigger the "Subject" question logic for this tile
-    const tileIdx = GameState.pendingAnswerTile;
-    const tile = BOARD_TILES[tileIdx];
-    const tileState = GameState.tiles[tileIdx];
-    const challenger = GameState.currentTeam;
-    const defender = tileState.owner;
-    const questionLevel = tileState.owner === null ? 1 : tileState.level + 1;
-
-    if (questionLevel > 3) {
-      showToast('This tile is at MAX LEVEL — choose another path!');
-      openModal('fate-selection-modal');
-      return;
-    }
-
-    const q = QUESTION_BANK[tile.bankKey][questionLevel - 1];
-    GameState.currentQuestion = { tileIdx, q, challenger, defender, questionLevel };
-
-    // Update Modal UI
-    const levelLabels = ['', 'Level 1 · Fill in the Blank', 'Level 2 · Calculation', 'Level 3 · Open Question'];
-    document.getElementById('q-level-label').textContent = levelLabels[questionLevel];
-    document.getElementById('q-text').textContent = q.question;
-    document.getElementById('q-answer').textContent = q.answer;
-    document.getElementById('q-answer').classList.add('hidden');
-
-    const qAuthEl = document.getElementById('q-author');
-    if (qAuthEl) {
-      qAuthEl.textContent = tile.author.toUpperCase();
-      qAuthEl.style.color = `var(--c-${tile.color})`;
-    }
-
-    openModal('question-modal');
-  } else if (type === 'life') {
+  if (type === 'life') {
     triggerLifeQuestion();
   } else {
     triggerChallengeQuestion();
@@ -764,11 +743,13 @@ function selectFate(type) {
 }
 
 function triggerChallengeQuestion() {
-  const pool = CHALLENGE_QUESTIONS.filter(q => !GameState.usedChallengeQuestions.includes(q.id));
+  const challengeBank = CHALLENGE_QUESTIONS.slice(0, FATE_MAX_PER_TYPE);
+  const pool = challengeBank.filter(q => !GameState.usedChallengeQuestions.includes(q.id));
   if (pool.length === 0) {
-    showToast("All challenges completed! Resetting pool...");
-    GameState.usedChallengeQuestions = [];
-    return triggerChallengeQuestion();
+    showToast('Challenge quota reached. Choose Life.');
+    syncFateSelectionButtons();
+    openModal('fate-selection-modal');
+    return;
   }
 
   const q = pool[Math.floor(Math.random() * pool.length)];
@@ -795,7 +776,7 @@ function solveChallenge(points) {
   if (points > 0) {
     team.fateBonus += points;
   }
-  if (points > 0) {
+  if (q?.id && !GameState.usedChallengeQuestions.includes(q.id)) {
     GameState.usedChallengeQuestions.push(q.id);
   }
 
@@ -815,11 +796,13 @@ function solveChallenge(points) {
 }
 
 function triggerLifeQuestion() {
-  const pool = LIFE_QUESTIONS.filter(q => !GameState.usedLifeQuestions.includes(q.id));
+  const lifeBank = LIFE_QUESTIONS.slice(0, FATE_MAX_PER_TYPE);
+  const pool = lifeBank.filter(q => !GameState.usedLifeQuestions.includes(q.id));
   if (pool.length === 0) {
-    showToast("All life questions consumed! Shuffling pool...");
-    GameState.usedLifeQuestions = [];
-    return triggerLifeQuestion();
+    showToast('Life quota reached. Choose Challenge.');
+    syncFateSelectionButtons();
+    openModal('fate-selection-modal');
+    return;
   }
 
   const q = pool[Math.floor(Math.random() * pool.length)];
@@ -856,6 +839,33 @@ function solveLife(points) {
   renderStats();
   renderSidePanels();
   endTurn(); // Usually fate tiles end the turn if they involve a question
+}
+
+function isLifeExhausted() {
+  return GameState.usedLifeQuestions.length >= FATE_MAX_PER_TYPE;
+}
+
+function isChallengeExhausted() {
+  return GameState.usedChallengeQuestions.length >= FATE_MAX_PER_TYPE;
+}
+
+function isFateFullyConsumed() {
+  return isLifeExhausted() && isChallengeExhausted();
+}
+
+function syncFateSelectionButtons() {
+  const lifeBtn = document.getElementById('fate-btn-life');
+  const challengeBtn = document.getElementById('fate-btn-challenge');
+  if (lifeBtn) {
+    lifeBtn.disabled = isLifeExhausted();
+    lifeBtn.style.opacity = lifeBtn.disabled ? '0.35' : '1';
+    lifeBtn.style.pointerEvents = lifeBtn.disabled ? 'none' : 'auto';
+  }
+  if (challengeBtn) {
+    challengeBtn.disabled = isChallengeExhausted();
+    challengeBtn.style.opacity = challengeBtn.disabled ? '0.35' : '1';
+    challengeBtn.style.pointerEvents = challengeBtn.disabled ? 'none' : 'auto';
+  }
 }
 
 // ── Admin Panel Logic ───────────────────────────────────────

@@ -763,16 +763,12 @@
     <div class="section-label">FATE / START & CHANCE</div>
     <h2 class="guide-title">Event Selection</h2>
     <p style="color:var(--c-text-muted); margin-bottom:1.5rem;">Choose your path for this fate tile.</p>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:1rem;">
-      <button id="fate-btn-question" class="btn-proceed-v2 hidden" onclick="selectFate('question')" style="height:auto; padding:1.5rem 1rem; border-color:var(--c-primary); background:rgba(143,245,255,0.05); color:var(--c-primary);">
-        <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">help_center</span>
-        QUESTION
-      </button>
-      <button class="btn-proceed-v2" onclick="selectFate('life')" style="height:auto; padding:1.5rem 1rem;">
+    <div style="display:grid; grid-template-columns: repeat(2, minmax(160px, 1fr)); gap:1rem;">
+      <button id="fate-btn-life" class="btn-proceed-v2" onclick="selectFate('life')" style="height:auto; padding:1.5rem 1rem;">
         <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">auto_awesome</span>
-        LIFE / FUN
+        LIFE
       </button>
-      <button class="btn-proceed-v2" onclick="selectFate('challenge')" style="height:auto; padding:1.5rem 1rem; border-color:var(--c-error); background:rgba(255,113,108,0.05); color:var(--c-error);">
+      <button id="fate-btn-challenge" class="btn-proceed-v2" onclick="selectFate('challenge')" style="height:auto; padding:1.5rem 1rem; border-color:var(--c-error); background:rgba(255,113,108,0.05); color:var(--c-error);">
         <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">bolt</span>
         CHALLENGE
       </button>
