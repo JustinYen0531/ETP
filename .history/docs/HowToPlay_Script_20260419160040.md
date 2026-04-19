@@ -7,18 +7,6 @@
 
 ---
 
-### [Phase 0] Justin: Team Randomizer (The Shuffle)
-**Timing:** ~45 Seconds (to be spoken while the names are shuffling in the UI).
-**Tone:** Hype, anticipation, authoritative.
-
-"Attention everyone! Before we head to the arena, we need the most important element: your teams! Right now, our four slots—ALPHA, BETA, GAMMA, and DELTA—are empty, waiting for their crew. In just a second, I’m going to initiate the Kinetic Terminal Roster Protocol. 
-
-We have 15 top-tier students in the pool today. Our algorithm is about to shuffle and distribute you across the four team slots. Some of you might find yourselves with longtime friends, while others will be making brand-new strategic alliances on the spot! 
-
-As the names start spinning on the screen, get ready to find your group! Watch closely for your Lead Mentor's name on each slot. Once the drum stops, these people will be your comrades for the entire show. Stand by... Initiating roster synchronization... Shuffle the drum! Let's see who’s carrying the flag for Team Alpha!"
-
----
-
 ### [Module 1] Justin: Overview
 **Topic:** Introduction, Teams, and General Flow.
 
@@ -63,25 +51,29 @@ Everything is tracked in real-time on our live leaderboard. At the end, we’ll 
 
 ---
 
+### [Phase 1] Justin: Team Randomizer (The Shuffle)
+**Timing:** ~45 Seconds (to be spoken while the names are shuffling in the UI).
+**Tone:** Hype, anticipation, authoritative.
+
+"Attention everyone! Before we head to the arena, we need the most important element: your teams! Right now, our four slots—ALPHA, BETA, GAMMA, and DELTA—are empty, waiting for their crew. In just a second, I’m going to initiate the Kinetic Terminal Roster Protocol. 
+
+We have 15 top-tier students in the pool today. Our algorithm is about to shuffle and distribute you across the four team slots. Some of you might find yourselves with longtime friends, while others will be making brand-new strategic alliances on the spot! 
+
+As the names start spinning on the screen, get ready to find your group! Watch closely for your Lead Mentor's name on each slot. Once the drum stops, these people will be your comrades for the entire show. Stand by... Initiating roster synchronization... Shuffle the drum! Let's see who’s carrying the flag for Team Alpha!"
+
 ## Staff Protocols & Responsibilities (工作分配)
 
-### 1. Permanent Staff Roles (常態性工作人員角色)
-*These roles are active throughout the entire game event:*
-*   **System Operator (Justin):** Manages the software UI, handles team randomization, dice rolls, and screen transitions.
-*   **Time Keeper:** Monitors the countdown for questions and physical challenges. Signals the host and authors when time is up. 
-*   **Betting & Score Registrar:** Tracks the 'Betting' phase (voting) from non-active teams. Communicates correct bets to the System Operator for manual score updates.
-*   **Floor Manager & Atmosphere Lead:** Coordinates the physical space for challenges (e.g., dancing/push-ups), manages microphones for students, and keeps the audience's energy and interaction high.
-
-### 2. Subject Author Protocol (出題者規範)
+### 1. Subject Author Protocol (出題者規範)
 *As an author, you are responsible for the flow of your specific question tiles:*
 *   **Reading:** You must read the question aloud clearly as soon as it appears on the modal.
 *   **Probing:** During the team's thinking/discussion phase, ask guiding questions to stimulate their logic. **NEVER** give away the answer directly.
 *   **Revealing:** Once the time is up or the team answers, you are responsible for reading the correct answer aloud.
 *   **Discretion (Lv 3):** For Level 3 open questions, if the team's answer is conceptually sound but phrased differently than the key, you have the authority to decide if it earns points.
 
-### 3. Team Mentor Protocol (組長/導師規範)
+### 2. Team Mentor Protocol (組長/導師規範)
 *As a mentor, you ensure your team stays engaged and competitive:*
 *   **Engagement & Discussion:** Facilitate the team's thinking process. Encourage everyone to contribute their ideas and don't let the discussion stall.
 *   **Nomination (The Push):** Actively encourage students to answer. If the team is too hesitant or shy, you **MUST** nominate a specific student to deliver the final answer to the room.
 *   **Spokesperson:** If the team has reached a consensus but no student is willing to speak, you may act as the team's official spokesperson to announce their final answer.
 *   **Strategic Hints:** You may offer hints or guide the thinking process, but you are **forbidden** from providing the final answer alone. The conclusion must come from the team.
+
