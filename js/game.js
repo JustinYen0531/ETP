@@ -36,6 +36,7 @@ const GameState = {
       properties: [],
       position: 0,
       manualBonus: 0,
+      fateBonus: 0,
       lapBonusCount: 0,
       mentor: TEAM_MENTORS[i],
       scoreBreakdown: { lvl1: 0, lvl2: 0, lvl3: 0 }
@@ -200,7 +201,7 @@ function renderBoard() {
   const tileIdx = GameState.pendingAnswerTile;
   const pendingTile = tileIdx === null ? null : BOARD_TILES[tileIdx];
   const canAnswerSubject = pendingTile && pendingTile.type === 'subject';
-  const isFate = pendingTile && pendingTile.type === 'special';
+  const isFate = pendingTile && (pendingTile.type === 'special' || pendingTile.type === 'fate-subject');
 
   if (centerTile) {
     centerTile.classList.toggle('answer-mode', Boolean(canAnswerSubject || isFate));
@@ -473,7 +474,7 @@ function renderStatsPanel(containerId, teamIndexes) {
           </div>
           <div class="team-stat-scorebox">
             <div class="team-stat-total-label">Total</div>
-            <div class="team-stat-total" style="color:${team.hex};">${team.score}</div>
+            <div class="team-stat-total" id="team-total-${teamIdx}" style="color:${team.hex};">${team.score}</div>
           </div>
         </div>
         <div class="team-breakdown">
@@ -481,10 +482,11 @@ function renderStatsPanel(containerId, teamIndexes) {
           <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">looks_two</span>200</span><span>${breakdown.lvl2}</span></div>
           <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">looks_3</span>300</span><span>${breakdown.lvl3}</span></div>
           <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">sync</span>+50</span><span>${team.lapBonusCount}</span></div>
+          <div class="team-breakdown-row"><span class="team-breakdown-key"><span class="material-symbols-outlined team-breakdown-icon">bolt</span>FATE +</span><span id="fate-bonus-${teamIdx}">${team.fateBonus}</span></div>
         </div>
         <div class="manual-score-wrap">
           <label class="manual-score-label" for="manual-score-${teamIdx}">Manual</label>
-          <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" inputmode="numeric" placeholder="Type score" value="${team.manualBonus}" oninput="updateManualScore(${teamIdx}, this.value)" />
+          <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" inputmode="numeric" placeholder="Type score" value="${team.manualBonus}" onchange="updateManualScore(${teamIdx}, this.value)" onkeydown="if (event.key === 'Enter') { updateManualScore(${teamIdx}, this.value); this.blur(); }" />
         </div>
       </div>
     `;
@@ -512,10 +514,20 @@ function updateManualScore(teamIdx, rawValue) {
   const team = GameState.teams[teamIdx];
   const nextManual = Number(rawValue) || 0;
   const delta = nextManual - team.manualBonus;
+  if (delta === 0) return;
   team.manualBonus = nextManual;
   team.score += delta;
   pushHistory(teamIdx, `Manual score adjusted by ${delta >= 0 ? '+' : ''}${delta}.`, 'MANUAL');
-  renderBoard();
+  refreshTeamScoreDisplays(teamIdx);
+  renderStats();
+}
+
+function refreshTeamScoreDisplays(teamIdx) {
+  const team = GameState.teams[teamIdx];
+  const totalEl = document.getElementById(`team-total-${teamIdx}`);
+  if (totalEl) totalEl.textContent = team.score.toLocaleString();
+  const fateEl = document.getElementById(`fate-bonus-${teamIdx}`);
+  if (fateEl) fateEl.textContent = team.fateBonus.toLocaleString();
 }
 
 function getWinningTeam() {
@@ -781,6 +793,9 @@ function solveChallenge(points) {
 
   team.score += points;
   if (points > 0) {
+    team.fateBonus += points;
+  }
+  if (points > 0) {
     GameState.usedChallengeQuestions.push(q.id);
   }
 
@@ -823,6 +838,9 @@ function solveLife(points) {
   const q = GameState.currentLifeQuestion;
 
   team.score += points;
+  if (points > 0) {
+    team.fateBonus += points;
+  }
   GameState.usedLifeQuestions.push(q.id);
 
   showToast(`Life Event: ${team.name} gained ${points} points!`);
