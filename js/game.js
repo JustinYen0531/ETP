@@ -22,6 +22,7 @@ const GameState = {
   activeStepTile: null,
   teamsRandomized: false,
   isRandomizingTeams: false,
+  devDragMode: false,
   usedLifeQuestions: [],
   usedChallengeQuestions: [],
   currentLifeQuestion: null,
@@ -50,6 +51,7 @@ const GameState = {
     this.activeStepTile = null;
     this.teamsRandomized = false;
     this.isRandomizingTeams = false;
+    this.devDragMode = false;
     this.usedLifeQuestions = [];
     this.usedChallengeQuestions = [];
   }
@@ -268,6 +270,15 @@ function renderBoard() {
     }
 
     el.classList.toggle('step-active', GameState.activeStepTile === idx);
+    if (GameState.devDragMode) {
+      el.classList.add('dev-drop-target');
+      el.setAttribute('ondragover', 'adminDragOver(event)');
+      el.setAttribute('ondrop', `adminDropToken(event, ${idx})`);
+    } else {
+      el.classList.remove('dev-drop-target');
+      el.removeAttribute('ondragover');
+      el.removeAttribute('ondrop');
+    }
     renderTileTokens(el, idx);
   });
 
@@ -383,6 +394,10 @@ async function animateTeamMove(steps) {
 // Question Flow
 // ============================================================
 function triggerQuestion(tileIdx) {
+  if (GameState.devDragMode) {
+    showToast('Drag mode active: tile questions are temporarily disabled.');
+    return;
+  }
   const tile = BOARD_TILES[tileIdx];
 
   // Handle Special Tiles (Fate / Start / Chance)
@@ -664,7 +679,7 @@ function renderTileTokens(tileEl, tileIdx) {
     .filter(({ team }) => BOARD_ROUTE[team.position] === tileIdx);
 
   layer.innerHTML = teamsOnTile.map(({ team, idx }) =>
-    `<span class="team-token ${GameState.isRolling && idx === GameState.currentTeam ? 'moving' : ''}" title="${team.name}" style="background:${team.hex}; color:${team.hex}; outline: 1px solid ${team.hex}90;" data-team="${idx}"></span>`
+    `<span class="team-token ${GameState.isRolling && idx === GameState.currentTeam ? 'moving' : ''} ${GameState.devDragMode ? 'draggable' : ''}" title="${team.name}" style="background:${team.hex}; color:${team.hex}; outline: 1px solid ${team.hex}90;" data-team="${idx}" ${GameState.devDragMode ? `draggable="true" ondragstart="adminDragTokenStart(event, ${idx})"` : ''}></span>`
   ).join('');
 }
 
@@ -1028,4 +1043,61 @@ function adminResetPools() {
   GameState.usedLifeQuestions = [];
   GameState.usedChallengeQuestions = [];
   showToast("Admin: All question pools have been reset!");
+}
+
+function adminToggleDragMode() {
+  GameState.devDragMode = !GameState.devDragMode;
+  if (GameState.devDragMode) {
+    GameState.pendingAnswerTile = null;
+    closeModal('fate-selection-modal');
+    closeModal('question-modal');
+    closeModal('life-modal');
+    closeModal('challenge-modal');
+  }
+  const toggleBtn = document.getElementById('admin-drag-toggle-btn');
+  if (toggleBtn) toggleBtn.textContent = `DRAG FLAGS: ${GameState.devDragMode ? 'ON' : 'OFF'}`;
+  showToast(`Admin: Drag Flags Mode ${GameState.devDragMode ? 'enabled' : 'disabled'}.`);
+  renderBoard();
+}
+
+function adminDragTokenStart(event, teamIdx) {
+  if (!GameState.devDragMode) return;
+  event.dataTransfer.setData('text/plain', String(teamIdx));
+  event.dataTransfer.effectAllowed = 'move';
+}
+
+function adminDragOver(event) {
+  if (!GameState.devDragMode) return;
+  event.preventDefault();
+}
+
+function adminDropToken(event, tileIdx) {
+  if (!GameState.devDragMode) return;
+  event.preventDefault();
+  const teamIdx = Number(event.dataTransfer.getData('text/plain'));
+  if (Number.isNaN(teamIdx) || !GameState.teams[teamIdx]) return;
+  const routeIdx = BOARD_ROUTE.indexOf(tileIdx);
+  if (routeIdx < 0) return;
+  GameState.teams[teamIdx].position = routeIdx;
+  GameState.pendingAnswerTile = null;
+  GameState.activeStepTile = null;
+  pushHistory(teamIdx, `Admin moved token to tile ${tileIdx + 1}.`, 'ADMIN DRAG');
+  renderBoard();
+}
+
+function adminForceNextTurn() {
+  GameState.pendingAnswerTile = null;
+  endTurn();
+}
+
+function adminClearPending() {
+  GameState.pendingAnswerTile = null;
+  GameState.activeStepTile = null;
+  GameState.currentQuestion = null;
+  closeModal('fate-selection-modal');
+  closeModal('question-modal');
+  closeModal('life-modal');
+  closeModal('challenge-modal');
+  showToast('Admin: Cleared pending question/event state.');
+  renderBoard();
 }

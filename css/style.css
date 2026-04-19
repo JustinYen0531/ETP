@@ -948,6 +948,16 @@ html, body {
   position: relative;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
+.team-token.draggable {
+  cursor: grab;
+}
+.team-token.draggable:active {
+  cursor: grabbing;
+}
+.tile.dev-drop-target {
+  outline: 1px dashed rgba(143,245,255,0.4);
+  outline-offset: -3px;
+}
 .team-token.moving {
   transform: scale(1.38);
   box-shadow:

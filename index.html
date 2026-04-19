@@ -864,7 +864,9 @@
       <!-- Logic Control -->
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.75rem;">
         <button class="btn-proceed-v2" onclick="adminResetPools()" style="font-size:0.8rem; height:auto; padding:0.75rem; border-color:var(--c-tertiary); color:var(--c-tertiary);">RESET POOLS</button>
-        <button class="btn-proceed-v2" onclick="endTurn()" style="font-size:0.8rem; height:auto; padding:0.75rem;">FORCE NEXT TURN</button>
+        <button class="btn-proceed-v2" onclick="adminForceNextTurn()" style="font-size:0.8rem; height:auto; padding:0.75rem;">FORCE NEXT TURN</button>
+        <button id="admin-drag-toggle-btn" class="btn-proceed-v2" onclick="adminToggleDragMode()" style="font-size:0.8rem; height:auto; padding:0.75rem; border-color:var(--c-cyan); color:var(--c-cyan);">DRAG FLAGS: OFF</button>
+        <button class="btn-proceed-v2" onclick="adminClearPending()" style="font-size:0.8rem; height:auto; padding:0.75rem; border-color:var(--c-secondary); color:var(--c-secondary);">CLEAR PENDING</button>
       </div>
 
       <!-- Navigation Control -->
