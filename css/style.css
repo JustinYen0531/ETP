@@ -494,6 +494,7 @@ html, body {
   width: 100%; height: calc(100vh - 60px - 60px);
   display: flex; align-items: center; justify-content: center;
   padding: 1rem 1.5rem;
+  z-index: 1;
 }
 
 /* Team HUDs */
@@ -506,6 +507,8 @@ html, body {
   border: 1px solid var(--c-outline);
   max-height: calc(50vh - 90px);
   overflow: hidden;
+  z-index: 25;
+  pointer-events: auto;
 }
 .hud-tl {
   top: 50%;
