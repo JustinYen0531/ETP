@@ -1,21 +1,10 @@
 # ETP Game Show - Presentation Script (UI-Aligned Version)
 
 ## Introduction
-*   **Characters:** Justin (Overview & Randomizer), Ally (Board), Kelly (Questions), Carrie (Winning)
-*   **Total Duration:** ~6 - 7 Minutes
-*   **Alignment:** Strictly follows the "How to Play" UI modules + Team Randomizer phase.
-
----
-
-### [Phase 0] Justin: Team Randomizer (The Shuffle)
-**Timing:** ~45 Seconds (to be spoken while the names are shuffling in the UI).
-**Tone:** Hype, anticipation, authoritative.
-
-"Attention everyone! Before we head to the arena, we need the most important element: your teams! Right now, our four slots—ALPHA, BETA, GAMMA, and DELTA—are empty, waiting for their crew. In just a second, I’m going to initiate the Kinetic Terminal Roster Protocol. 
-
-We have 15 top-tier students in the pool today. Our algorithm is about to shuffle and distribute you across the four team slots. Some of you might find yourselves with longtime friends, while others will be making brand-new strategic alliances on the spot! 
-
-As the names start spinning on the screen, get ready to find your group! Watch closely for your Lead Mentor's name on each slot. Once the drum stops, these people will be your comrades for the entire show. Stand by... Initiating roster synchronization... Shuffle the drum! Let's see who’s carrying the flag for Team Alpha!"
+*   **Characters:** Justin (Overview), Ally (Board), Kelly (Questions), Carrie (Winning)
+*   **Total Duration:** ~5 - 6 Minutes
+*   **Target Pace:** 1.25 minutes per person (~200 words)
+*   **Alignment:** Strictly follows the "How to Play" UI modules.
 
 ---
 
@@ -31,13 +20,13 @@ The basic flow is easy to follow: We’ll start by randomizing your teams, then 
 ---
 
 ### [Module 2] Ally: Board
-**Topic:** Layout, Movement, and Mandatory Conquering.
+**Topic:** Layout, Movement, and Tile Control (Stealing).
 
 "Thanks, Justin! Let’s dive into the **Board** layout. We have 10 unique tiles. Tiles 1 and 6 are your Fate tiles—START and CHANCE—while the rest are dedicated to Accounting, Statistics, Calculus, and Economics.
 
 Your team will roll the dice and move the exact number shown. But here’s the kicker: as tiles reach Level 3, they become 'Maxed Out' and are automatically skipped in future moves, speeding up the game's rhythm! Every time you complete a full lap and pass the START tile, your team gains a **+50 Lap Bonus**.
 
-Now, listen carefully to the strategy: **Tile Control**. If you land on an unclaimed tile, answer correctly to own it. However, if you land on an OPPONENT’S tile, you **MUST** attempt to 'CONQUER' it! There is no playing it safe—you take the challenge head-on. If you succeed, you seize the property and boost its value. But if you fail, you’ve just helped your rival! The original owner will get an automatic 'Level Up' and 50 bonus points. It’s conquer or crash! Kelly, tell them about the Questions!"
+Now, let’s talk strategy: **Tile Control**. If you land on an unclaimed tile, answer correctly to own it. But if you land on an OPPONENT’S tile, you can attempt to 'CONQUER' it! Answer the next level's question correctly, and the tile is yours. But be careful—if you fail, the original owner gets an auto-upgrade and 50 bonus points. Play it safe, or play to win? The choice is yours. Kelly, tell them about the Questions!"
 
 ---
 
@@ -57,6 +46,6 @@ To win, you’ll need a mix of book smarts, memory of our lives, and some physic
 
 "Thank you, Kelly! Let’s talk about the final path to **Winning**. The game ends when all subject tiles reach Level 3. Your final standing is based on your **Total Assets**—that’s the sum of all your question points, lap bonuses, and captured tiles.
 
-But here is a secret weapon: our **Betting System**. Even when it isn’t your turn, you can stay in the game! When another team is answering, your team can vote on whether they will succeed or fail. If your bet is correct, you earn a **50-point bonus**! This is also your chance for manual score adjustments for moments of extra brilliance.
+But here is a secret weapon: our **Betting System**. Even when it isn’t your turn, you can stay in the game! When another team is answering, your team can vote on whether they will succeed or fail. If your bet is correct, you earn a **50-point bonus**! This is score adjustments for moments of extra brilliance.
 
 Everything is tracked in real-time on our live leaderboard. At the end, we’ll tally the scores, celebrate the leaders, and crown the ETP Champions. Remember, every point counts, whether you earned it through a calculus integral or a lucky bet on your rival’s mistake. Good luck to everyone—Justin, let's roll for the first team!"
