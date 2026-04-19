@@ -21,6 +21,7 @@ const GameState = {
   activeStepTile: null,
   teamsRandomized: false,
   usedLifeQuestions: [],
+  usedChallengeQuestions: [],
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -43,6 +44,7 @@ const GameState = {
     this.activeStepTile = null;
     this.teamsRandomized = false;
     this.usedLifeQuestions = [];
+    this.usedChallengeQuestions = [];
   }
 };
 
@@ -697,10 +699,56 @@ function selectFate(type) {
   if (type === 'life') {
     triggerLifeQuestion();
   } else {
-    // Challenge Path: Trigger a high-level random question or special event
-    // For now, let's just show a toast or a random Hard question
-    showToast("Challenge Protocol Initialized... (Feature pending)");
+    triggerChallengeQuestion();
   }
+}
+
+function triggerChallengeQuestion() {
+  const pool = CHALLENGE_QUESTIONS.filter(q => !GameState.usedChallengeQuestions.includes(q.id));
+  if (pool.length === 0) {
+    showToast("All challenges completed! Resetting pool...");
+    GameState.usedChallengeQuestions = [];
+    return triggerChallengeQuestion();
+  }
+
+  const q = pool[Math.floor(Math.random() * pool.length)];
+  GameState.currentChallenge = q;
+
+  // Populate Challenge Modal
+  const authorEl = document.getElementById('challenge-author');
+  const taskEl = document.getElementById('challenge-task');
+  const iconEl = document.getElementById('challenge-icon');
+
+  if (authorEl) authorEl.textContent = q.author.toUpperCase();
+  if (taskEl) taskEl.textContent = q.task;
+  if (iconEl) iconEl.textContent = q.icon;
+  
+  openModal('challenge-modal');
+}
+
+function solveChallenge(points) {
+  closeModal('challenge-modal');
+  const team = GameState.teams[GameState.currentTeam];
+  const q = GameState.currentChallenge;
+
+  team.score += points;
+  if (points > 0) {
+    GameState.usedChallengeQuestions.push(q.id);
+  }
+
+  showToast(`Challenge Event: ${team.name} ${points > 0 ? 'completed it!' : 'failed...'}`);
+  
+  // Log it
+  GameState.history.push({
+    turn: GameState.turnCount,
+    team: team.name, // Fixed: use team.name instead of team index for consistency with solveLife
+    action: `Challenge (${q.author})`,
+    points: points
+  });
+
+  renderStats();
+  renderSidePanels();
+  nextTurn();
 }
 
 function triggerLifeQuestion() {

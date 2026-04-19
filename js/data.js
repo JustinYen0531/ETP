@@ -170,6 +170,13 @@ const LIFE_QUESTIONS = [
   { id: 'l5', image: 'Kelly_Harry.jpg', author: 'Kelly', hint: 'Harry Potter' },
   { id: 'l6', image: 'Kelly_Titanic.jpg', author: 'Kelly', hint: 'Titanic' }
 ];
+
+const CHALLENGE_QUESTIONS = [
+  { id: 'c1', task: 'Dance for 15 seconds!', author: 'Justin', icon: 'theater_comedy' },
+  { id: 'c2', task: 'Sing for 15 seconds!', author: 'Justin', icon: 'mic_external_on' },
+  { id: 'c3', task: 'Do 3 push-ups!', author: 'Justin', icon: 'fitness_center' },
+  { id: 'c4', task: 'Play Rock-Paper-Scissors with Justin. (Win = +200)', author: 'Justin', icon: 'front_hand' }
+];
 const BOARD_TILES = [
   { id: 0, type: 'special', label: 'START', icon: 'flag', color: 'white', bankKey: null, author: 'System' },
   { id: 1, type: 'subject', label: 'ACQ', icon: 'account_balance', color: 'tertiary', bankKey: 'ACQ1', author: 'Kelly' },

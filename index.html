@@ -810,6 +810,37 @@
   </div>
 </div>
 
+<!-- ============================================================
+     CHALLENGE MODAL
+     ============================================================ -->
+<div id="challenge-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'challenge-modal')">
+  <div class="modal-card modal-card-wide" onclick="event.stopPropagation()">
+    <div class="modal-accent-line" style="background:var(--c-error);"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+      <div class="q-level-badge" style="background:rgba(255,113,108,0.1); border-color:rgba(255,113,108,0.3); color:var(--c-error);">
+        <span class="material-symbols-outlined" style="font-size:0.9rem;">bolt</span>
+        PHYSICAL CHALLENGE
+      </div>
+      <span class="q-author-modal-tag" id="challenge-author" style="color:var(--c-error); text-shadow:0 0 15px rgba(255,113,108,0.4);">JUSTIN</span>
+    </div>
+    
+    <div style="text-align:center; margin:2rem 0;">
+      <div style="width:100px; height:100px; border-radius:50%; background:rgba(255,113,108,0.1); display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem;">
+        <span class="material-symbols-outlined" id="challenge-icon" style="font-size:4rem; color:var(--c-error);">fitness_center</span>
+      </div>
+      <h2 id="challenge-task" style="font-family:var(--font-head); font-size:2.5rem; line-height:1.2; letter-spacing:-0.02em;">
+        Do 3 push-ups!
+      </h2>
+      <p style="color:var(--c-text-muted); margin-top:1rem; font-size:1.1rem;">Complete the task to earn 200 points.</p>
+    </div>
+
+    <div class="modal-actions" style="justify-content:center; gap:2rem;">
+      <button class="btn-wrong" onclick="solveChallenge(0)" style="flex:none; min-width:180px; padding:1.2rem;">FAILED (+0)</button>
+      <button class="btn-correct" onclick="solveChallenge(200)" style="flex:none; min-width:180px; padding:1.2rem; border-color:var(--c-error); color:var(--c-error); background:rgba(255,113,108,0.05);">DONE (+200)</button>
+    </div>
+  </div>
+</div>
+
 <!-- Scripts -->
 <script src="js/data.js"></script>
 <script src="js/game.js"></script>
