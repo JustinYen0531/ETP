@@ -986,6 +986,7 @@ function syncFateSelectionButtons() {
 // ── Admin Panel Logic ───────────────────────────────────────
 let adminClickCount = 0;
 let adminClickTimeout = null;
+const adminActionStack = [];
 
 function handleAdminTrigger() {
   adminClickCount++;
@@ -1019,11 +1020,73 @@ function openAdminPanel() {
       </div>
     </div>
   `).join('');
+
+  const undoBtn = document.getElementById('admin-undo-btn');
+  if (undoBtn) {
+    const hasUndo = adminActionStack.length > 0;
+    undoBtn.disabled = !hasUndo;
+    undoBtn.style.opacity = hasUndo ? '1' : '0.45';
+    undoBtn.style.pointerEvents = hasUndo ? 'auto' : 'none';
+  }
   
   openModal('admin-modal');
 }
 
+function captureAdminSnapshot(actionLabel) {
+  const snapshot = {
+    label: actionLabel,
+    turnCount: GameState.turnCount,
+    history: GameState.history.map(entry => ({ ...entry })),
+    currentTeam: GameState.currentTeam,
+    pendingAnswerTile: GameState.pendingAnswerTile,
+    activeStepTile: GameState.activeStepTile,
+    currentQuestion: GameState.currentQuestion ? { ...GameState.currentQuestion } : null,
+    usedLifeQuestions: [...GameState.usedLifeQuestions],
+    usedChallengeQuestions: [...GameState.usedChallengeQuestions],
+    devDragMode: GameState.devDragMode,
+    teams: GameState.teams.map(team => ({
+      score: team.score,
+      position: team.position,
+      manualBonus: team.manualBonus,
+      fateBonus: team.fateBonus,
+      lapBonusCount: team.lapBonusCount,
+      scoreBreakdown: { ...team.scoreBreakdown },
+      properties: [...team.properties]
+    })),
+    tiles: GameState.tiles.map(tile => ({ owner: tile.owner, level: tile.level }))
+  };
+  adminActionStack.push(snapshot);
+  if (adminActionStack.length > 60) adminActionStack.shift();
+}
+
+function restoreAdminSnapshot(snapshot) {
+  if (!snapshot) return;
+  GameState.currentTeam = snapshot.currentTeam;
+  GameState.turnCount = snapshot.turnCount;
+  GameState.history = snapshot.history.map(entry => ({ ...entry }));
+  GameState.pendingAnswerTile = snapshot.pendingAnswerTile;
+  GameState.activeStepTile = snapshot.activeStepTile;
+  GameState.currentQuestion = snapshot.currentQuestion ? { ...snapshot.currentQuestion } : null;
+  GameState.usedLifeQuestions = [...snapshot.usedLifeQuestions];
+  GameState.usedChallengeQuestions = [...snapshot.usedChallengeQuestions];
+  GameState.devDragMode = snapshot.devDragMode;
+
+  GameState.tiles = snapshot.tiles.map(tile => ({ owner: tile.owner, level: tile.level }));
+  GameState.teams.forEach((team, idx) => {
+    const saved = snapshot.teams[idx];
+    if (!saved) return;
+    team.score = saved.score;
+    team.position = saved.position;
+    team.manualBonus = saved.manualBonus;
+    team.fateBonus = saved.fateBonus;
+    team.lapBonusCount = saved.lapBonusCount;
+    team.scoreBreakdown = { ...saved.scoreBreakdown };
+    team.properties = [...saved.properties];
+  });
+}
+
 function adminAdjustScore(idx, amount) {
+  captureAdminSnapshot(`adjust-score-${idx}`);
   GameState.teams[idx].score += amount;
   showToast(`Admin: Modified ${GameState.teams[idx].name} score by ${amount}`);
   renderStats();
@@ -1032,6 +1095,7 @@ function adminAdjustScore(idx, amount) {
 }
 
 function adminSwitchTeam(idx) {
+  captureAdminSnapshot(`switch-team-${idx}`);
   GameState.currentTeam = idx;
   showToast(`Admin: Switched active turn to ${GameState.teams[idx].name}`);
   renderBoard();
@@ -1040,12 +1104,15 @@ function adminSwitchTeam(idx) {
 }
 
 function adminResetPools() {
+  captureAdminSnapshot('reset-pools');
   GameState.usedLifeQuestions = [];
   GameState.usedChallengeQuestions = [];
   showToast("Admin: All question pools have been reset!");
+  openAdminPanel();
 }
 
 function adminToggleDragMode() {
+  captureAdminSnapshot('toggle-drag-mode');
   GameState.devDragMode = !GameState.devDragMode;
   if (GameState.devDragMode) {
     GameState.pendingAnswerTile = null;
@@ -1078,6 +1145,7 @@ function adminDropToken(event, tileIdx) {
   if (Number.isNaN(teamIdx) || !GameState.teams[teamIdx]) return;
   const routeIdx = BOARD_ROUTE.indexOf(tileIdx);
   if (routeIdx < 0) return;
+  captureAdminSnapshot(`drop-token-${teamIdx}`);
   GameState.teams[teamIdx].position = routeIdx;
   GameState.pendingAnswerTile = null;
   GameState.activeStepTile = null;
@@ -1086,11 +1154,14 @@ function adminDropToken(event, tileIdx) {
 }
 
 function adminForceNextTurn() {
+  captureAdminSnapshot('force-next-turn');
   GameState.pendingAnswerTile = null;
   endTurn();
+  openAdminPanel();
 }
 
 function adminClearPending() {
+  captureAdminSnapshot('clear-pending');
   GameState.pendingAnswerTile = null;
   GameState.activeStepTile = null;
   GameState.currentQuestion = null;
@@ -1100,4 +1171,64 @@ function adminClearPending() {
   closeModal('challenge-modal');
   showToast('Admin: Cleared pending question/event state.');
   renderBoard();
+  openAdminPanel();
+}
+
+function adminUndoLastAction() {
+  const snapshot = adminActionStack.pop();
+  if (!snapshot) {
+    showToast('Admin: No action to undo.');
+    return;
+  }
+  restoreAdminSnapshot(snapshot);
+  const toggleBtn = document.getElementById('admin-drag-toggle-btn');
+  if (toggleBtn) toggleBtn.textContent = `DRAG FLAGS: ${GameState.devDragMode ? 'ON' : 'OFF'}`;
+  showToast(`Admin: Undid ${snapshot.label}.`);
+  renderBoard();
+  renderStats();
+  renderSidePanels();
+  openAdminPanel();
+}
+
+function adminExportSnapshot() {
+  const snapshot = {
+    exportedAt: new Date().toISOString(),
+    phase: GameState.phase,
+    turnCount: GameState.turnCount,
+    currentTeam: GameState.currentTeam,
+    pendingAnswerTile: GameState.pendingAnswerTile,
+    activeStepTile: GameState.activeStepTile,
+    devDragMode: GameState.devDragMode,
+    usedLifeQuestions: [...GameState.usedLifeQuestions],
+    usedChallengeQuestions: [...GameState.usedChallengeQuestions],
+    tiles: GameState.tiles.map((tile, idx) => ({
+      tileId: idx,
+      owner: tile.owner,
+      level: tile.level
+    })),
+    teams: GameState.teams.map((team, idx) => ({
+      idx,
+      name: team.name,
+      score: team.score,
+      positionRouteIdx: team.position,
+      positionTileId: BOARD_ROUTE[team.position],
+      manualBonus: team.manualBonus,
+      fateBonus: team.fateBonus,
+      lapBonusCount: team.lapBonusCount,
+      properties: [...team.properties],
+      scoreBreakdown: { ...team.scoreBreakdown }
+    }))
+  };
+
+  const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const ts = new Date().toISOString().replace(/[:.]/g, '-');
+  a.download = `etp-snapshot-${ts}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast('Admin: Snapshot exported.');
 }
