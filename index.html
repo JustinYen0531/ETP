@@ -76,24 +76,20 @@
     <h1 class="home-title">ETP<br>Game Show</h1>
     <p class="home-subtitle">High-Frequency Competitive Environment</p>
     <div class="home-cta-row">
+      <button id="btn-how-to-play" class="btn-home-secondary" onclick="openHowToPlay()">
+        HOW TO PLAY
+      </button>
       <div class="btn-start">
         <div class="btn-start-glow"></div>
         <button id="btn-start-game" onclick="startGame()">
           START GAME
-          <div style="display:flex;gap:4px;justify-content:center;margin-top:6px;">
-            <div style="width:4px;height:4px;background:var(--c-primary);"></div>
-            <div style="width:48px;height:1px;background:rgba(143,245,255,0.3);align-self:center;"></div>
-            <div style="width:4px;height:4px;background:var(--c-primary);"></div>
-          </div>
         </button>
       </div>
-      <button id="btn-how-to-play" class="btn-home-secondary" onclick="openHowToPlay()">
-        HOW TO PLAY
-      </button>
       <button id="btn-question-overview" class="btn-home-secondary" onclick="openQuestionOverview()" style="border-color:var(--c-tertiary); color:var(--c-tertiary);">
         QUESTION INDEX
       </button>
     </div>
+    <p class="home-credit">Made by Justin</p>
     <div class="home-stats">
       <div class="home-stat-card">
         <div class="home-stat-label">Live Participants</div>
