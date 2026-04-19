@@ -181,7 +181,7 @@ async function runFlashToLock(slotEl, finalName, candidatePool, memberIdx) {
   slotEl.classList.remove('slot-member-final');
   slotEl.classList.add('slot-member-flashing');
 
-  const flashDuration = Math.min(1000 + memberIdx * 1000, 3000);
+  const flashDuration = 1500;
   const flashStep = 75;
   const cycles = Math.max(1, Math.floor(flashDuration / flashStep));
 
