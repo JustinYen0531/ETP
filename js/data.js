@@ -4,7 +4,7 @@
 // ============================================================
 
 const QUESTION_BANK = {
-  // Tile 1: Accounting - Kelly (佳璇)
+  // Tile 1: Accounting - Kelly
   ACQ1: [
     {
       level: 1, type: 'fill',
@@ -61,26 +61,26 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 6: Statistics - Library 2
+  // Tile 6: Statistics - Justin
   STQ2: [
     {
       level: 1, type: 'fill',
-      question: "If two variables move in opposite directions, they have a ______ correlation.",
-      answer: "Negative"
+      question: "A probability distribution where the mean, median, and mode are all equal and the curve is perfectly bell-shaped is the ______ distribution.",
+      answer: "Normal"
     },
     {
       level: 2, type: 'calc',
-      question: "If you flip a coin 3 times, what is the probability of getting 3 Heads?",
-      answer: "1/8 (12.5%)"
+      question: "In a standard deck of 52 cards, what is the probability of drawing a 'Heart' card? (Enter as a fraction, e.g., 1/2)",
+      answer: "1/4"
     },
     {
       level: 3, type: 'open',
-      question: "What does a 'P-value < 0.05' typically represent in a hypothesis test?",
-      answer: "Statistically significant result — we reject the null hypothesis (H₀)."
+      question: "Explain the main difference between 'Descriptive Statistics' and 'Inferential Statistics'.",
+      answer: "Descriptive statistics summarize and describe data, while inferential statistics use sample data to make predictions or generalizations about a larger population."
     }
   ],
 
-  // Tile 3: Calculus - Ally (A.L.L.Y)
+  // Tile 3: Calculus - Ally
   CAQ1: [
     {
       level: 1, type: 'fill',
@@ -99,26 +99,26 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 7: Calculus - Library 2
+  // Tile 7: Calculus - Justin
   CAQ2: [
     {
       level: 1, type: 'fill',
-      question: "The reverse process of differentiation is called ______.",
-      answer: "Integration (Antiderivative)"
+      question: "The mathematical concept used to measure the rate at which a function changes at a specific point is the ______.",
+      answer: "Derivative"
     },
     {
       level: 2, type: 'calc',
-      question: "What is the value of 'e' to two decimal places?",
-      answer: "2.72"
+      question: "Find the derivative (f') of f(x) = 5x^2 + 7x - 3.",
+      answer: "10x + 7"
     },
     {
       level: 3, type: 'open',
-      question: "Explain the 'Chain Rule' in one simple sentence.",
-      answer: "It's a rule for finding the derivative of a function inside another function (composite function)."
+      question: "In calculus, what does it mean for a function to be 'Continuous' at a specific point?",
+      answer: "It means the limit as you approach the point equals the actual function value at that point (there are no jumps, holes, or gaps in the graph)."
     }
   ],
 
-  // Tile 4: Economics - Kelly (佳璇)
+  // Tile 4: Economics - Kelly
   ECQ1: [
     {
       level: 1, type: 'fill',
@@ -137,7 +137,7 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 8: Economics - Carrie (C.A.R.R.I.E)
+  // Tile 8: Economics - Carrie 
   ECQ2: [
     {
       level: 1, type: 'fill',
