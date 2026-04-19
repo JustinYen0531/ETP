@@ -756,7 +756,7 @@ function solveChallenge(points) {
 
   renderStats();
   renderSidePanels();
-  nextTurn();
+  endTurn();
 }
 
 function triggerLifeQuestion() {
@@ -797,5 +797,5 @@ function solveLife(points) {
 
   renderStats();
   renderSidePanels();
-  nextTurn(); // Usually fate tiles end the turn if they involve a question
+  endTurn(); // Usually fate tiles end the turn if they involve a question
 }
