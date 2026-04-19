@@ -35,6 +35,7 @@ const GameState = {
       position: 0,
       manualBonus: 0,
       lapBonusCount: 0,
+      mentor: TEAM_MENTORS[i],
       scoreBreakdown: { lvl1: 0, lvl2: 0, lvl3: 0 }
     }));
     this.history = [];
@@ -98,7 +99,10 @@ function renderTeamSlots() {
     if (!el) return;
     const members = GameState.teams[i].members;
     el.innerHTML = `
-      <div class="slot-label" style="font-weight:900;">SLOT 0${i + 1}</div>
+      <div class="slot-label" style="font-weight:900; display:flex; justify-content:space-between; align-items:center;">
+        <span>SLOT 0${i + 1}</span>
+        <span style="color:var(--c-text-muted); font-size:0.65rem; letter-spacing:0.1em; opacity:0.7;">LEAD BY ${GameState.teams[i].mentor.toUpperCase()}</span>
+      </div>
       <div class="slot-team-name" style="color: ${GameState.teams[i].hex}">${name}</div>
       <div class="slot-status">READY</div>
       <div class="slot-members" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.75rem;">

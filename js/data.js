@@ -201,5 +201,6 @@ const STUDENT_POOL = [
 ];
 
 const TEAM_NAMES = ['ALPHA', 'BETA', 'GAMMA', 'DELTA'];
+const TEAM_MENTORS = ['Justin', 'Ally', 'Carrie', 'Kelly'];
 const TEAM_COLORS = ['primary', 'secondary', 'tertiary', 'error'];
 const TEAM_HEX = ['#8ff5ff', '#c47fff', '#a0ed00', '#ff716c'];
