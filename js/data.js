@@ -23,26 +23,26 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 5: Accounting - Library 2
+  // Tile 5: Accounting - Carrie
   ACQ2: [
     {
       level: 1, type: 'fill',
-      question: "When a company sells a bond at $1,050 (Face Value: $1,000), it is called a ______.",
-      answer: "Premium"
+      question: "The resources owned by a business that are expected to provide future economic benefits are called ______.",
+      answer: "Assets"
     },
     {
       level: 2, type: 'calc',
-      question: "A machine costs $5,000 with a 5-year life. What is the annual straight-line depreciation?",
-      answer: "$1,000"
+      question: "If a company has Total Assets of $50,000 and Total Equity of $20,000, what is the total amount of its Liabilities? (Enter number only)",
+      answer: "30000"
     },
     {
       level: 3, type: 'open',
-      question: "Explain the difference between 'Depreciation' and 'Amortization' in one simple sentence.",
-      answer: "Depreciation is for tangible assets; Amortization is for intangible assets."
+      question: "Explain the concept of 'Depreciation' and why it is recorded as an expense even if no cash flow occurs during the period.",
+      answer: "Depreciation represents the systematic allocation of an asset's cost over its useful life to match expenses with revenue earned (Matching Principle)."
     }
   ],
 
-  // Tile 2: Statistics - Ally (A.L.L.Y)
+  // Tile 2: Statistics - Ally
   STQ1: [
     {
       level: 1, type: 'fill',
@@ -137,38 +137,38 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 8: Economics - Library 2
+  // Tile 8: Economics - Carrie (C.A.R.R.I.E)
   ECQ2: [
     {
       level: 1, type: 'fill',
-      question: "When your income increases and you buy LESS of a good, that good is called an ______ good.",
-      answer: "Inferior"
+      question: "When the price of a good increases, the Quantity Demanded usually decreases; this relationship is known as the Law of ______.",
+      answer: "Demand"
     },
     {
       level: 2, type: 'calc',
-      question: "You can work (earn $160) or go to a concert (ticket costs $100). What is the total opportunity cost of the concert?",
-      answer: "$260 ($100 ticket + $160 forgone income)"
+      question: "If a consumer has a budget of $120 and the price of a book is $15, how many books can they purchase at most?",
+      answer: "8"
     },
     {
       level: 3, type: 'open',
-      question: "In your opinion, what is one 'Negative Externality' of using AI for homework?",
-      answer: "e.g. Losing critical thinking skills / Academic dishonesty."
+      question: "Explain why a consumer's willingness to pay for a product often decreases as they consume more units of that same product.",
+      answer: "Due to the Law of Diminishing Marginal Utility, the satisfaction (utility) gained from each additional unit decreases, reducing the willingness to pay."
     }
   ]
 };
 
 // Board tile configuration (索引 0-9)
 const BOARD_TILES = [
-  { id: 0, type: 'special', label: 'START',    icon: 'flag',             color: 'white',      bankKey: null },
-  { id: 1, type: 'subject', label: 'ACQ',       icon: 'account_balance',  color: 'tertiary',   bankKey: 'ACQ1' },
-  { id: 2, type: 'subject', label: 'STQ',       icon: 'insights',         color: 'primary',    bankKey: 'STQ1' },
-  { id: 3, type: 'subject', label: 'CAQ',       icon: 'calculate',        color: 'secondary',  bankKey: 'CAQ1' },
-  { id: 4, type: 'subject', label: 'ECQ',       icon: 'trending_up',      color: 'cyan',       bankKey: 'ECQ1' },
-  { id: 5, type: 'subject', label: 'ACQ',       icon: 'account_balance_wallet', color: 'tertiary', bankKey: 'ACQ2' },
-  { id: 6, type: 'subject', label: 'STQ',       icon: 'analytics',        color: 'primary',    bankKey: 'STQ2' },
-  { id: 7, type: 'subject', label: 'CAQ',       icon: 'functions',        color: 'secondary',  bankKey: 'CAQ2' },
-  { id: 8, type: 'subject', label: 'ECQ',       icon: 'science',          color: 'cyan',       bankKey: 'ECQ2' },
-  { id: 9, type: 'special', label: 'CHANCE',   icon: 'casino',           color: 'white',      bankKey: null },
+  { id: 0, type: 'special', label: 'START', icon: 'flag', color: 'white', bankKey: null },
+  { id: 1, type: 'subject', label: 'ACQ', icon: 'account_balance', color: 'tertiary', bankKey: 'ACQ1' },
+  { id: 2, type: 'subject', label: 'STQ', icon: 'insights', color: 'primary', bankKey: 'STQ1' },
+  { id: 3, type: 'subject', label: 'CAQ', icon: 'calculate', color: 'secondary', bankKey: 'CAQ1' },
+  { id: 4, type: 'subject', label: 'ECQ', icon: 'trending_up', color: 'cyan', bankKey: 'ECQ1' },
+  { id: 5, type: 'subject', label: 'ACQ', icon: 'account_balance_wallet', color: 'tertiary', bankKey: 'ACQ2' },
+  { id: 6, type: 'subject', label: 'STQ', icon: 'analytics', color: 'primary', bankKey: 'STQ2' },
+  { id: 7, type: 'subject', label: 'CAQ', icon: 'functions', color: 'secondary', bankKey: 'CAQ2' },
+  { id: 8, type: 'subject', label: 'ECQ', icon: 'science', color: 'cyan', bankKey: 'ECQ2' },
+  { id: 9, type: 'special', label: 'CHANCE', icon: 'casino', color: 'white', bankKey: null },
 ];
 
 // Student pool (15 students, excluding 4 presenters: Justin, Kelly, Carrie, Ally)
