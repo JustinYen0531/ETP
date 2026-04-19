@@ -22,6 +22,8 @@ const GameState = {
   teamsRandomized: false,
   usedLifeQuestions: [],
   usedChallengeQuestions: [],
+  currentLifeQuestion: null,
+  currentChallenge: null,
 
   init() {
     this.tiles = BOARD_TILES.map(() => ({ owner: null, level: 0 }));
@@ -696,6 +698,8 @@ document.addEventListener('DOMContentLoaded', () => {
   GameState.init();
   renderSidePanels();
   showScreen('home');
+});
+
 // ── Fate / Life logic ───────────────────────────────────────
 
 function selectFate(type) {
@@ -795,4 +799,3 @@ function solveLife(points) {
   renderSidePanels();
   nextTurn(); // Usually fate tiles end the turn if they involve a question
 }
-});
