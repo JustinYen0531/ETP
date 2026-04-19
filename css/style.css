@@ -679,6 +679,9 @@ html, body {
   padding-top: 0;
   border-top: none;
   grid-column: 2;
+  pointer-events: auto;
+  position: relative;
+  z-index: 3;
 }
 .manual-score-label {
   display: block;
@@ -700,6 +703,9 @@ html, body {
   font-size: 0.76rem;
   text-align: right;
   line-height: 1;
+  pointer-events: auto;
+  cursor: text;
+  caret-color: #ffffff;
 }
 .manual-score-input:focus {
   outline: none;

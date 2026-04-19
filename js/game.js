@@ -487,7 +487,7 @@ function renderStatsPanel(containerId, teamIndexes) {
         </div>
         <div class="manual-score-wrap">
           <label class="manual-score-label" for="manual-score-${teamIdx}">Manual</label>
-          <input id="manual-score-${teamIdx}" class="manual-score-input" type="text" inputmode="numeric" placeholder="Type score" value="${team.manualBonus}" oninput="updateManualScore(${teamIdx}, this.value)" onfocus="this.select()" onkeydown="if (event.key === 'Enter') { updateManualScore(${teamIdx}, this.value); this.blur(); }" />
+          <input id="manual-score-${teamIdx}" class="manual-score-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="Type score" value="${team.manualBonus}" onclick="event.stopPropagation(); this.focus();" onmousedown="event.stopPropagation()" oninput="updateManualScore(${teamIdx}, this.value)" onfocus="this.select()" onkeydown="if (event.key === 'Enter') { updateManualScore(${teamIdx}, this.value); this.blur(); }" />
         </div>
       </div>
     `;
