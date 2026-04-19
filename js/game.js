@@ -487,7 +487,7 @@ function renderStatsPanel(containerId, teamIndexes) {
         </div>
         <div class="manual-score-wrap">
           <label class="manual-score-label" for="manual-score-${teamIdx}">Manual</label>
-          <input id="manual-score-${teamIdx}" class="manual-score-input" type="number" inputmode="numeric" placeholder="Type score" value="${team.manualBonus}" onchange="updateManualScore(${teamIdx}, this.value)" onkeydown="if (event.key === 'Enter') { updateManualScore(${teamIdx}, this.value); this.blur(); }" />
+          <input id="manual-score-${teamIdx}" class="manual-score-input" type="text" inputmode="numeric" placeholder="Type score" value="${team.manualBonus}" oninput="updateManualScore(${teamIdx}, this.value)" onfocus="this.select()" onkeydown="if (event.key === 'Enter') { updateManualScore(${teamIdx}, this.value); this.blur(); }" />
         </div>
       </div>
     `;
@@ -513,7 +513,8 @@ function renderRoundPanel() {
 
 function updateManualScore(teamIdx, rawValue) {
   const team = GameState.teams[teamIdx];
-  const nextManual = Number(rawValue) || 0;
+  const cleaned = String(rawValue ?? '').trim();
+  const nextManual = /^-?\d+$/.test(cleaned) ? Number(cleaned) : 0;
   const delta = nextManual - team.manualBonus;
   if (delta === 0) return;
   team.manualBonus = nextManual;
@@ -856,6 +857,14 @@ function isFateFullyConsumed() {
 function syncFateSelectionButtons() {
   const lifeBtn = document.getElementById('fate-btn-life');
   const challengeBtn = document.getElementById('fate-btn-challenge');
+  const lifeRemainEl = document.getElementById('fate-life-remaining');
+  const challengeRemainEl = document.getElementById('fate-challenge-remaining');
+  const lifeRemaining = Math.max(FATE_MAX_PER_TYPE - GameState.usedLifeQuestions.length, 0);
+  const challengeRemaining = Math.max(FATE_MAX_PER_TYPE - GameState.usedChallengeQuestions.length, 0);
+
+  if (lifeRemainEl) lifeRemainEl.textContent = `REMAINING ${lifeRemaining}/${FATE_MAX_PER_TYPE}`;
+  if (challengeRemainEl) challengeRemainEl.textContent = `REMAINING ${challengeRemaining}/${FATE_MAX_PER_TYPE}`;
+
   if (lifeBtn) {
     lifeBtn.disabled = isLifeExhausted();
     lifeBtn.style.opacity = lifeBtn.disabled ? '0.35' : '1';
