@@ -21,6 +21,7 @@ const GameState = {
   pendingAnswerTile: null,
   activeStepTile: null,
   teamsRandomized: false,
+  isRandomizingTeams: false,
   usedLifeQuestions: [],
   usedChallengeQuestions: [],
   currentLifeQuestion: null,
@@ -48,6 +49,7 @@ const GameState = {
     this.pendingAnswerTile = null;
     this.activeStepTile = null;
     this.teamsRandomized = false;
+    this.isRandomizingTeams = false;
     this.usedLifeQuestions = [];
     this.usedChallengeQuestions = [];
   }
@@ -66,7 +68,13 @@ function showScreen(id) {
 // ============================================================
 // Team Randomizer
 // ============================================================
-function randomizeTeams() {
+async function randomizeTeams() {
+  if (GameState.isRandomizingTeams) return;
+  GameState.isRandomizingTeams = true;
+  GameState.teamsRandomized = false;
+  if (typeof updateProceedButtonState === 'function') updateProceedButtonState();
+  setRandomizeButtonBusy(true);
+
   const pool = [...STUDENT_POOL];
   // Fisher-Yates shuffle
   for (let i = pool.length - 1; i > 0; i--) {
@@ -78,12 +86,26 @@ function randomizeTeams() {
   pool.forEach((student, idx) => {
     GameState.teams[idx % 4].members.push(student);
   });
+  renderTeamSlotsSkeleton();
+  await animateTeamSlotDraw(pool);
   GameState.teamsRandomized = true;
-  renderTeamSlots();
   if (typeof updateProceedButtonState === 'function') updateProceedButtonState();
+  setRandomizeButtonBusy(false);
+  GameState.isRandomizingTeams = false;
   
   // Animate the number spinner
   animatePoolCount();
+}
+
+function setRandomizeButtonBusy(isBusy) {
+  const btn = document.getElementById('btn-randomize-teams');
+  if (!btn) return;
+  btn.disabled = isBusy;
+  btn.style.opacity = isBusy ? '0.7' : '1';
+  btn.style.pointerEvents = isBusy ? 'none' : 'auto';
+  btn.innerHTML = isBusy
+    ? '<span class="material-symbols-outlined" style="vertical-align:middle;margin-right:6px;">autorenew</span>RANDOMIZING TEAM PROTOCOL...'
+    : '<span class="material-symbols-outlined" style="vertical-align:middle;margin-right:6px;">shuffle</span>RANDOMIZE TEAMS · INITIATE PROTOCOL';
 }
 
 function animatePoolCount() {
@@ -114,6 +136,65 @@ function renderTeamSlots() {
       </div>
     `;
   });
+}
+
+function renderTeamSlotsSkeleton() {
+  const maxMembers = Math.max(...GameState.teams.map(t => t.members.length));
+  TEAM_NAMES.forEach((name, i) => {
+    const el = document.getElementById(`team-slot-${i}`);
+    if (!el) return;
+    el.innerHTML = `
+      <div class="slot-label" style="font-weight:900; display:flex; justify-content:space-between; align-items:center;">
+        <span>SLOT 0${i + 1}</span>
+        <span style="color:var(--c-text-muted); font-size:0.65rem; letter-spacing:0.1em; opacity:0.7;">LEAD BY ${GameState.teams[i].mentor.toUpperCase()}</span>
+      </div>
+      <div class="slot-team-name" style="color: ${GameState.teams[i].hex}">${name}</div>
+      <div class="slot-status">LOCKING MEMBERS...</div>
+      <div class="slot-members slot-members-animated">
+        ${Array.from({ length: maxMembers }, (_, memberIdx) => `
+          <span id="slot-member-${i}-${memberIdx}" class="slot-member-box slot-member-pending">---</span>
+        `).join('')}
+      </div>
+    `;
+  });
+}
+
+async function animateTeamSlotDraw(candidatePool) {
+  const maxMembers = Math.max(...GameState.teams.map(t => t.members.length));
+  for (let memberIdx = 0; memberIdx < maxMembers; memberIdx++) {
+    for (let teamIdx = 0; teamIdx < GameState.teams.length; teamIdx++) {
+      const finalName = GameState.teams[teamIdx].members[memberIdx];
+      if (!finalName) continue;
+      const slotEl = document.getElementById(`slot-member-${teamIdx}-${memberIdx}`);
+      if (!slotEl) continue;
+      await runFlashToLock(slotEl, finalName, candidatePool, memberIdx);
+    }
+  }
+  TEAM_NAMES.forEach((_, i) => {
+    const slot = document.getElementById(`team-slot-${i}`);
+    const status = slot?.querySelector('.slot-status');
+    if (status) status.textContent = 'READY';
+  });
+}
+
+async function runFlashToLock(slotEl, finalName, candidatePool, memberIdx) {
+  slotEl.classList.remove('slot-member-final');
+  slotEl.classList.add('slot-member-flashing');
+
+  const flashDuration = Math.min(1000 + memberIdx * 1000, 3000);
+  const flashStep = 75;
+  const cycles = Math.max(1, Math.floor(flashDuration / flashStep));
+
+  for (let i = 0; i < cycles; i++) {
+    const randomName = candidatePool[Math.floor(Math.random() * candidatePool.length)];
+    slotEl.textContent = randomName;
+    await wait(flashStep);
+  }
+
+  slotEl.textContent = finalName;
+  slotEl.classList.remove('slot-member-pending', 'slot-member-flashing');
+  slotEl.classList.add('slot-member-final');
+  await wait(140);
 }
 
 // ============================================================

@@ -429,6 +429,44 @@ html, body {
   padding: 0.2rem 0.5rem;
   color: var(--c-text-muted);
 }
+.slot-members-animated {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.slot-member-box {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.04);
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.slot-member-pending {
+  color: rgba(255,255,255,0.35);
+}
+.slot-member-flashing {
+  color: var(--c-primary);
+  border-color: rgba(143,245,255,0.55);
+  background: rgba(143,245,255,0.1);
+  animation: slotFlashPulse 0.16s steps(2, end) infinite;
+}
+.slot-member-final {
+  color: #fff;
+  border-color: rgba(160,237,0,0.7);
+  background: rgba(160,237,0,0.12);
+  box-shadow: 0 0 10px rgba(160,237,0,0.35);
+}
+@keyframes slotFlashPulse {
+  0%, 100% { opacity: 0.35; filter: brightness(0.8); }
+  50% { opacity: 1; filter: brightness(1.22); }
+}
 .btn-proceed-v2 {
   background: transparent;
   border: 1px solid var(--c-primary);
