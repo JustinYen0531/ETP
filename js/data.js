@@ -154,6 +154,24 @@ const QUESTION_BANK = {
       question: "Explain why a consumer's willingness to pay for a product often decreases as they consume more units of that same product.",
       answer: "Due to the Law of Diminishing Marginal Utility, the satisfaction (utility) gained from each additional unit decreases, reducing the willingness to pay."
     }
+  ],
+  // Tile 0 & 9: Management / General - System
+  MAQ1: [
+    {
+      level: 1, type: 'fill',
+      question: "The acronym 'CEO' stands for Chief ______ Officer.",
+      answer: "Executive"
+    },
+    {
+      level: 2, type: 'fill',
+      question: "The four functions of management are Planning, Organizing, Leading, and ______.",
+      answer: "Controlling"
+    },
+    {
+      level: 3, type: 'open',
+      question: "What is a 'SWOT analysis' primarily used for in business strategy?",
+      answer: "To evaluate Strengths, Weaknesses, Opportunities, and Threats of a project or business."
+    }
   ]
 };
 
@@ -178,7 +196,7 @@ const CHALLENGE_QUESTIONS = [
   { id: 'c4', task: 'Play Rock-Paper-Scissors with Justin. (Win = +200)', author: 'Justin', icon: 'front_hand' }
 ];
 const BOARD_TILES = [
-  { id: 0, type: 'special', label: 'START', icon: 'flag', color: 'white', bankKey: null, author: 'System' },
+  { id: 0, type: 'fate-subject', label: 'START', icon: 'flag', color: 'white', bankKey: 'MAQ1', author: 'System' },
   { id: 1, type: 'subject', label: 'ACQ', icon: 'account_balance', color: 'tertiary', bankKey: 'ACQ1', author: 'Kelly' },
   { id: 2, type: 'subject', label: 'STQ', icon: 'insights', color: 'primary', bankKey: 'STQ1', author: 'Ally' },
   { id: 3, type: 'subject', label: 'CAQ', icon: 'calculate', color: 'secondary', bankKey: 'CAQ1', author: 'Ally' },
@@ -187,7 +205,7 @@ const BOARD_TILES = [
   { id: 6, type: 'subject', label: 'STQ', icon: 'analytics', color: 'primary', bankKey: 'STQ2', author: 'Justin' },
   { id: 7, type: 'subject', label: 'CAQ', icon: 'functions', color: 'secondary', bankKey: 'CAQ2', author: 'Justin' },
   { id: 8, type: 'subject', label: 'ECQ', icon: 'science', color: 'cyan', bankKey: 'ECQ2', author: 'Carrie' },
-  { id: 9, type: 'special', label: 'CHANCE', icon: 'casino', color: 'white', bankKey: null, author: 'System' },
+  { id: 9, type: 'fate-subject', label: 'CHANCE', icon: 'casino', color: 'white', bankKey: 'MAQ1', author: 'System' },
 ];
 
 // Student pool (15 students, excluding 4 presenters: Justin, Kelly, Carrie, Ally)

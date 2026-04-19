@@ -303,8 +303,16 @@ function triggerQuestion(tileIdx) {
   const tile = BOARD_TILES[tileIdx];
 
   // Handle Special Tiles (Fate / Start / Chance)
-  if (tile.type === 'special') {
+  if (tile.type === 'special' || tile.type === 'fate-subject') {
     GameState.pendingAnswerTile = tileIdx;
+    
+    // Toggle question button visibility based on tile type
+    const qBtn = document.getElementById('fate-btn-question');
+    if (qBtn) {
+      if (tile.type === 'fate-subject') qBtn.classList.remove('hidden');
+      else qBtn.classList.add('hidden');
+    }
+    
     openModal('fate-selection-modal');
     return;
   }
@@ -639,7 +647,7 @@ function renderQuestionOverview() {
   const grid = document.getElementById('overview-grid');
   if (!grid) return;
 
-  grid.innerHTML = BOARD_TILES.filter(t => t.type === 'subject').map(tile => {
+  grid.innerHTML = BOARD_TILES.filter(t => t.bankKey).map(tile => {
     return `
       <div class="overview-item" onclick="openQuestionPreview('${tile.bankKey}')">
         <div class="overview-item-top">
@@ -704,7 +712,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function selectFate(type) {
   closeModal('fate-selection-modal');
-  if (type === 'life') {
+  if (type === 'question') {
+    // Manually trigger the "Subject" question logic for this tile
+    const tileIdx = GameState.pendingAnswerTile;
+    const tile = BOARD_TILES[tileIdx];
+    const tileState = GameState.tiles[tileIdx];
+    const challenger = GameState.currentTeam;
+    const defender = tileState.owner;
+    const questionLevel = tileState.owner === null ? 1 : tileState.level + 1;
+
+    if (questionLevel > 3) {
+      showToast('This tile is at MAX LEVEL — choose another path!');
+      openModal('fate-selection-modal');
+      return;
+    }
+
+    const q = QUESTION_BANK[tile.bankKey][questionLevel - 1];
+    GameState.currentQuestion = { tileIdx, q, challenger, defender, questionLevel };
+
+    // Update Modal UI
+    const levelLabels = ['', 'Level 1 · Fill in the Blank', 'Level 2 · Calculation', 'Level 3 · Open Question'];
+    document.getElementById('q-level-label').textContent = levelLabels[questionLevel];
+    document.getElementById('q-text').textContent = q.question;
+    document.getElementById('q-answer').textContent = q.answer;
+    document.getElementById('q-answer').classList.add('hidden');
+
+    const qAuthEl = document.getElementById('q-author');
+    if (qAuthEl) {
+      qAuthEl.textContent = tile.author.toUpperCase();
+      qAuthEl.style.color = `var(--c-${tile.color})`;
+    }
+
+    openModal('question-modal');
+  } else if (type === 'life') {
     triggerLifeQuestion();
   } else {
     triggerChallengeQuestion();
@@ -798,4 +838,66 @@ function solveLife(points) {
   renderStats();
   renderSidePanels();
   endTurn(); // Usually fate tiles end the turn if they involve a question
+}
+
+// ── Admin Panel Logic ───────────────────────────────────────
+let adminClickCount = 0;
+let adminClickTimeout = null;
+
+function handleAdminTrigger() {
+  adminClickCount++;
+  clearTimeout(adminClickTimeout);
+  
+  if (adminClickCount >= 5) {
+    adminClickCount = 0;
+    openAdminPanel();
+    return;
+  }
+  
+  adminClickTimeout = setTimeout(() => {
+    adminClickCount = 0;
+  }, 1000);
+}
+
+function openAdminPanel() {
+  const list = document.getElementById('admin-team-list');
+  if (!list) return;
+  
+  list.innerHTML = GameState.teams.map((team, i) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding:0.5rem 0;">
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <div style="width:12px; height:12px; border-radius:50%; background:${team.hex};"></div>
+        <span style="font-weight:700; color:${i === GameState.currentTeam ? '#fff' : 'var(--c-text-muted)'}">${team.name} ${i === GameState.currentTeam ? '◀' : ''}</span>
+      </div>
+      <div style="display:flex; gap:0.4rem;">
+        <button class="btn-wrong" onclick="adminAdjustScore(${i}, -50)" style="min-width:40px; padding:2px; height:auto; font-size:0.7rem;">-50</button>
+        <button class="btn-correct" onclick="adminAdjustScore(${i}, 50)" style="min-width:40px; padding:2px; height:auto; font-size:0.7rem; border-color:var(--c-tertiary); color:var(--c-tertiary); background:none;">+50</button>
+        <button class="btn-proceed-v2" onclick="adminSwitchTeam(${i})" style="font-size:0.6rem; padding:4px 8px; height:auto;">SET TURN</button>
+      </div>
+    </div>
+  `).join('');
+  
+  openModal('admin-modal');
+}
+
+function adminAdjustScore(idx, amount) {
+  GameState.teams[idx].score += amount;
+  showToast(`Admin: Modified ${GameState.teams[idx].name} score by ${amount}`);
+  renderStats();
+  renderSidePanels();
+  openAdminPanel(); // Refresh list
+}
+
+function adminSwitchTeam(idx) {
+  GameState.currentTeam = idx;
+  showToast(`Admin: Switched active turn to ${GameState.teams[idx].name}`);
+  renderBoard();
+  renderSidePanels();
+  openAdminPanel(); // Refresh list
+}
+
+function adminResetPools() {
+  GameState.usedLifeQuestions = [];
+  GameState.usedChallengeQuestions = [];
+  showToast("Admin: All question pools have been reset!");
 }

@@ -50,7 +50,7 @@
      GLOBAL TOP BAR
      ============================================================ -->
 <header class="topbar">
-  <span class="topbar-logo">ETP Game Show</span>
+  <span class="topbar-logo" onclick="handleAdminTrigger()" style="cursor:default; user-select:none;">ETP Game Show</span>
   <nav class="topbar-nav">
     <a id="nav-home" onclick="showTopNavHint()" class="active">Home</a>
     <a id="nav-randomize" onclick="showTopNavHint()">Teams</a>
@@ -763,12 +763,16 @@
     <div class="section-label">FATE / START & CHANCE</div>
     <h2 class="guide-title">Event Selection</h2>
     <p style="color:var(--c-text-muted); margin-bottom:1.5rem;">Choose your path for this fate tile.</p>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
-      <button class="btn-proceed-v2" onclick="selectFate('life')" style="height:auto; padding:2rem 1rem;">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:1rem;">
+      <button id="fate-btn-question" class="btn-proceed-v2 hidden" onclick="selectFate('question')" style="height:auto; padding:1.5rem 1rem; border-color:var(--c-primary); background:rgba(143,245,255,0.05); color:var(--c-primary);">
+        <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">help_center</span>
+        QUESTION
+      </button>
+      <button class="btn-proceed-v2" onclick="selectFate('life')" style="height:auto; padding:1.5rem 1rem;">
         <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">auto_awesome</span>
         LIFE / FUN
       </button>
-      <button class="btn-proceed-v2" onclick="selectFate('challenge')" style="height:auto; padding:2rem 1rem; border-color:var(--c-error); background:rgba(255,113,108,0.05); color:var(--c-error);">
+      <button class="btn-proceed-v2" onclick="selectFate('challenge')" style="height:auto; padding:1.5rem 1rem; border-color:var(--c-error); background:rgba(255,113,108,0.05); color:var(--c-error);">
         <span class="material-symbols-outlined" style="font-size:2rem; display:block; margin-bottom:0.5rem;">bolt</span>
         CHALLENGE
       </button>
@@ -837,6 +841,47 @@
     <div class="modal-actions" style="justify-content:center; gap:2rem;">
       <button class="btn-wrong" onclick="solveChallenge(0)" style="flex:none; min-width:180px; padding:1.2rem;">FAILED (+0)</button>
       <button class="btn-correct" onclick="solveChallenge(200)" style="flex:none; min-width:180px; padding:1.2rem; border-color:var(--c-error); color:var(--c-error); background:rgba(255,113,108,0.05);">DONE (+200)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ADMIN PANEL MODAL (HIDDEN)
+     ============================================================ -->
+<div id="admin-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'admin-modal')">
+  <div class="modal-card" onclick="event.stopPropagation()" style="border: 2px solid var(--c-error); max-width: 500px;">
+    <div class="modal-accent-line" style="background:var(--c-error);"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <div class="section-label" style="color:var(--c-error);">DEVELOPER CONSOLE</div>
+      <button class="btn-wrong" onclick="closeModal('admin-modal')" style="background:none; border:none; padding:0; min-width:auto;">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <div class="admin-grid" style="display:grid; gap:1.5rem;">
+      <!-- Team Control -->
+      <div style="background:rgba(255,113,108,0.05); padding:1rem; border-radius:8px; border:1px solid rgba(255,113,108,0.1);">
+        <h4 style="margin-bottom:0.75rem; font-size:0.8rem; color:var(--c-error);">TEAM CONTROL</h4>
+        <div id="admin-team-list" style="display:grid; gap:0.5rem;">
+          <!-- Dynamically filled -->
+        </div>
+      </div>
+
+      <!-- Logic Control -->
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.75rem;">
+        <button class="btn-proceed-v2" onclick="adminResetPools()" style="font-size:0.8rem; height:auto; padding:0.75rem; border-color:var(--c-tertiary); color:var(--c-tertiary);">RESET POOLS</button>
+        <button class="btn-proceed-v2" onclick="endTurn()" style="font-size:0.8rem; height:auto; padding:0.75rem;">FORCE NEXT TURN</button>
+      </div>
+
+      <!-- Navigation Control -->
+      <div>
+        <h4 style="margin-bottom:0.75rem; font-size:0.8rem; color:var(--c-text-muted);">FORCE NAVIGATION</h4>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.5rem;">
+          <button class="btn-proceed-v2" onclick="showScreen('home'); closeModal('admin-modal')" style="font-size:0.7rem; height:auto; padding:0.5rem;">HOME</button>
+          <button class="btn-proceed-v2" onclick="showScreen('board'); closeModal('admin-modal')" style="font-size:0.7rem; height:auto; padding:0.5rem;">BOARD</button>
+          <button class="btn-proceed-v2" onclick="showScreen('stats'); closeModal('admin-modal')" style="font-size:0.7rem; height:auto; padding:0.5rem;">STATS</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
