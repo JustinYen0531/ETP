@@ -672,7 +672,7 @@ html, body {
 }
 .manual-score-wrap {
   display: grid;
-  grid-template-columns: auto minmax(70px, 1fr);
+  grid-template-columns: auto 28px 28px minmax(58px, 1fr);
   align-items: center;
   gap: 0.45rem;
   margin-top: -0.08rem;
@@ -682,6 +682,28 @@ html, body {
   pointer-events: auto;
   position: relative;
   z-index: 3;
+}
+.manual-step-btn {
+  height: 26px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: var(--c-text);
+  border-radius: 4px;
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+.manual-step-plus {
+  color: var(--c-tertiary);
+  border-color: rgba(160,237,0,0.45);
+  background: rgba(160,237,0,0.08);
+}
+.manual-step-minus {
+  color: var(--c-error);
+  border-color: rgba(255,113,108,0.45);
+  background: rgba(255,113,108,0.08);
 }
 .manual-score-label {
   display: block;

@@ -487,7 +487,9 @@ function renderStatsPanel(containerId, teamIndexes) {
         </div>
         <div class="manual-score-wrap">
           <label class="manual-score-label" for="manual-score-${teamIdx}">Manual</label>
-          <input id="manual-score-${teamIdx}" class="manual-score-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="Type score" value="${team.manualBonus}" onclick="event.stopPropagation(); this.focus();" onmousedown="event.stopPropagation()" oninput="updateManualScore(${teamIdx}, this.value)" onfocus="this.select()" onkeydown="if (event.key === 'Enter') { updateManualScore(${teamIdx}, this.value); this.blur(); }" />
+          <button class="manual-step-btn manual-step-minus" type="button" onclick="nudgeManualScore(${teamIdx}, -50)">−</button>
+          <button class="manual-step-btn manual-step-plus" type="button" onclick="nudgeManualScore(${teamIdx}, 50)">+</button>
+          <input id="manual-score-${teamIdx}" class="manual-score-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="${team.manualBonus}" readonly />
         </div>
       </div>
     `;
@@ -522,6 +524,14 @@ function updateManualScore(teamIdx, rawValue) {
   pushHistory(teamIdx, `Manual score adjusted by ${delta >= 0 ? '+' : ''}${delta}.`, 'MANUAL');
   refreshTeamScoreDisplays(teamIdx);
   renderStats();
+}
+
+function nudgeManualScore(teamIdx, delta) {
+  const team = GameState.teams[teamIdx];
+  const nextManual = team.manualBonus + delta;
+  updateManualScore(teamIdx, String(nextManual));
+  const input = document.getElementById(`manual-score-${teamIdx}`);
+  if (input) input.value = String(GameState.teams[teamIdx].manualBonus);
 }
 
 function refreshTeamScoreDisplays(teamIdx) {
