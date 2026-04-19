@@ -1,52 +1,50 @@
-# ETP Game Show - Presentation Script
+# ETP Game Show - Presentation Script (Enhanced Version)
 
 ## Introduction
-*   **Total Duration:** ~5 Minutes
-*   **Characters:** Justin (Host/Overview), Andy (Board), Kelly (Questions/Challenges), Carrie (Scoring/Winning)
-*   **Target Pace:** 1 - 1.25 minutes per person (~180-200 words)
+*   **Total Duration:** ~5 - 6 Minutes
+*   **Characters:** Justin (Host/Overview), Ally (Board & Mechanics), Kelly (Questions & Challenges), Carrie (Scoring & Betting)
+*   **Target Pace:** 1.25 minutes per person (~200-220 words)
 
 ---
 
-### [Part 1] Justin: Overview & The Hype
-**Tone:** Energetic, welcoming, setting the stage.
+### [Part 1] Justin: The Empire of Assets
+**Tone:** Energetic, high-stakes, setting the goal.
 
-"Hello everyone! Welcome to the ETP Game Show! Today, we're not just here for a routine quiz; we’re here to find the ultimate business geniuses among us. I'm Justin, and I'll give you a quick overview of how this works. Think of this as a high-stakes journey through the core pillars of our business education. 
+"Hello everyone! Welcome to the ETP Game Show! Today, we aren't just playing a quiz; we are building business empires. I'm Justin, and I'll be your guide for this high-stakes journey. 
 
-We have four competitive teams today: ALPHA, BETA, GAMMA, and DELTA, each mentored by one of us on this stage. Your goal is simple: navigate the board, answer the questions, face your fate, and accumulate as many points as possible. It’s a perfect mix of strategy, knowledge, and let's be honest—a little bit of luck. 
+In this game, your score isn't just a number—it’s a measure of your 'Total Assets'. We have four powerful teams: ALPHA, BETA, GAMMA, and DELTA. Each team starts from scratch, but as you navigate the board, every correct answer adds to your wealth. 
 
-We’ve designed this game to test not just your memory of textbooks, but also your quick thinking and personality. So, get ready to roll the dice, because only the team with the highest score at the end of the show will be crowned the ETP Champions! Now, let’s see what kind of terrain you’ll be traversing today. Andy, take it away with the board layout!"
-
----
-
-### [Part 2] Andy: The Board & Movement
-**Tone:** Informative, clear, guiding.
-
-"Thanks, Justin! Alright guys, take a look at the map on the screen. We have a circular board consisting of 10 unique tiles. You start your journey at Tile 0, which is the START line, and work your way clockwise around to Tile 9, the CHANCE tile. 
-
-Most of these spaces are 'Subject Tiles' and they are color-coded for your convenience. You’ve got Accounting in the yellowish-orange tiles, Statistics in blue, Calculus in purple, and Economics in cyan. 
-
-Every time it's your team's turn, we’ll roll a virtual die and your team icon will move forward. But watch out! It's not just a straight path. Landing on different tiles triggers different events. Tiles 0 and 9 are special 'Fate-Subject' tiles where things can get very unpredictable. You might get a general management question, or you might trigger a 'Fate' event that changes the game's momentum entirely. Precision in movement and a bit of luck on where you land will determine your team’s destiny for each round. Now, Kelly, tell them about the specific challenges they’ll face!"
+One thing to keep in mind: consistency pays off. Every time your team completes a full lap around the board and passes the START tile, you’ll earn a 'Lap Bonus' of 50 points! This represents your business’s steady growth. But the real wealth comes from dominating the subjects. Only the team with the highest 'Total Assets' at the end will be crowned the ETP Champions. Are you ready to build your legacy? Let’s see the arena you’ll be fighting in. Ally, show them the board and how they can 'take over' the competition!"
 
 ---
 
-### [Part 3] Kelly: Questions & Challenges
-**Tone:** Fun, exciting, highlighting variety.
+### [Part 2] Ally: The Map & The Art of War (Stealing)
+**Tone:** Strategic, slightly aggressive, highlighting risk/reward.
 
-"Thanks, Andy! So, what actually happens when you land on a tile? If it’s a Subject tile, your team will face our official question bank. We have a variety of formats: 'Fill-in-the-blanks', technical 'Calculation' problems, and 'Open-ended' conceptual questions. You’ll have to collaborate quickly with your teammates to find the right answer before the time runs out. 
+"Thanks, Justin! Alright teams, look at the 10 tiles on your screen. We have Accounting, Statistics, Calculus, and Economics. But here is where it gets interesting: these tiles aren't just spaces; they are properties you can OWN. 
 
-But wait, there’s more! On those 'Fate' tiles that Justin and Andy mentioned, you might encounter our 'Life Questions'. These are fun trivia questions about our mentors' lives, complete with pictures and hints. Can you guess which mentor is in the photo? 
+When you land on an empty tile and answer correctly, you claim it. But what if you land on a tile ALREADY owned by another team? This is where you can 'Steal' it! You can choose to challenge the owner. If you answer the next level’s question correctly, you CONQUER that tile, taking it for yourself and boosting its value. 
 
-And for those of you feeling extra brave, we have 'Physical Challenges'. Landing here might mean you have to dance for 15 seconds, do some push-ups, or even play a high-stakes game of Rock-Paper-Scissors against Justin to win massive bonus points! So, stay sharp on your academics, but definitely keep those muscles warmed up too! Now, Carrie, how do we actually decide who wins?"
+But be warned! Stealing is high-risk. If you attempt to steal a tile and get the answer WRONG, you don't just lose your turn—you actually HELP your opponent. The original owner will receive an automatic 'Level Up' for their tile AND gain 50 bonus points for a successful defense! So, before you try to snatch someone else’s property, make sure your team is 100% certain of the answer. Now, Kelly, tell them about the points and the surprises waiting on the fate tiles!"
 
 ---
 
-### [Part 4] Carrie: Scoring & Winning
-**Tone:** Competitive, strategic, concluding.
+### [Part 3] Kelly: The Numbers & The Fun
+**Tone:** Enthusiastic, explaining the variety of gameplay.
 
-"Thank you, Kelly! Understanding the scoring system is where the real strategy comes in. Every technical question in our bank has three difficulty levels. 
+"Thanks, Ally! Let’s talk numbers. Every subject question has a price tag attached to its difficulty. Level 1 questions earn you 100 points, Level 2—which usually involves some tricky calculations—gets you 200, and those legendary Level 3 open-ended questions are worth a massive 300 points! 
 
-Level 1 is the easiest, perfect for a solid start. Level 2 is more technical and usually involves calculations. Level 3 consists of deep, open-ended questions that really test your mastery of the subject. Naturally, the harder the level, the more points your team earns! 
+But life isn't all textbooks and calculators. When you land on a 'Fate' or 'Chance' tile, the game takes a turn. You might encounter 'Life Questions'—trivia about our lives that will test how well you’ve been paying attention to your mentors! 
 
-When you land on a tile, we’ll open a selection modal where your team can choose which level of question you want to attempt. High risk equals high reward! We’ll be tracking every point in real-time on our digital scoreboard. At the end of the game, we’ll tally up all the points from your subject answers, life trivia, and those physical challenges. 
+And for the most daring among you, we have 'Physical Challenges'. We’re talking about dancing for 15 seconds, doing push-ups, or even facing off against Justin in a high-stakes game of Rock-Paper-Scissors! These challenges can give you that extra point boost needed to pull ahead of the other teams. So, whether it’s a math problem or a dance-off, you’ve got to be ready for anything! Carrie, tells us how the audience and other teams can get involved in the scoring!"
 
-The team with the highest total score at the end will be declared our winners! Remember, consistency is key, but don’t be afraid to go for those Level 3 questions if you want to pull ahead in the final stretch. Good luck to all the teams! back to you, Justin, to start the first roll!"
+---
+
+### [Part 4] Carrie: The Betting & The Victory
+**Tone:** Inclusive, strategic, concluding.
+
+"Thank you, Kelly! Now, listen closely, because this is how you can win points even when it isn't your turn. We’ve implemented a 'Betting and Voting' system! 
+
+Whenever a team is about to answer a question, the other teams have a chance to VOTE. Do you think they’ll get it right, or will they crumble under the pressure? If you bet correctly on their success or failure, your team will be awarded a 50-point bonus! It’s all about reading your opponents and knowing who to trust. 
+
+We’ll also have 'Manual Scoring' for those moments of extra brilliance that deserve a reward. We will be tracking all your 'Total Assets'—from questions, lap bonuses, and bets—on our live scoreboard. At the end of the show, the team with the most diversified and valuable portfolio of assets will be our grand winners! Good luck to everyone, stay focused, and may the best business minds win! Back to you, Justin, for the first roll of the dice!"
