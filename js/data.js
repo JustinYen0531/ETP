@@ -4,22 +4,22 @@
 // ============================================================
 
 const QUESTION_BANK = {
-  // Tile 1: Accounting - Library 1
+  // Tile 1: Accounting - Kelly (佳璇)
   ACQ1: [
     {
       level: 1, type: 'fill',
-      question: "The recording of an asset's cost as an expense over its useful life is called ______.",
-      answer: "Depreciation"
+      question: "Accounts that represent what the business owes to others are called ______.",
+      answer: "Liabilities"
     },
     {
       level: 2, type: 'calc',
-      question: "Total Assets = $100, Total Equity = $60. How much are the Liabilities?",
-      answer: "$40"
+      question: "If a company buys a $5,000 equipment with Cash, what is the net effect on Total Assets? (Increase/Decrease/No Change)",
+      answer: "No Change"
     },
     {
       level: 3, type: 'open',
-      question: "Why do we need 'Adjusting Entries' at the end of a period?",
-      answer: "To match revenues and expenses (accrual basis)"
+      question: "Why is the Income Statement prepared for a 'period of time' instead of a 'single point in time'?",
+      answer: "Because it records the financial performance (flow) over a duration, unlike the Balance Sheet which is a stock concept for a single point in time."
     }
   ],
 
@@ -42,22 +42,22 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 2: Statistics - Library 1
+  // Tile 2: Statistics - Ally (A.L.L.Y)
   STQ1: [
     {
       level: 1, type: 'fill',
-      question: "A value that is very far away from all other data points is called an ______.",
-      answer: "Outlier"
+      question: "According to the Central Limit Theorem, as the sample size becomes sufficiently large, the sampling distribution of the sample mean approaches a ______ distribution, regardless of the population's original shape.",
+      answer: "Normal"
     },
     {
       level: 2, type: 'calc',
-      question: "Data: {1, 1, 2, 3, 8}. What is the Median?",
+      question: "If a dataset has a population mean of μ=75 and a standard deviation of σ=5, what is the Z-score for a data point with a value of X=85?",
       answer: "2"
     },
     {
       level: 3, type: 'open',
-      question: "Why is 'Correlation does not imply Causation' an important rule?",
-      answer: "e.g. Ice cream sales don't cause shark attacks — two variables can move together without one causing the other."
+      question: "When looking at housing prices in a city, or starting salaries for college graduates, why is the 'Median' often a better measure of a typical value than the 'Mean'?",
+      answer: "The mean is highly sensitive to extreme values (outliers), which can distort the average."
     }
   ],
 
@@ -80,22 +80,22 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 3: Calculus - Library 1
+  // Tile 3: Calculus - Ally (A.L.L.Y)
   CAQ1: [
     {
       level: 1, type: 'fill',
-      question: "If the slope of a curve is zero, it might be a maximum or a ______ point.",
-      answer: "Minimum"
+      question: "The Fundamental Theorem of Calculus establishes a connection between the two main operations of calculus: differentiation and ______.",
+      answer: "Integration"
     },
     {
       level: 2, type: 'calc',
-      question: "Find the derivative (f') of f(x) = x³ + 2x.",
-      answer: "3x² + 2"
+      question: "Evaluate the definite integral: ∫²₀ 3x^2 dx",
+      answer: "8"
     },
     {
       level: 3, type: 'open',
-      question: "Describe a real-world scenario where we might need to use 'Optimization' (finding the maximum or minimum).",
-      answer: "e.g. Minimizing production cost / Maximizing profit for a company."
+      question: "If a function s(t) represents the position of a car at time t, what do its first derivative s′(t) and second derivative s′′(t) represent in the real world?",
+      answer: "The first derivative s′(t) represents the car's Velocity, and the second derivative s′′(t) represents its Acceleration."
     }
   ],
 
@@ -118,22 +118,22 @@ const QUESTION_BANK = {
     }
   ],
 
-  // Tile 4: Economics - Library 1
+  // Tile 4: Economics - Kelly (佳璇)
   ECQ1: [
     {
       level: 1, type: 'fill',
-      question: "The point where Supply meets Demand is called the Market ______.",
-      answer: "Equilibrium"
+      question: "A situation where the quantity supplied exceeds the quantity demanded at the current price is called a ______.",
+      answer: "Surplus"
     },
     {
       level: 2, type: 'calc',
-      question: "Price increases from $10 to $12. Quantity demanded drops from 100 to 80. Is the demand elastic or inelastic?",
-      answer: "Elastic (% change in quantity > % change in price)"
+      question: "If the price of a cup of coffee increases by 20% and the quantity demanded falls by 10%, what is the Price Elasticity of Demand? (Enter number only)",
+      answer: "0.5"
     },
     {
       level: 3, type: 'open',
-      question: "Explain 'Opportunity Cost' using an example from your daily life as a university student.",
-      answer: "e.g. Choosing to sleep instead of studying — the opportunity cost is lost study time."
+      question: "Explain why a 'Price Ceiling' (such as rent control) often leads to a shortage in the long run.",
+      answer: "Because the price is fixed below the equilibrium, quantity demanded increases while quantity supplied decreases, creating a gap (shortage)."
     }
   ],
 
