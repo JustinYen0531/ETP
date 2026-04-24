@@ -748,6 +748,21 @@
   </div>
 </div>
 
+<!-- ============================================================
+     QUESTION PREVIEW MODAL
+     ============================================================ -->
+<div id="preview-modal" class="modal-overlay hidden" onclick="closeModalOutside(event,'preview-modal')">
+  <div class="modal-card modal-card-wide" onclick="event.stopPropagation()">
+    <div id="preview-accent" class="modal-accent-line" style="background:var(--c-primary);"></div>
+    <button class="modal-close-btn" onclick="closeModal('preview-modal')">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div id="preview-content">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
 </div>
 
 <!-- ============================================================
